@@ -43,13 +43,13 @@ The team laptop is an HP Envy x360 16" with **Intel Iris Xe (no NVIDIA GPU, no C
 
 ## 6. Commits
 
-- Author commits as the team member directing the session. No AI attribution trailers.
+- Ayaan and Kshiti work together on the same machine and both direct every session. Split commit authorship between them: switch author after an irregular, random number of commits (e.g. 1–4), not strict alternation. No AI attribution trailers.
 
   | Member | Git author | GitHub |
   |---|---|---|
   | Ayaan Goel | `Ayaan Goel <goel30july@gmail.com>` | ayaan-goel |
   | Kshiti Bhavsar | `Kshiti Bhavsar <kshitibhavsar@gmail.com>` | Kshitii05 |
 
-  Set per commit, e.g. `git commit --author="Kshiti Bhavsar <kshitibhavsar@gmail.com>" -m "..."`. If it is unclear who is directing the session, ask.
+  Set per commit, e.g. `git commit --author="Kshiti Bhavsar <kshitibhavsar@gmail.com>" -m "..."`. Check `git log -5 --format=%an` to see the current run before choosing.
 - Small, focused commits with clear imperative messages (e.g. `Add subset generator for azimuth-step levels`).
 - Prefer small, testable milestones over generating the whole system at once.

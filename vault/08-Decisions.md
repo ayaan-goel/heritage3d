@@ -11,5 +11,5 @@
 | 2026-10-25 | Experiments run on the team laptop; cloud agent writes code/docs/museum | Cloud session: no GPU, limited disk, ephemeral, Zenodo blocked |
 | 2026-10-25 | Data stored on D: outside the repo | More free space; keeps repo small |
 | 2026-10-25 | Vault updates are mandatory every session | Context must survive agent/session switches |
-| 2026-10-25 | Commits authored by the team member directing the session; no AI attribution | Team preference |
+| 2026-10-25 | Commit authorship split between Ayaan and Kshiti, switching after an irregular number of commits; no AI attribution | Both work together on one machine and direct every session (replaces the earlier per-director rule) |
 | 2026-10-25 | Presentation rules dropped for now | Focus is the working project; presentation discussed later |
