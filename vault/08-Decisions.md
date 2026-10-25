@@ -12,4 +12,6 @@
 | 2026-10-25 | Data stored on D: outside the repo | More free space; keeps repo small |
 | 2026-10-25 | Vault updates are mandatory every session | Context must survive agent/session switches |
 | 2026-10-25 | Commit authorship split between Ayaan and Kshiti, switching after an irregular number of commits; no AI attribution | Both work together on one machine and direct every session (replaces the earlier per-director rule) |
+| 2026-10-25 | Keep Python 3.13 on the laptop (no downgrade) | Open3D 0.20.0 has 3.13 wheels; avoids reinstalling |
+| 2026-10-25 | Tools in `C:\tools\colmap` and `C:\tools\openmvs`, both on user PATH | Scripts call `colmap` / OpenMVS tools by name |
 | 2026-10-25 | Presentation rules dropped for now | Focus is the working project; presentation discussed later |

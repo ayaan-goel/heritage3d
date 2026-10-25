@@ -28,6 +28,13 @@ CHSD RGB images → controlled image subsets (L1–L5)
 
 More folders (`experiments/`, `museum/`) are added as each milestone is built.
 
+## Environment check
+
+```
+python scripts/check_env.py --out D:\heritage3d-data\runs\environment.json
+```
+Prints COLMAP/OpenMVS versions and hardware; exits with an error if a tool is not on PATH.
+
 ## Subset levels
 
 Uniform azimuth step on every camera ring: L1 3° (600 images), L2 6° (300), L3 12° (150), L4 24° (75), L5 45° (40).

@@ -7,16 +7,17 @@
 
 ## Current status (updated 2026-10-25)
 
-- Phase: **setup**. Subset generator written and unit-tested; no reconstruction, no results yet.
+- Phase: **setup**. Subset generator and environment check written and unit-tested; no reconstruction, no results yet.
 - Repository created and scaffolded (README, CLAUDE.md, vault, literature workbook).
 - CHSD Zenodo records identified; file names, sizes and license confirmed from the record pages.
-- Dataset **download in progress** (team laptop). COLMAP / OpenMVS **not yet installed**.
+- Dataset **download in progress** (team laptop).
+- Laptop toolchain verified: COLMAP 4.2.1 (CPU), OpenMVS 2.4.0, Python 3.13.15; repo cloned to `D:\heritage3d`, 7/7 tests passed there.
 - Hardware confirmed: Intel Iris Xe, no CUDA → CPU pipeline (COLMAP SfM + OpenMVS).
 
 ## Next action
 
 1. Team: download both CHSD zips to `D:\heritage3d-data\raw\`, check MD5, extract with 7-Zip (see [[06-Environment-Setup]]).
-2. Team: install COLMAP (no-CUDA) and OpenMVS; send `--help` outputs.
+2. Team: `git pull`, then run `python scripts/check_env.py` on the laptop and send the output.
 3. Team: send the folder tree + a few file names of one artifact; try to get the companion paper PDF (doi 10.1007/978-3-032-06389-2_15) via the university library.
 4. Agent: set the real `rgb_pattern` / `pole_rings` in `configs/experiment.toml` and write `scripts/inspect_dataset.py` once the real layout is known.
 

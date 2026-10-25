@@ -29,5 +29,12 @@ Newest first. Every session must add an entry (see `CLAUDE.md`).
 - Built the subset generator: `configs/experiment.toml`, `src/heritage3d/{config,subsets}.py`, `scripts/create_subsets.py`, `tests/test_subsets.py`.
   - `pytest tests` → 7 passed (cloud session, Python 3.13).
   - `python scripts/create_subsets.py --artifact demo --out <scratch>` → L1 600, L2 300, L3 150, L4 75, L5 40 (file pattern is still a placeholder; not run on real data).
+- Laptop setup (run by team, output pasted into chat):
+  - COLMAP 4.2.1 no-CUDA extracted to `C:\tools\colmap`; `COLMAP.bat -h` → "COLMAP 4.2.1 (Commit bd1fcf6 on 2026-09-29 without GPU support)".
+  - OpenMVS 2.4.0 extracted to `C:\tools\openmvs`; `InterfaceCOLMAP --help` and `DensifyPointCloud --help` → OK; banner: i7-1255U, 15.72 GB RAM, Windows 11.
+  - Both added to user PATH; `colmap -h` and `DensifyPointCloud --help` work from any folder.
+  - `git clone` to `D:\heritage3d`, venv with Python 3.13.15, `pytest tests` → 7 passed.
+- Added `scripts/check_env.py` + `src/heritage3d/environment.py` (records tool versions and hardware; exits 1 if a tool is missing).
+  - Cloud: `pytest tests` → 11 passed; `check_env.py` → exit 1 with "COLMAP not found" (expected: no tools in the cloud container). Not yet run on the laptop.
 
 **Next action** — see [[00-Home]].
