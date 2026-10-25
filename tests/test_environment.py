@@ -4,8 +4,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from heritage3d.environment import (
+    collect,
     parse_colmap_version,
-    parse_openmvs_hardware,
     parse_openmvs_version,
     problems,
 )
@@ -27,13 +27,14 @@ def test_parse_colmap_version_unrecognised():
     assert parse_colmap_version("something else") is None
 
 
-def test_parse_openmvs_version_and_hardware():
+def test_parse_openmvs_version():
     assert parse_openmvs_version(OPENMVS_BANNER) == {"version": "2.4.0"}
-    assert parse_openmvs_hardware(OPENMVS_BANNER) == {
-        "cpu": "12th Gen Intel(R) Core(TM) i7-1255U (12 cores)",
-        "ram": "15.72GB",
-        "os": "Windows 11+ x64",
-    }
+
+
+def test_hardware_is_detected_without_tools():
+    hw = collect()["hardware"]
+    assert hw["logical_cpus"] and hw["logical_cpus"] > 0
+    assert hw["ram_gb"] and hw["ram_gb"] > 0
 
 
 def test_problems_lists_missing_tools():

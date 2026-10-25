@@ -36,5 +36,8 @@ Newest first. Every session must add an entry (see `CLAUDE.md`).
   - `git clone` to `D:\heritage3d`, venv with Python 3.13.15, `pytest tests` → 7 passed.
 - Added `scripts/check_env.py` + `src/heritage3d/environment.py` (records tool versions and hardware; exits 1 if a tool is missing).
   - Cloud: `pytest tests` → 11 passed; `check_env.py` → exit 1 with "COLMAP not found" (expected: no tools in the cloud container). Not yet run on the laptop.
+- Laptop: `git pull`, `pytest tests` → 11 passed; `check_env.py` → COLMAP 4.2.1 detected, all 5 OpenMVS tools found, but OpenMVS version "unknown" and hardware empty (OpenMVS writes its banner to the Windows console, not stdout).
+- Fixed `environment.py`: hardware now read from Windows registry / `GlobalMemoryStatusEx` (or `/proc` on Linux); OpenMVS run in a temp folder without a console and its `*.log` read for the version.
+  - Cloud: `pytest tests` → 12 passed; simulated OpenMVS that only writes a log file → version 2.4.0 parsed. Windows behaviour **to verify** on the laptop.
 
 **Next action** — see [[00-Home]].
