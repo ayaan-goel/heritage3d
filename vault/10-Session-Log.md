@@ -21,5 +21,6 @@ Newest first. Every session must add an entry (see `CLAUDE.md`).
 
 - Added both team members' git author identities to `CLAUDE.md`.
 - Team started downloading CHSD to D:.
+- Authors' GitLab repo returned 404. Found likely companion paper (doi 10.1007/978-3-032-06389-2_15) via web search; logged in open questions.
 
 **Next action** — see [[00-Home]].

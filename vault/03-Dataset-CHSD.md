@@ -14,7 +14,8 @@ Cultural Heritage Synthetic Depth Dataset. Primary and only dataset for the core
 - Authors: Arampatzakis, V., Arnaoutoglou, F., Koutsoudis, A., & Pavlidis, G. (2024).
 - Venue: Computer Applications and Quantitative Methods in Archaeology (CAA-GR), Serres, Greece, 17 April 2024 (Springer).
 - Keywords: cultural heritage, synthetic image dataset, **monocular depth estimation** (the dataset was built for depth estimation, not photogrammetry).
-- Linked software repo: https://gitlab.com/VasilisAramp/chsd-dataset (not reachable from the cloud session; team to check).
+- Linked software repo: https://gitlab.com/VasilisAramp/chsd-dataset → returns 404 (checked by team 2026-10-25).
+- Companion paper (to verify that it is the dataset paper): "Deep Learning-Based Monocular Depth Estimation in Cultural Heritage", CAA-GR 2024, doi 10.1007/978-3-032-06389-2_15.
 - File names use **CHSDD**, not CHSD.
 
 ## Stated in the Zenodo description, not yet checked on the files (to verify)

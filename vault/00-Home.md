@@ -17,7 +17,7 @@
 
 1. Team: download both CHSD zips to `D:\heritage3d-data\raw\`, check MD5, extract with 7-Zip (see [[06-Environment-Setup]]).
 2. Team: install COLMAP (no-CUDA) and OpenMVS; send `--help` outputs.
-3. Team: send the folder tree + a few file names of one artifact, and the README of the authors' GitLab repo.
+3. Team: send the folder tree + a few file names of one artifact; try to get the companion paper PDF (doi 10.1007/978-3-032-06389-2_15) via the university library.
 4. Agent: write `scripts/inspect_dataset.py` once the real layout is known.
 
 ## Notes
