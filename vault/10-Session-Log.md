@@ -25,4 +25,9 @@ Newest first. Every session must add an entry (see `CLAUDE.md`).
 
 - Commit rule changed: authorship split between Ayaan and Kshiti at irregular intervals (both work together).
 
+- Added clean-commit rule to `CLAUDE.md` (one commit per meaningful working unit).
+- Built the subset generator: `configs/experiment.toml`, `src/heritage3d/{config,subsets}.py`, `scripts/create_subsets.py`, `tests/test_subsets.py`.
+  - `pytest tests` → 7 passed (cloud session, Python 3.13).
+  - `python scripts/create_subsets.py --artifact demo --out <scratch>` → L1 600, L2 300, L3 150, L4 75, L5 40 (file pattern is still a placeholder; not run on real data).
+
 **Next action** — see [[00-Home]].

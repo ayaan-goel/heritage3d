@@ -21,8 +21,20 @@ CHSD RGB images → controlled image subsets (L1–L5)
 |---|---|
 | `vault/` | Obsidian vault: project memory, decisions, dataset facts, session log |
 | `docs/literature/` | Literature review workbook |
+| `configs/` | Experiment configuration (data paths, subset levels) |
+| `src/heritage3d/` | Library code |
+| `scripts/` | Command-line entry points |
+| `tests/` | Unit tests (`python -m pytest tests`) |
 
-More folders (`configs/`, `scripts/`, `src/`, `experiments/`, `museum/`) are added as each milestone is built.
+More folders (`experiments/`, `museum/`) are added as each milestone is built.
+
+## Subset levels
+
+Uniform azimuth step on every camera ring: L1 3° (600 images), L2 6° (300), L3 12° (150), L4 24° (75), L5 45° (40).
+
+```
+python scripts/create_subsets.py --artifact <name> --out D:\heritage3d-data\runs\<name> --check
+```
 
 ## Dataset
 

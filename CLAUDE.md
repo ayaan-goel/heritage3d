@@ -53,5 +53,8 @@ The team laptop is an HP Envy x360 16" with **Intel Iris Xe (no NVIDIA GPU, no C
   Set **both author and committer** per commit (otherwise GitHub shows "X authored and Y committed"), e.g.:
   `GIT_COMMITTER_NAME="Kshiti Bhavsar" GIT_COMMITTER_EMAIL="kshitibhavsar@gmail.com" git commit --author="Kshiti Bhavsar <kshitibhavsar@gmail.com>" -m "..."`
   Check `git log -5 --format='%an / %cn'` to see the current run before choosing.
-- Small, focused commits with clear imperative messages (e.g. `Add subset generator for azimuth-step levels`).
+- **Clean commits only.** One commit = one meaningful, working unit of project work (a script with its tests, a pipeline stage, an analysis, a museum feature), with a clear imperative message (e.g. `Add subset generator for azimuth-step levels`).
+  - No standalone commits for vault notes, small rule tweaks, typo fixes or chat-driven housekeeping: include those in the next real work commit.
+  - Never commit half-finished or broken work; run tests/checks first.
+  - Don't fix a previous commit with a follow-up "fix" commit when it can be folded into the next real commit.
 - Prefer small, testable milestones over generating the whole system at once.

@@ -1,0 +1,26 @@
+# Experiment configuration. Paths point outside the repo (see vault/06-Environment-Setup.md).
+
+[paths]
+chsd_rgb = 'D:\heritage3d-data\chsd\rgb'
+chsd_depth = 'D:\heritage3d-data\chsd\depth'
+runs = 'D:\heritage3d-data\runs'
+
+[dataset]
+# Camera rings (elevations in degrees) as stated in the Zenodo description (to verify on files).
+rings = [-90, -45, 0, 45, 90]
+# Azimuth sampling of the rendered views, in degrees (to verify on files).
+azimuth_step = 1
+# Rings whose views do not change with azimuth (pure top/bottom views). Each contributes
+# one image per level. Empty until verified on the downloaded files.
+pole_rings = []
+# Image file pattern relative to chsd_rgb. Placeholder until the real naming is known.
+# Fields: {artifact}, {elevation}, {azimuth}.
+rgb_pattern = '{artifact}/{elevation}/{azimuth}.png'
+
+# Image-input levels: azimuth step in degrees, applied uniformly on every ring.
+[levels]
+L1 = 3
+L2 = 6
+L3 = 12
+L4 = 24
+L5 = 45
