@@ -10,7 +10,10 @@
 - [ ] CPU runtime for L1 (600 images) — feasible? Decide after pilot.
 - [ ] Matcher choice (exhaustive vs vocabulary tree) — fixed after pilot, same for all levels.
 - [ ] Code license for the repository (separate from the CC BY-NC-SA data license).
-- [ ] Kshiti's git author name/email for commits.
+
+## Closed
+
+- [x] Kshiti's git author identity → `Kshiti Bhavsar <kshitibhavsar@gmail.com>`, GitHub Kshitii05 (2026-10-25).
 
 ## Risks
 

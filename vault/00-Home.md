@@ -10,7 +10,7 @@
 - Phase: **setup**. No code, no reconstruction, no results yet.
 - Repository created and scaffolded (README, CLAUDE.md, vault, literature workbook).
 - CHSD Zenodo records identified; file names, sizes and license confirmed from the record pages.
-- Dataset **not yet downloaded**. COLMAP / OpenMVS **not yet installed**.
+- Dataset **download in progress** (team laptop). COLMAP / OpenMVS **not yet installed**.
 - Hardware confirmed: Intel Iris Xe, no CUDA → CPU pipeline (COLMAP SfM + OpenMVS).
 
 ## Next action

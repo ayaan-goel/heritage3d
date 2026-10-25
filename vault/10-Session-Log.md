@@ -19,4 +19,7 @@ Newest first. Every session must add an entry (see `CLAUDE.md`).
 - `git clone https://gitlab.com/VasilisAramp/chsd-dataset` → auth prompt, failed. WebFetch → 403.
 - `git clone https://github.com/ayaan-goel/heritage3d` → empty repository.
 
+- Added both team members' git author identities to `CLAUDE.md`.
+- Team started downloading CHSD to D:.
+
 **Next action** — see [[00-Home]].
