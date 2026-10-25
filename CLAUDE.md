@@ -50,6 +50,8 @@ The team laptop is an HP Envy x360 16" with **Intel Iris Xe (no NVIDIA GPU, no C
   | Ayaan Goel | `Ayaan Goel <goel30july@gmail.com>` | ayaan-goel |
   | Kshiti Bhavsar | `Kshiti Bhavsar <kshitibhavsar@gmail.com>` | Kshitii05 |
 
-  Set per commit, e.g. `git commit --author="Kshiti Bhavsar <kshitibhavsar@gmail.com>" -m "..."`. Check `git log -5 --format=%an` to see the current run before choosing.
+  Set **both author and committer** per commit (otherwise GitHub shows "X authored and Y committed"), e.g.:
+  `GIT_COMMITTER_NAME="Kshiti Bhavsar" GIT_COMMITTER_EMAIL="kshitibhavsar@gmail.com" git commit --author="Kshiti Bhavsar <kshitibhavsar@gmail.com>" -m "..."`
+  Check `git log -5 --format='%an / %cn'` to see the current run before choosing.
 - Small, focused commits with clear imperative messages (e.g. `Add subset generator for azimuth-step levels`).
 - Prefer small, testable milestones over generating the whole system at once.
