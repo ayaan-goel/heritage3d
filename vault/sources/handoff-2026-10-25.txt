@@ -1,0 +1,646 @@
+MINOR PROJECT — CLAUDE HANDOFF
+Complete project context and development brief
+Prepared: 25 October 2026
+
+IMPORTANT NOTE
+This is a comprehensive handoff of the project context and decisions available in the conversation. It is not a literal verbatim export of every message: some earlier conversation turns were skipped or unavailable in the current context. Treat uploaded project documents, the finalized literature-review workbook, dataset documentation, and the current repository files as the source of truth wherever they contain more precise information. Do not invent missing details.
+
+============================================================
+1. PROJECT IDENTITY
+============================================================
+
+Working/final project title:
+“Cost-Effective Image-Based 3D Digitization of Cultural Heritage Artifacts for Virtual Museum Applications”
+
+Project direction:
+Individual cultural heritage artifacts:
+Images → 3D reconstruction → textured 3D artifact → virtual museum.
+
+Team:
+- Ayaan Goel
+- Kshiti Bhavsar
+
+Mentor:
+- Ms. Komal Singh
+
+Mid-term evaluator:
+- Dr. Kalgi Gandhi
+
+Repository name recommendation:
+- heritage3d
+
+Suggested repository description:
+“A cost-effective image-based 3D digitization framework for cultural heritage preservation and virtual museum applications.”
+
+The repository name is a recommendation, not confirmation that a GitHub repository has already been created.
+
+============================================================
+2. PROJECT IN ONE PARAGRAPH
+============================================================
+
+The project proposes a controlled and reproducible image-based 3D digitization framework for individual cultural heritage artifacts. The core research question is how image acquisition effort affects reconstructed geometric/visual quality and computational/storage cost. The same artifact will be reconstructed from different controlled subsets of available multi-view RGB images using a consistent COLMAP-based Structure-from-Motion (SfM) and Multi-View Stereo (MVS) pipeline. The outputs will be compared using suitable geometric-quality, completeness, runtime, resource-use and model-size measures. A selected reconstruction will then be optimized for web visualization and presented as an interactive artifact in a virtual-museum application.
+
+The central principle:
+Do not simply ask “Which reconstruction looks best?”
+Ask “What reconstruction quality can be achieved at what image-acquisition and computational/storage cost?”
+
+============================================================
+3. PROBLEM, MOTIVATION AND SCOPE
+============================================================
+
+Motivation:
+- Physical cultural heritage artifacts can deteriorate or be damaged.
+- Physical access may be limited.
+- Digital models can support preservation, documentation, research, education and virtual exhibitions.
+- Image-based reconstruction is a practical route to create 3D models without requiring a dedicated active 3D scanner for every artifact.
+
+Problem:
+- Too few images or poor image coverage can lead to missing surfaces, incomplete geometry or weak reconstruction.
+- More images can improve coverage and robustness, but also increase feature matching, processing time, storage and computational requirements.
+- The project investigates the trade-off between image input, reconstruction quality and cost.
+
+Project scope:
+- Focus on individual heritage artifacts, not city-scale/urban asset reconstruction.
+- Image-based 3D reconstruction.
+- Controlled image-subset experiments.
+- Geometric/visual quality and computational/storage cost evaluation.
+- Model optimization for browser-based virtual museum presentation.
+
+Out of scope unless later approved:
+- Building a physical museum.
+- City-wide urban asset management.
+- Claiming continuous condition monitoring as a current implemented feature.
+- Claiming that results exist before experiments have been run.
+- Training YOLO or other neural networks unless a clear requirement is established; the current main reconstruction method is COLMAP/SfM + MVS, not necessarily a trained deep-learning model.
+
+============================================================
+4. RESEARCH GAP AND PROPOSED CONTRIBUTION
+============================================================
+
+The literature was reviewed across these broad categories:
+1. Cultural heritage digitization.
+2. Image-based photogrammetry and 3D reconstruction.
+3. Structure-from-Motion (SfM) and Multi-View Stereo (MVS).
+4. Quantitative geometry evaluation.
+5. Web-based 3D visualization and virtual museum applications.
+
+Working research gap:
+Existing research demonstrates many parts of the workflow—artifact digitization, photogrammetric reconstruction, geometry evaluation, and virtual visualization. The proposed project connects these parts in a controlled experiment that varies image-input density and jointly evaluates reconstruction quality and computational/storage cost, then considers whether the resulting model is suitable for web-based virtual museum presentation.
+
+Do not present this as a proven universal gap without checking the finalized literature-review workbook and sources. Phrase it as the gap identified from the team's reviewed literature.
+
+Proposed contribution/novelty:
+1. Controlled image-effort analysis: reconstruct the same artifact using different input-image densities.
+2. Joint quality–cost evaluation: compare geometry/completeness with processing time, resource requirements and output size.
+3. End-to-end practical workflow: take a reconstruction through mesh/texture optimization to a web-ready model and virtual-museum display.
+
+The novelty is the controlled experimental framework and its integration, not inventing COLMAP, SfM, MVS or a new reconstruction algorithm.
+
+============================================================
+5. RESEARCH QUESTIONS AND OBJECTIVES
+============================================================
+
+Research questions:
+RQ1. How does image acquisition effort affect geometric and visual reconstruction quality?
+RQ2. What trade-off exists between acquisition effort, processing cost and model quality?
+RQ3. Can an optimized reconstruction retain sufficient quality for interactive virtual-museum presentation while reducing storage and rendering requirements?
+
+Objectives:
+- Implement an image-based COLMAP/SfM and MVS reconstruction workflow.
+- Generate controlled image subsets at different input densities.
+- Quantitatively evaluate reconstructed geometry and completeness using appropriate reference data.
+- Compare quality with computational and storage cost.
+- Optimize a selected 3D model for web visualization.
+- Demonstrate the model in a virtual-museum interface, if feasible within project constraints.
+
+============================================================
+6. DATASET — CHSD
+============================================================
+
+Selected dataset:
+Cultural Heritage Synthetic Depth Dataset (CHSD).
+
+The team selected CHSD for its controlled multi-view RGB imagery and reference depth information, which are relevant to evaluating image-based reconstructions.
+
+Previously described dataset details in the presentation/context:
+- 81 unique artifacts.
+- 145,800 RGB images.
+- Corresponding reference depth maps.
+- Five virtual camera positions/elevations: -90°, -45°, 0°, 45°, +90°.
+- Rotational sampling described as 1° steps.
+- The presentation interpreted this as 1,800 views per artifact across the five camera positions.
+
+CRITICAL VALIDATION REQUIREMENT:
+Before implementation or making claims in reports, verify every dataset count, camera-position definition, view count, depth-map availability, file structure, license and download procedure against the official CHSD documentation and the actual downloaded files. Do not assume “1,800 views per artifact” is correct merely because it appeared in a previous presentation. Check whether the angles describe camera elevations, azimuths, or another parameter, and whether the number of images is consistent. Preserve the source's actual terminology.
+
+Why synthetic data:
+Synthetic data is computer-generated or rendered rather than directly captured from physical artifacts. Controlled virtual views and reference depth can make experiments repeatable and help isolate the effect of changing the image subset. Synthetic data does not automatically represent all real-world challenges, so discuss generalization to real artifact photography as a limitation/future validation step.
+
+Why CHSD:
+- Supports controlled image-subset experiments.
+- Multiple views are available for the same artifact.
+- Reference depth can potentially support quantitative evaluation.
+- The same artifact can be reconstructed under different input-image conditions.
+
+Important:
+- RGB images should be the primary reconstruction inputs for the image-based pipeline.
+- Reference depth is for evaluation/validation where appropriate, not silently supplied as an input to COLMAP reconstruction if the experiment is intended to measure RGB-only reconstruction.
+- Verify that the downloaded files actually contain what the documentation claims before coding.
+
+Do not claim the dataset is downloaded or prepared unless that is confirmed in the workspace.
+
+============================================================
+7. PROPOSED METHODOLOGY
+============================================================
+
+High-level pipeline:
+CHSD
+→ Multi-view RGB images
+→ Controlled image subsets
+→ COLMAP / SfM
+→ Dense MVS
+→ Point cloud
+→ Mesh generation
+→ Texture mapping
+→ 3D artifact
+→ Quality and cost evaluation
+→ Model optimization
+→ Web-ready model
+→ Virtual museum
+
+Detailed steps:
+
+A. Dataset inspection and preparation
+- Read official documentation and license.
+- Inspect directory structure, image formats, depth-map formats and metadata.
+- Choose one or more representative artifacts for a pilot.
+- Record camera/view relationships if provided.
+- Establish a repeatable train/experiment directory structure.
+
+B. Controlled image subset generation
+- Use the same artifact and consistent selection strategy.
+- Proposed input levels discussed in the presentation: 100%, 50%, 25%, 12.5%, 6.25%.
+- These percentages are planned experimental conditions, not results.
+- Keep image selection reproducible and document the sampling procedure.
+- Avoid confounding variables: keep reconstruction settings as consistent as possible across conditions.
+- Consider whether subsets preserve adequate angular coverage rather than merely selecting consecutive or clustered views.
+
+C. Sparse reconstruction using COLMAP/SfM
+- Extract image features.
+- Match features across overlapping views.
+- Estimate camera parameters/poses and sparse 3D points.
+- Check registration success, number of registered images and sparse point-cloud quality.
+
+D. Dense reconstruction using MVS
+- Use the calibrated images/cameras to estimate denser geometry.
+- Export/inspect the dense point cloud.
+- Document failures, missing surfaces and processing cost.
+
+E. Mesh and texture
+- Convert or process point cloud into a surface mesh using a suitable practical tool/workflow.
+- Clean or simplify the mesh as needed.
+- Generate texture maps from the images.
+- Preserve an unoptimized/reference output as well as the optimized output so optimization does not obscure experimental comparisons.
+
+F. Quantitative and practical evaluation
+Potential geometric metrics, subject to compatibility with CHSD reference data:
+- Chamfer Distance: average bidirectional point-set distance.
+- Hausdorff Distance: worst-case/max geometric deviation.
+- RMSE: root mean squared error for suitable corresponding measurements.
+- Precision, recall and F-score at a declared distance threshold, where appropriate.
+- Completeness/surface coverage, if measurable reliably.
+
+Potential cost and model metrics:
+- Number of input images.
+- Total input image bytes.
+- Feature extraction/matching/reconstruction time.
+- Peak RAM/VRAM or other resource use where feasible.
+- Number of registered images and reconstruction failure rate.
+- Point count, mesh vertices and faces.
+- Texture size and final model size.
+- Browser loading/rendering behavior, if feasible.
+
+Metric cautions:
+- Define units, alignment procedure, sampling method and thresholds.
+- Chamfer/Hausdorff/RMSE are not interchangeable; use only metrics that fit the available reference geometry.
+- Reference depth maps may require camera calibration/projection to derive comparable geometry; validate the pipeline before claiming direct 3D ground-truth comparison.
+- Do not report numerical results until actually measured.
+
+G. Analysis
+- Compare quality against image input and compute/storage cost.
+- Plot the trade-off curves.
+- Identify whether a lower-input condition retains acceptable quality for the intended use.
+- Do not predetermine which image percentage will be “best”; this is the question being tested.
+
+H. Web optimization and virtual museum
+- Select a model based on measured quality–cost trade-off.
+- Simplify mesh and compress/resize textures as appropriate.
+- Export to a suitable web format such as GLB/glTF if compatible with the chosen viewer.
+- Create a simple artifact-viewing page/interface with rotation/zoom and concise artifact information.
+- Clearly label this as a prototype if it is not a production museum platform.
+
+============================================================
+8. BASIC TECHNICAL TERMS
+============================================================
+
+Synthetic data:
+Computer-generated or rendered data, rather than images captured directly from a physical scene.
+
+RGB image:
+A regular color image with red, green and blue channels.
+
+Multi-view images:
+Images of the same object from different viewpoints.
+
+Camera pose:
+The camera's position and orientation when an image was captured/rendered.
+
+Point cloud:
+A collection of 3D points representing sampled positions on an object's surface. Points may include color.
+
+COLMAP:
+An established open-source tool commonly used for image-based 3D reconstruction. It supports feature extraction/matching, camera pose estimation, sparse reconstruction and dense reconstruction workflows. Verify current license and dependencies before distribution.
+
+SfM (Structure-from-Motion):
+Estimates camera poses and sparse 3D structure from overlapping images.
+
+MVS (Multi-View Stereo):
+Uses multiple calibrated views to estimate denser 3D geometry.
+
+Sparse point cloud:
+A relatively small set of reconstructed 3D points, often created during SfM.
+
+Dense point cloud:
+A much denser collection of reconstructed surface points, often created during MVS.
+
+Mesh:
+A surface representation made from vertices, edges and polygon faces.
+
+Texture mapping:
+Applying image/color information to a 3D surface so it looks visually similar to the artifact.
+
+Reference depth map:
+An image in which pixel values encode distance/depth according to the dataset's convention. Check its encoding and coordinate conventions.
+
+Quantitative geometry evaluation:
+Numerically measuring how closely a reconstructed model matches reference geometry.
+
+Chamfer Distance:
+A bidirectional point-set distance measure often used to compare reconstructed and reference geometry.
+
+Hausdorff Distance:
+A measure of the largest nearest-neighbor deviation between two geometric sets.
+
+RMSE:
+Root mean square error, a measure of the magnitude of errors.
+
+F-score:
+A precision/recall-based measure, often calculated using a distance threshold for point-cloud comparison.
+
+GLB/glTF:
+A 3D asset format suited to sharing and rendering 3D scenes, including geometry and often textures/materials.
+
+Virtual museum:
+A digital interface in which users can inspect and interact with digitized artifacts.
+
+============================================================
+9. LITERATURE REVIEW AND PAPER PRESENTATION RULES
+============================================================
+
+A literature review workbook was created/updated during earlier work. The team reviewed papers across categories and selected a smaller set for deeper reading. The exact workbook and PDFs should be inspected in the workspace rather than reconstructing paper details from this handoff.
+
+Two papers were deeply discussed earlier, but for the mid-term presentation the user explicitly decided:
+- Do NOT mention or display titles/authors of individual research papers.
+- Synthesize the literature collectively as “Existing Research,” “Previous Approaches,” or similar.
+- Do not show or name two or three specific papers in the presentation.
+- The literature-review table may contain individual papers for academic documentation, but the presentation should synthesize findings without spotlighting specific titles/authors unless the user changes this instruction.
+
+Broad literature insights used in the presentation:
+- Cultural heritage digitization is an established application of photogrammetry and image-based reconstruction.
+- SfM and MVS are common reconstruction components.
+- Quantitative geometric evaluation can compare a reconstruction with reference geometry.
+- Web-based 3D visualization supports virtual exhibition and access.
+- The proposed project studies the relationship among image acquisition effort, reconstruction quality and computational/storage cost within a controlled framework.
+
+Do not fabricate citations or pretend to have re-read PDFs that are not present. Read the actual workbook and source PDFs before finalizing literature claims.
+
+============================================================
+10. PRESENTATION CONTEXT AND STATUS
+============================================================
+
+A mid-term presentation was prepared for Dr. Kalgi Gandhi, following the official outline:
+- Introduction
+- Problem & Motivation
+- Design & Methodology
+- Implementation & Technical Details
+- Results/Demo (if any)
+- Conclusion
+- Q&A
+
+The presentation was described as 13 pages total in the last available context.
+
+The presentation's 12-slide/section structure previously proposed:
+1. Title
+2. Introduction & Motivation
+3. Problem Statement
+4. Existing Research & Literature Insights
+5. Research Gap & Proposed Contribution
+6. Research Questions & Objectives
+7. Dataset — CHSD
+8. Proposed Methodology / Architecture
+9. Experimental Design & Evaluation
+10. Expected Virtual Museum Output
+11. Current Progress & Next Steps
+12. Conclusion & Q&A
+
+Do not assume this is exactly the latest slide order; inspect the current PPT file.
+
+Presentation style:
+- Professional, academic and visually clean.
+- Slightly text-heavy was considered acceptable, but avoid overcrowding.
+- Use diagrams and short bullets where possible.
+- Do not invent experimental results or imply implementation is complete.
+- Clearly distinguish completed work, proposed methodology and future work.
+- Use literature citations where appropriate, but do not mention/display individual paper titles/authors in the presentation.
+
+Dataset slide content previously used:
+“Cultural Heritage Synthetic Depth Dataset (CHSD)
+- Controlled, reproducible multi-view RGB imagery
+- Reference depth information for quantitative evaluation
+- Multiple views of cultural heritage artifacts
+- Supports controlled variation of image input
+- Enables comparison across different image densities
+The same artifact can be reconstructed from different image subsets under a consistent experimental setting.”
+
+Numbers were subsequently added to the slide, including the dataset counts listed in Section 6. Verify those numbers against official documentation before using them again.
+
+Current progress as last described:
+- Project definition/title selected.
+- Literature review and research-gap framing developed.
+- Research questions/objectives formulated.
+- CHSD selected as the intended dataset.
+- Main methodology and evaluation plan drafted.
+- Architecture/methodology diagrams and mid-term presentation prepared.
+- No final experimental results should be assumed.
+- Actual implementation/download status is unknown and must be checked.
+
+If asked “Do you have results?” answer honestly based on repository status. At the planning/presentation stage, the agreed response was:
+“The research framework, dataset selection, methodology and evaluation design have been prepared. Reconstruction experiments and quantitative results are the next phase.”
+Only use that if still accurate after inspecting the project workspace.
+
+============================================================
+11. EXPECTED DELIVERABLES
+============================================================
+
+Suggested implementation milestones:
+1. Verify CHSD documentation, license and file structure.
+2. Prepare a reproducible environment and dependency list.
+3. Run a small pilot reconstruction on one artifact and a modest image subset.
+4. Validate image registration and output quality before scaling up.
+5. Implement repeatable image-subset generation.
+6. Run all planned image-density conditions using consistent settings.
+7. Record metrics, runtime, resource use and model size.
+8. Compare results in tables/plots and document limitations.
+9. Optimize a selected model for web display.
+10. Build a simple virtual-museum prototype.
+11. Write reproducible setup/run instructions and final report.
+
+Potential project structure (adapt after inspecting existing files):
+heritage3d/
+  README.md
+  LICENSE (only if chosen and appropriate)
+  .gitignore
+  requirements.txt or environment.yml
+  configs/
+  data/
+    README.md
+    raw/                (do not commit large datasets unless explicitly intended)
+    processed/
+    subsets/
+  notebooks/
+  scripts/
+    inspect_dataset.py
+    create_subsets.py
+    run_reconstruction.py
+    evaluate_geometry.py
+    analyze_results.py
+    optimize_model.py
+  src/
+    dataset/
+    reconstruction/
+    evaluation/
+    optimization/
+    viewer/
+  experiments/
+    configs/
+    logs/
+    results/
+  assets/
+    diagrams/
+    screenshots/
+  docs/
+    DATASET.md
+    METHODOLOGY.md
+    EXPERIMENTS.md
+    LIMITATIONS.md
+  tests/
+
+Do not create this structure blindly if a repository already exists. Inspect first and preserve useful existing work.
+
+Large raw datasets, generated point clouds, meshes, and textures should normally be excluded from Git and documented with download/preparation instructions. Use Git LFS or another storage strategy only if the team actually needs it.
+
+============================================================
+12. HARDWARE / COMPUTATIONAL CONSTRAINTS
+============================================================
+
+Earlier project context mentioned a laptop with:
+- NVIDIA RTX 3050 GPU
+- 6 GB VRAM
+- 16 GB RAM
+
+Verify the actual machine and OS before designing the pipeline.
+
+Practical implications:
+- Start with one artifact and small image subsets.
+- Do not immediately process the entire dataset.
+- Check COLMAP's current GPU/CUDA compatibility and available memory.
+- Use staged experiments and monitor peak RAM/VRAM.
+- Reduce image resolution or batch sizes if needed, while documenting the settings.
+- Dense MVS may be the most computationally demanding step.
+- Prefer a pilot run to estimate feasibility before committing to full-scale experiments.
+- Do not promise that all dataset items can be processed on this hardware until benchmarked.
+
+The project should be designed to be realistically achievable with coding agents such as Claude Sonnet/Opus assisting with implementation, while keeping human review for research decisions, data validity, experimental design and result interpretation.
+
+============================================================
+13. REPOSITORY AND AGENT WORKFLOW
+============================================================
+
+Recommended repository name:
+heritage3d
+
+Recommended first README summary:
+“A cost-effective image-based 3D digitization framework for cultural heritage artifacts. This project studies how input-image density affects 3D reconstruction quality, computation and storage, and explores optimized models for virtual-museum visualization.”
+
+Claude should:
+- First inspect all files already in the workspace/repository.
+- Read the current README, project documents, literature-review workbook, presentation, dataset documentation and any existing code.
+- Identify what exists, what is missing and what is only planned.
+- Never claim a script ran successfully unless it actually ran.
+- Never invent dataset contents, citations, metrics or experimental results.
+- Ask only when a genuinely blocking decision cannot be resolved from existing sources.
+- Prefer small, testable milestones over generating the entire system at once.
+- Provide commands that work on the team's actual OS/environment.
+- Record dependency versions and experiment configurations.
+- Keep code modular, documented and reproducible.
+- Include error handling and clear diagnostics.
+- Use a small pilot dataset before scaling up.
+- Preserve raw data and reference files.
+- Document any assumptions and limitations.
+- Explain any deviation from the agreed methodology before making it.
+- Do not add deep-learning training (e.g. YOLO) unless justified by the project goals.
+- Do not use reference depth as reconstruction input if doing so would compromise the intended RGB-only experiment.
+- Do not add unrelated urban-asset-management features.
+
+Suggested working protocol:
+1. Audit workspace.
+2. Report status and proposed next milestone.
+3. Implement one milestone.
+4. Run tests or a small real-data check.
+5. Report changed files, commands run, outputs, issues and next steps.
+6. Update documentation after each meaningful change.
+
+============================================================
+14. OBSIDIAN / PROJECT MEMORY (OPTIONAL BUT RECOMMENDED)
+============================================================
+
+The user has previously expressed interest in using an Obsidian vault to preserve project context while switching between coding agents. If using this approach, keep the vault in or alongside the project and always update it after meaningful decisions, experiments or implementation changes.
+
+Suggested structure:
+Project-Vault/
+  00-Home.md
+  01-Project-Definition.md
+  02-Research-Questions.md
+  03-Literature-Review.md
+  04-Research-Gap-and-Novelty.md
+  05-Dataset-CHSD.md
+  06-Methodology.md
+  07-Architecture.md
+  08-Experiment-Plan.md
+  09-Results-and-Analysis.md
+  10-Implementation-Log.md
+  11-Decisions.md
+  12-Open-Questions.md
+  13-Meeting-and-Presentation-Notes.md
+  sources/
+  diagrams/
+
+At the end of every substantial coding/research session, update:
+- Current status
+- What changed
+- Files created/modified
+- Commands/tests executed and their real outcomes
+- Dataset details verified
+- Experiment settings/results, if any
+- Decisions made and rationale
+- Open questions/risks
+- Exact next action
+
+Never write an unverified assumption into the vault as a fact. Mark it “To verify” or “Hypothesis”.
+
+============================================================
+15. LIMITATIONS AND THREATS TO VALIDITY
+============================================================
+
+Likely limitations to discuss:
+- Synthetic data may not capture all real-world lighting, reflectance, occlusion, camera noise or background variation.
+- Results on CHSD may not directly generalize to photographs of physical artifacts.
+- Image-subset selection strategy itself may influence reconstruction; it must be documented and ideally designed to preserve view coverage.
+- Different reconstruction settings can confound the image-density comparison if changed between runs.
+- Reference depth maps may not directly equal full 3D ground truth without correct camera calibration and projection.
+- Geometric metrics depend on alignment, sampling, units and thresholds.
+- Hardware limitations may require reduced image resolution or a smaller subset of artifacts.
+- Web optimization may reduce geometric/texture detail, requiring a trade-off analysis.
+
+Possible future work:
+- Validate the selected workflow on real artifact photographs.
+- Test other artifact types/materials.
+- Improve subset selection based on camera coverage rather than random sampling alone.
+- Extend the viewer with metadata, provenance and educational descriptions.
+- Explore repeated digitization for change detection only if suitable repeated captures and reference alignment are available.
+
+Do not present future work as already implemented.
+
+============================================================
+16. PRESENTATION / VIVA QUICK ANSWERS
+============================================================
+
+Project in one sentence:
+“We study how the number/density of input images affects 3D reconstruction quality and computational/storage cost, then optimize a suitable reconstruction for a virtual museum.”
+
+Problem:
+“More images can improve coverage but increase processing and storage; too few may produce incomplete or less accurate geometry.”
+
+Experiment:
+“Same artifact → different image-input densities → same reconstruction pipeline → compare quality and cost.”
+
+Dataset:
+“CHSD is selected for controlled multi-view RGB imagery and reference depth information; its exact counts and structure must be verified against official documentation.”
+
+SfM:
+“Estimates camera poses and sparse 3D structure from overlapping images.”
+
+MVS:
+“Uses multiple calibrated views to estimate dense 3D geometry.”
+
+COLMAP:
+“An established tool for image-based SfM and MVS reconstruction.”
+
+Quantitative geometry evaluation:
+“Numerically measuring how closely the reconstructed 3D geometry matches reference geometry.”
+
+Why synthetic data:
+“It supports controlled, repeatable experiments and reference-based evaluation, though it may not capture every real-world imaging condition.”
+
+Novelty:
+“Our contribution is a controlled study connecting image-input effort, geometric/visual quality and computational/storage cost, followed by web-model optimization.”
+
+Do you have results?
+“Only state what has actually been implemented and measured. The agreed mid-term framing was that the methodology and experimental plan were prepared, with reconstruction experiments and quantitative analysis as the next phase.”
+
+============================================================
+17. IMMEDIATE FIRST TASK FOR CLAUDE
+============================================================
+
+Do not begin by implementing the whole pipeline.
+
+First:
+1. Inspect the existing workspace/repository.
+2. List all files and identify the current state.
+3. Locate and read the CHSD official documentation/source files available locally.
+4. Verify dataset facts, license, folder structure, camera metadata, RGB/depth correspondence and expected storage.
+5. Check the machine's OS, Python, GPU, CUDA/driver and available disk space.
+6. Check whether COLMAP is installed and which version is compatible.
+7. Propose a minimal pilot experiment on one artifact with a small image subset.
+8. Define the exact experiment configuration and output files before running it.
+9. Run the pilot only after checking feasibility.
+10. Update README and project notes/Obsidian vault with verified facts and actual results.
+
+Expected first response from Claude:
+- Workspace audit.
+- Facts verified from sources versus assumptions.
+- Dataset access/preparation status.
+- Hardware/software compatibility.
+- Main risks.
+- One proposed pilot milestone.
+- No fabricated results.
+
+============================================================
+18. MASTER INSTRUCTION TO CLAUDE
+============================================================
+
+You are the coding and research implementation agent for the project described in this handoff. Treat this document as the project's current working brief, but verify all factual claims against available primary sources and files. Preserve the agreed project scope: cost-effective image-based 3D digitization of individual cultural heritage artifacts for virtual museum applications. The core experiment varies input-image density for the same artifact, runs a consistent COLMAP/SfM + MVS reconstruction workflow, and compares geometric/visual quality against computational/storage cost. CHSD is the selected dataset, subject to verification of its official documentation, contents, licensing and metadata. The eventual output is an optimized web-ready 3D artifact for a virtual museum.
+
+Begin with an audit, not a full implementation. Never invent dataset statistics, paper citations, experimental results or successful command execution. Distinguish facts, assumptions, plans and measured outcomes. Do not name individual research papers in presentation content; synthesize literature collectively. Do not introduce unrelated urban asset management, YOLO training or other methods without a justified reason and explicit discussion. Keep the work feasible for the actual hardware, use a small pilot first, write reproducible code and documentation, and update the Obsidian project notes after every meaningful session if the vault is present.
+
+END OF HANDOFF
