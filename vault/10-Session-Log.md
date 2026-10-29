@@ -95,4 +95,13 @@ Newest first. Every session must add an entry (see `CLAUDE.md`).
 - `run_pipeline.py` now also copies OpenMVS's own `*.log` files into `experiments/logs/`.
 - Team went to sleep and asked the agent to keep working overnight with clean commits balanced between Ayaan and Kshiti (history before tonight: Ayaan 9, Kshiti 4).
 
-**Next action** — run the other levels (L1, L2, L4, L5) on `Ark_HM_272_HI`; then design the evaluation against CHSD depth.
+- Commits (as Kshiti, to rebalance authorship): `71ac740` pipeline runner + L3 pilot, `d86dc81` PLY reader + preview. Pushed.
+- Started L5 → L4 → L2 → L1 runs on `Ark_HM_272_HI` in the background (scratch PowerShell loop calling `run_pipeline.py` sparse then dense, then `preview_cloud.py`).
+- Meanwhile, decoded the CHSD depth geometry (scratch analyses, then code):
+  - CHSD value vs COLMAP z on 277,449 L3 observations: linear (R² 0.998, median residual 20 ≈ one depth step); per-image slopes nearly identical → one global mapping.
+  - COLMAP camera centres = ideal turntable (elevations ±45.0 ± 0.02°, steps 12.000 ± 0.011°, equal radius).
+  - Depth-only consistency (no COLMAP) on 5 artifacts → best f = 1000 px, near 0.5 R, far 1.5 R, rotation sign +1; poles' roll found (2 artifacts). See [[03-Dataset-CHSD]].
+- Wrote `src/heritage3d/reference.py`, `src/heritage3d/evaluate.py`, `scripts/evaluate_run.py`, `tests/test_reference.py`; `[evaluation]` config; `pip install scipy` → 1.18.1. `pytest tests -q` → 34 passed.
+- `evaluate_run.py --artifact Ark_HM_272_HI --level L3` → exit 0 (376 s incl. reference build): camera RMS 0.00025 R, Chamfer 0.00075 R, F@0.002 R 0.974. See [[07-Results]].
+
+**Next action** — when the level runs finish: evaluate L1, L2, L4, L5; compare quality vs cost across levels; team to confirm the evaluation method.

@@ -61,6 +61,14 @@ python scripts/run_pipeline.py --artifact <name> --level L3 --stages dense
 
 Sparse: COLMAP feature extraction, matching, mapping (CPU). Dense: undistortion, then OpenMVS densify, mesh, texture. Settings come from `[pipeline]` in the config and are the same for every level. Each stage's wall time and peak memory go to `experiments/results/runs/<name>_<level>.json`, logs to `experiments/logs/`. Workspaces stay in `D:\heritage3d-data\runs`.
 
+## Evaluation
+
+```
+python scripts/evaluate_run.py --artifact <name> --level L3
+```
+
+Builds a reference point cloud from the artifact's CHSD depth maps (decoded depth + known turntable cameras, never the reconstruction), aligns the reconstruction through its camera positions, and reports accuracy, completeness, Chamfer, Hausdorff and F-scores in units of the camera distance R. Output: `experiments/results/runs/<name>_<level>_eval.json`.
+
 ## Dataset
 
 Cultural Heritage Synthetic Depth Dataset (CHSD) by Arampatzakis, Arnaoutoglou, Koutsoudis & Pavlidis (2024), licensed **CC BY-NC-SA 4.0**:

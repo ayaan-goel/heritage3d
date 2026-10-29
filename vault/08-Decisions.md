@@ -17,4 +17,5 @@
 | 2026-10-29 | Agent moves from cloud session to local Claude Code on the laptop | Team prefers working offline; agent can now run tools and experiments directly |
 | 2026-10-25 | Presentation rules dropped for now | Focus is the working project; presentation discussed later |
 | 2026-10-29 | `pole_rings = [-90, 90]`: one image (frame 0001) from each pole ring per level → L1–L5 = 362/182/92/47/26 images | Verified ±90° views are in-plane spins of one picture (IoU ≥ 0.991 on 40 well-framed artifacts); applies the 2026-10-25 rule |
+| 2026-10-30 | Evaluation Option A implemented (reference cloud from decoded CHSD depth + ideal rig; alignment via camera centres; τ = 0.002/0.005/0.01 R) — **team to confirm** | Depth encoding, intrinsics and rig decoded from depth maps alone, so the reference is independent of the reconstruction; it was the plan's preferred option |
 | 2026-10-29 | Pick pilot/main artifacts from those not cut off by the image frame | 41/81 artifacts leave the frame in some views; partial views would confound the image-count comparison |

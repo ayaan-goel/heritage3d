@@ -50,3 +50,22 @@ Same workspace and metrics file as above; OpenMVS 2.4.0, `DensifyPointCloud --re
 - Visual check (`experiments/plots/Ark_HM_272_HI_L3_dense.jpg`): the pot is clearly reconstructed — ribbing, rim, base with the catalogue label, surface colour. Not yet a metric; geometric accuracy needs the evaluation step.
 - Peak memory measured with a Windows job object agrees with OpenMVS's own report (ReconstructMesh: 650 MB vs `PeakPagefileUsage` 649 MB).
 - **Interpretation (hypothesis):** at L3 the CPU pipeline is cheap (18 min, 2 GB); RAM is not the constraint at 800×600, time is (matching, densify).
+
+## Pilot — `Ark_HM_272_HI`, L3, geometric evaluation — 2026-10-30
+
+Method: [[04-Methodology]] Option A. Units: R (camera-to-centre distance); object extent 0.50 × 0.50 × 0.39 R (diagonal 0.81 R). Reference: 306,000 points from all 1,800 depth maps (build 352 s, cached). File: `experiments/results/runs/Ark_HM_272_HI_L3_eval.json`.
+
+| Metric | Dense cloud | Mesh vertices |
+|---|---|---|
+| Camera alignment RMS / max | 0.00025 / 0.00057 R (92 cameras) | same |
+| Points after 0.002 R voxel grid | 227,961 | — |
+| Accuracy median / mean | 0.00057 / 0.00075 R | 0.00066 / — R |
+| Completeness median / mean | 0.00069 / 0.00076 R | 0.00092 / — R |
+| Chamfer | **0.00075 R** (≈ 0.09 % of object diagonal) | 0.00082 R |
+| RMSE (accuracy) | 0.00112 R | — |
+| Hausdorff / 95th percentile | 0.0137 / 0.0019 R | — |
+| F-score @ 0.002 R (P / R) | **0.974** (0.952 / 0.997) | — |
+| F-score @ 0.005 R | 0.995 | 1.000 |
+| F-score @ 0.01 R | 1.000 | — |
+
+- L3 is close to the measurement floor (median errors below the 0.002 R voxel). F @ 0.002 R and Chamfer are the discriminating numbers.

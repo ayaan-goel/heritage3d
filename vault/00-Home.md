@@ -18,9 +18,10 @@
 
 ## Next action
 
-1. Pilot `Ark_HM_272_HI` L3 done end to end: 18.2 min, 2.0 GB peak, 1.19 M dense points, 482k-face textured mesh ([[07-Results]]). Next: run L1, L2, L4, L5 on the same artifact; then build the evaluation against CHSD depth.
-2. The zips in `Downloads` can be kept as backup or deleted (team's choice).
-3. Team: try to get the companion paper PDF (doi 10.1007/978-3-032-06389-2_15) via the university library.
+1. Pilot `Ark_HM_272_HI` L3 done end to end and evaluated (18.2 min, 2.0 GB; Chamfer 0.00075 R, F@0.002 R 0.974 — [[07-Results]]). L1/L2/L4/L5 runs in progress; then evaluate each and compare quality vs cost.
+2. Team: confirm the evaluation method (Option A, decoded CHSD depth — [[04-Methodology]]).
+3. The zips in `Downloads` can be kept as backup or deleted (team's choice).
+4. Team: try to get the companion paper PDF (doi 10.1007/978-3-032-06389-2_15) via the university library.
 
 ## Notes
 

@@ -37,14 +37,25 @@ Cultural Heritage Synthetic Depth Dataset. Primary and only dataset for the core
 - **Framing problem:** in 41 of 81 artifacts the object touches/leaves the image edge in some of the 20 sample views (frames 1/91/181/271 × 5 rings); some are badly off-centre (e.g. `Ark_HM_1279_Hi`, `LR_41638k_HI`, `Ark_HM_484_HI` swing partly out of the picture). 40 artifacts are never cut off in the sample.
 - Object size in the image (well-framed artifacts): 2–53 % of pixels.
 
+## Depth decoding and camera rig (verified 2026-10-30)
+
+Found from the depth maps alone (projecting one view's depth into another with an ideal rig and comparing), cross-checked with the COLMAP L3 reconstruction of `Ark_HM_272_HI`:
+
+- **Rig:** ideal turntable. Every camera at the same distance R from the rotation centre, at elevation exactly −90/−45/0/45/90°, looking at the centre. Frame k = object turned (k−1)°, equivalent to the camera at azimuth −(k−1)° about the vertical axis. COLMAP independently recovered this: elevations ±45.0 ± 0.02°, 12.000 ± 0.011° steps at L3, equal distances to 0.01 %.
+- **Intrinsics:** pinhole, **f = 1000 px**, principal point at the image centre (800 × 600) — consistent with a 45 mm lens on Blender's default 36 mm sensor (hypothesis about the cause; the value itself is verified). COLMAP estimated 998.8 px.
+- **Depth encoding:** planar z (not distance along the ray), linear, inverted: **z = R · (1.5 − v / 65535)**, i.e. near = 0.5 R ↦ 65535, far = 1.5 R ↦ 0, background v = 0. Pixel-level consistency between views ≈ 0.0003 R (one depth step = R/2048 ≈ 0.0005 R).
+- Same values (f, near, far) give the best consistency on all 5 artifacts tested (`Ark_HM_272_HI`, `Ark_HM_1288_HI`, `shell_bead_HI`, `Ark_HM_1260B_HI`, `Ark_HM_110_HI`) → treated as dataset-wide.
+- **Pole cameras' roll:** right vector (−sin φ, cos φ, 0) — the limit of the ring formula; verified on 2 artifacts.
+- Units: everything is relative to R. Absolute size in metres is unknown and not needed.
+- The 65535 values on `Ark_HM_1279_Hi` = parts of the object closer than 0.5 R (clipped).
+
 ## Assumptions
 
 - Frame `0001` = azimuth 0°, frame k = (k−1)° (assumption: only relative angles matter; rotation direction unknown).
 
 ## Still unknown
 
-- Depth units / near-far mapping (metric or normalized?); z-depth vs ray distance. Needed for a 3D reference (Option A).
-- Camera intrinsics (focal length, sensor) and camera distance — not in the files (PNG metadata only has render info).
+- Absolute scale (R in metres) — not needed for relative comparisons.
 - Are the original Hampson 3D models obtainable (best ground truth)? Their license?
 
 ## License implications

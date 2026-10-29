@@ -32,7 +32,15 @@ A depth map gives per-pixel distance from one camera only. To build a 3D referen
 - **Option B (fallback):** render reconstruction depth at reference viewpoints → per-pixel depth error after scale alignment; coverage = fraction of valid pixels.
 - **Option C:** original Hampson 3D models as ground truth, if obtainable.
 
-Choice to be made after [[03-Dataset-CHSD]] unknowns are answered.
+### Implemented: Option A (2026-10-30, team to confirm)
+
+The depth encoding, intrinsics and rig were decoded from the depth maps alone ([[03-Dataset-CHSD]]), so Option A is possible without using the reconstruction to build its own reference:
+
+1. **Reference cloud** (`src/heritage3d/reference.py`): back-project every CHSD depth map of the artifact (all 1,800 views, every 2nd pixel) with the ideal rig, merge on a 0.002 R voxel grid. Cached at `<runs>/<artifact>/reference.npy`.
+2. **Alignment** (`src/heritage3d/evaluate.py`): similarity transform (Umeyama) from the COLMAP camera centres to the known ideal camera centres. The residual is reported as a pose-accuracy metric. No ICP (camera alignment is already ≈ 0.0003 R; ICP would hide errors).
+3. **Metrics** (`scripts/evaluate_run.py`): reconstruction voxel-downsampled to the same 0.002 R grid; nearest-neighbour distances both ways → accuracy, completeness, Chamfer (mean of both), RMSE, Hausdorff and 95th-percentile Hausdorff, precision/recall/F-score at τ = 0.002, 0.005, 0.01 R (declared before any level comparison). Evaluated on the dense cloud and on the mesh vertices.
+
+Units: R = camera-to-centre distance (object sizes ≈ 0.3–0.8 R). Reference uses depth maps only — RGB-only input to reconstruction is unchanged.
 
 ## Optimization and museum
 

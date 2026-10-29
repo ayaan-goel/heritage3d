@@ -29,6 +29,15 @@ matcher = 'exhaustive_matcher'
 # OpenMVS DensifyPointCloud: 0 = full resolution, 1 = half (default); never below 640 px.
 densify_resolution_level = 1
 
+# Evaluation against the CHSD reference cloud (decoded depth, see src/heritage3d/reference.py).
+# All lengths are in units of R, the camera-to-centre distance.
+[evaluation]
+# Reference built from every CHSD view (all 1,800), every 2nd pixel, merged on this voxel grid.
+reference_stride = 2
+voxel = 0.002
+# Distance thresholds for precision / recall / F-score.
+thresholds = [0.002, 0.005, 0.01]
+
 # Image-input levels: azimuth step in degrees, applied uniformly on every ring.
 [levels]
 L1 = 3
