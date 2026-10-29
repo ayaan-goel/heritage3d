@@ -1,21 +1,22 @@
 # Experiment configuration. Paths point outside the repo (see vault/06-Environment-Setup.md).
 
 [paths]
-chsd_rgb = 'D:\heritage3d-data\chsd\rgb'
-chsd_depth = 'D:\heritage3d-data\chsd\depth'
+chsd_rgb = 'D:\heritage3d-data\chsd\rgb\CHSDD_RGB'
+chsd_depth = 'D:\heritage3d-data\chsd\depth\CHSDD_depth'
 runs = 'D:\heritage3d-data\runs'
 
 [dataset]
-# Camera rings (elevations in degrees) as stated in the Zenodo description (to verify on files).
+# Camera rings (elevations in degrees); verified on the files 2026-10-29.
 rings = [-90, -45, 0, 45, 90]
-# Azimuth sampling of the rendered views, in degrees (to verify on files).
+# Azimuth sampling of the rendered views, in degrees: 360 frames per ring (verified).
 azimuth_step = 1
 # Rings whose views do not change with azimuth (pure top/bottom views). Each contributes
-# one image per level. Empty until verified on the downloaded files.
-pole_rings = []
-# Image file pattern relative to chsd_rgb. Placeholder until the real naming is known.
-# Fields: {artifact}, {elevation}, {azimuth}.
-rgb_pattern = '{artifact}/{elevation}/{azimuth}.png'
+# one image per level. Verified 2026-10-29: +/-90 views are the same picture spun in-plane.
+pole_rings = [-90, 90]
+# Image file patterns relative to chsd_rgb / chsd_depth.
+# Fields: {artifact}, {elevation}, {azimuth}, {frame} (1-based file number = azimuth / azimuth_step + 1).
+rgb_pattern = '{artifact}/RGB/{frame:04d}_{elevation}_.png'
+depth_pattern = '{artifact}/Z/{frame:04d}_{elevation}_.png'
 
 # Image-input levels: azimuth step in degrees, applied uniformly on every ring.
 [levels]

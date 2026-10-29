@@ -7,21 +7,20 @@
 
 ## Current status (updated 2026-10-29)
 
-- Phase: **setup**. Subset generator and environment check written and unit-tested; no reconstruction, no results yet.
+- Phase: **setup → pilot**. Subset generator, environment check and dataset inspection written and tested on real data; no reconstruction, no results yet.
 - Repository created and scaffolded (README, CLAUDE.md, vault, literature workbook).
 - CHSD Zenodo records identified; file names, sizes and license confirmed from the record pages.
-- Dataset **download in progress** (team laptop).
+- Dataset **downloaded, MD5-verified, extracted and inspected** (2026-10-29): 81 artifacts, complete 360 × 5 grid, RGB 800×600 on black, 16-bit depth; ±90° are pole views; 41/81 artifacts cut off by the frame in some views. See [[03-Dataset-CHSD]].
+- Config filled in with the real file pattern and `pole_rings = [-90, 90]` → levels L1–L5 = 362/182/92/47/26 images. 19/19 tests pass.
 - Laptop toolchain verified: COLMAP 4.2.1 (CPU), OpenMVS 2.4.0, Python 3.13.15; repo at `D:\heritage3d`; 12/12 tests pass and `check_env.py` reports everything (2026-10-25).
 - **Agent moved from the cloud to a local Claude Code session on the laptop (2026-10-29).** Read [[sources/handoff-2026-10-29]] first.
 - Hardware confirmed: Intel Iris Xe, no CUDA → CPU pipeline (COLMAP SfM + OpenMVS).
 
 ## Next action
 
-1. Finish the CHSD download to `D:\heritage3d-data\raw\`, check MD5 against Zenodo (`certutil -hashfile <zip> MD5`), extract with 7-Zip to `D:\heritage3d-data\chsd\rgb` and `\depth`.
-2. Agent: inspect the extracted files directly (folder layout, naming, resolution, background, depth encoding, ±90° views) → write `scripts/inspect_dataset.py`, record facts in [[03-Dataset-CHSD]].
-3. Agent: set the real `rgb_pattern` / `pole_rings` in `configs/experiment.toml`; run `create_subsets.py --check` on one artifact.
-4. Agent: pilot reconstruction on one artifact at L3 (150 images): COLMAP SfM (CPU) → OpenMVS; record runtime and peak RAM.
-5. Team: try to get the companion paper PDF (doi 10.1007/978-3-032-06389-2_15) via the university library.
+1. Team: confirm the pilot artifact (proposed `Ark_HM_272_HI`). The zips in `Downloads` can be kept as backup or deleted.
+2. Agent: pilot reconstruction on that artifact at L3 (92 images): COLMAP SfM (CPU) → OpenMVS; record runtime and peak RAM; check registered-image count before going dense.
+3. Team: try to get the companion paper PDF (doi 10.1007/978-3-032-06389-2_15) via the university library.
 
 ## Notes
 

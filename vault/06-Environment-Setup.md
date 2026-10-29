@@ -9,13 +9,14 @@
 
 ```
 D:\heritage3d-data\
-  raw\          CHSDD_RGB.zip, CHSDD_depth.zip   (~54 GB)
-  chsd\rgb\     extracted RGB                    (to verify size)
-  chsd\depth\   extracted depth                  (to verify size)
+  chsd\rgb\CHSDD_RGB\       extracted RGB, 145,800 files (43.1 GiB)   (verified 2026-10-29)
+  chsd\depth\CHSDD_depth\   extracted depth, 145,800 files (7.4 GiB)  (verified 2026-10-29)
   runs\         COLMAP/OpenMVS workspaces per artifact/level
 ```
 
-Repository clone: `D:\heritage3d\` (code only), Python venv at `D:\heritage3d\.venv` (verified 2026-10-25).
+The zips were not moved to `raw\`; they are still in `C:\Users\goel3\Downloads\` (MD5-verified, can be kept as backup or deleted).
+
+Repository clone: `D:\heritage3d\` (code only), Python venv at `D:\heritage3d\.venv` (verified 2026-10-25). Install packages with `python -m pip install -r requirements.txt` (pytest, numpy, pillow; numpy 2.5.4 + pillow 13.0.0 installed 2026-10-29).
 
 ## Tools (installed and verified on the laptop, 2026-10-25)
 

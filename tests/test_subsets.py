@@ -13,7 +13,8 @@ RINGS = [-90, -45, 0, 45, 90]
 
 def test_planned_level_totals():
     levels = build_levels(load_config())
-    assert {k: len(v) for k, v in levels.items()} == {"L1": 600, "L2": 300, "L3": 150, "L4": 75, "L5": 40}
+    # 3 turning rings x 360/step views + one view for each of the 2 pole rings.
+    assert {k: len(v) for k, v in levels.items()} == {"L1": 362, "L2": 182, "L3": 92, "L4": 47, "L5": 26}
 
 
 def test_levels_l1_to_l4_are_nested():
@@ -45,3 +46,9 @@ def test_unknown_pole_ring_rejected():
 
 def test_view_path_uses_pattern():
     assert view_path(View(-45, 90), "pot01", "{artifact}/{elevation}/{azimuth}.png") == "pot01/-45/90.png"
+
+
+def test_view_path_chsd_frames_start_at_one():
+    pattern = load_config()["dataset"]["rgb_pattern"]
+    assert view_path(View(0, 0), "a", pattern) == "a/RGB/0001_0_.png"
+    assert view_path(View(-45, 359), "a", pattern) == "a/RGB/0360_-45_.png"

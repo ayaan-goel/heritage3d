@@ -37,7 +37,15 @@ Prints COLMAP/OpenMVS versions and hardware; exits with an error if a tool is no
 
 ## Subset levels
 
-Uniform azimuth step on every camera ring: L1 3° (600 images), L2 6° (300), L3 12° (150), L4 24° (75), L5 45° (40).
+Uniform azimuth step on the −45°/0°/45° rings plus one top and one bottom view: L1 3° (362 images), L2 6° (182), L3 12° (92), L4 24° (47), L5 45° (26).
+
+## Dataset inspection
+
+```
+python scripts/inspect_dataset.py
+```
+
+Checks every CHSD artifact for missing files, image format, depth values, framing and pole views; writes `experiments/results/dataset_inspection.json`.
 
 ```
 python scripts/create_subsets.py --artifact <name> --out D:\heritage3d-data\runs\<name> --check

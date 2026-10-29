@@ -34,7 +34,7 @@ def main(argv=None):
 
     summary = {}
     for name, views in build_levels(config).items():
-        paths = [view_path(v, args.artifact, pattern) for v in views]
+        paths = [view_path(v, args.artifact, pattern, config["dataset"]["azimuth_step"]) for v in views]
         if args.check:
             missing = [x for x in paths if not (rgb_root / x).is_file()]
             if missing:

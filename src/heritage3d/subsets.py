@@ -46,5 +46,7 @@ def build_levels(config):
     }
 
 
-def view_path(view, artifact, pattern):
-    return pattern.format(artifact=artifact, elevation=view.elevation, azimuth=view.azimuth)
+def view_path(view, artifact, pattern, source_step=1):
+    """Fill a file pattern. CHSD numbers files from 1, so azimuth 0 is frame 1."""
+    frame = view.azimuth // source_step + 1
+    return pattern.format(artifact=artifact, elevation=view.elevation, azimuth=view.azimuth, frame=frame)
