@@ -69,3 +69,23 @@ Method: [[04-Methodology]] Option A. Units: R (camera-to-centre distance); objec
 | F-score @ 0.01 R | 1.000 | — |
 
 - L3 is close to the measurement floor (median errors below the 0.002 R voxel). F @ 0.002 R and Chamfer are the discriminating numbers.
+
+## Pilot — `Ark_HM_272_HI`, all levels L1–L5, cost — 2026-10-30
+
+Same config and laptop as L3 (CPU only). Metrics: `experiments/results/runs/Ark_HM_272_HI_<level>.json`; logs: `experiments/logs/Ark_HM_272_HI/<level>/`; previews: `experiments/plots/Ark_HM_272_HI_<level>_dense.jpg`; table: `experiments/results/Ark_HM_272_HI_levels.csv`.
+L5 and L4 were re-run (`--overwrite`) on an idle machine because their first runs overlapped other work; the first runs were 5–15 % slower. L1, L2, L3 ran with nothing else heavy running.
+
+| Level | Images | Registered | Sparse points | Reproj. error | Matching | Densify | Total time | Peak RAM | Dense cloud file | Textured mesh files |
+|---|---|---|---|---|---|---|---|---|---|---|
+| L1 | 362 | 362 | 67,944 | 0.24 px | 80.4 min | 36.3 min | **135.2 min** | **4.7 GB** | 320 MB | 27.9 MB |
+| L2 | 182 | 182 | 51,488 | 0.22 px | 19.7 min | 18.1 min | **45.1 min** | 2.4 GB | 179 MB | 26.5 MB |
+| L3 | 92 | 92 | 35,995 | 0.19 px | 4.7 min | 9.1 min | **18.1 min** | 2.0 GB | 93 MB | 24.8 MB |
+| L4 | 47 | 47 | 22,176 | 0.16 px | 1.3 min | 4.4 min | **7.9 min** | 2.0 GB | 46 MB | 21.9 MB |
+| L5 | 26 | 26 | 7,119 | 0.17 px | 0.5 min | 1.7 min | **3.4 min** | 2.0 GB | 19 MB | 16.3 MB |
+
+Dense points (before evaluation voxel grid): L1 4,117,294; L2 2,201,830; L3 1,194,573; L4 680,823; L5 305,185.
+
+- Every level registered every image; SfM did not fail even with 26 images (45° steps).
+- Matching grows about quadratically with image count (exhaustive): ×4.1 per doubling L2→L1, ×4.2 L3→L2. Densify grows about linearly (×2.0 per doubling). At L1 matching is 60 % of the time.
+- Peak RAM is ~2 GB up to L3 (set by feature extraction), then rises with densify: 2.4 GB at L2, 4.7 GB at L1. Fits in 16 GB at 800×600.
+- The textured mesh (what the museum would load) changes little in size (16–28 MB); the dense cloud scales with images.
