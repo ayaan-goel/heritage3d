@@ -4,7 +4,7 @@ A cost-effective image-based 3D digitization framework for cultural heritage art
 
 This project studies how input-image density affects 3D reconstruction quality, computation and storage, and turns an optimized reconstruction into an interactive artifact in a web-based virtual museum.
 
-**Status:** pilot phase. First reconstruction (one artifact, 92 images) done; evaluation not built yet. See [`vault/00-Home.md`](vault/00-Home.md).
+**Status:** pilot phase. One artifact reconstructed and evaluated at all five subset levels (26–362 images). See [`vault/00-Home.md`](vault/00-Home.md).
 
 ## Pipeline
 
@@ -68,6 +68,14 @@ python scripts/evaluate_run.py --artifact <name> --level L3
 ```
 
 Builds a reference point cloud from the artifact's CHSD depth maps (decoded depth + known turntable cameras, never the reconstruction), aligns the reconstruction through its camera positions, and reports accuracy, completeness, Chamfer, Hausdorff and F-scores in units of the camera distance R. Output: `experiments/results/runs/<name>_<level>_eval.json`.
+
+## Level comparison
+
+```
+python scripts/compare_levels.py --artifact <name>
+```
+
+Collects cost (time, RAM, file sizes) and quality (Chamfer, F-score) for every evaluated level into `experiments/results/<name>_levels.csv` and a plot `experiments/plots/<name>_levels.png`.
 
 ## Dataset
 

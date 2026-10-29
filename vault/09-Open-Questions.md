@@ -3,15 +3,17 @@
 ## Open
 
 - [ ] Team: confirm evaluation Option A as implemented (see [[04-Methodology]]) and the thresholds τ = 0.002/0.005/0.01 R.
-- [ ] Black background: will COLMAP find features on the background or edges only on the object? Check in the pilot (masks may not be needed since background is uniform black).
 - [ ] Companion paper: Arampatzakis, Arnaoutoglou, Koutsoudis & Pavlidis, "Deep Learning-Based Monocular Depth Estimation in Cultural Heritage", CAA-GR 2024 proceedings (Springer), doi 10.1007/978-3-032-06389-2_15 (to verify: does it describe camera setup and depth encoding?). Team to check access via university library.
 - [ ] Are the original Virtual Hampson Museum models obtainable, and under what license?
-- [ ] CPU runtime for L1 (362 images) — feasible? Decide after pilot.
+- [ ] Why does dense-cloud precision fall as images increase (L4 0.985 → L1 0.829)? Hypothesis: fixed OpenMVS fusion settings. Check on more artifacts first.
+- [ ] Main artifact set: how many artifacts, and does each get L1 (2.3 h)?
 - [ ] Matcher choice (exhaustive vs vocabulary tree) — fixed after pilot, same for all levels.
 - [ ] Code license for the repository (separate from the CC BY-NC-SA data license).
 
 ## Closed
 
+- [x] CPU runtime for L1 (362 images) → feasible: 135 min, peak 4.7 GB on the pilot (2026-10-30).
+- [x] Black background → SfM registered every image at every level with 0.16–0.24 px error; no masks needed on the pilot (2026-10-30).
 - [x] Depth encoding and intrinsics → decoded from the depth maps: z = R(1.5 − v/65535), f = 1000 px, ideal turntable rig (2026-10-30, [[03-Dataset-CHSD]]). Option A feasible.
 - [x] Pilot artifact → `Ark_HM_272_HI`, confirmed by the team 2026-10-30.
 

@@ -104,4 +104,10 @@ Newest first. Every session must add an entry (see `CLAUDE.md`).
 - Wrote `src/heritage3d/reference.py`, `src/heritage3d/evaluate.py`, `scripts/evaluate_run.py`, `tests/test_reference.py`; `[evaluation]` config; `pip install scipy` → 1.18.1. `pytest tests -q` → 34 passed.
 - `evaluate_run.py --artifact Ark_HM_272_HI --level L3` → exit 0 (376 s incl. reference build): camera RMS 0.00025 R, Chamfer 0.00075 R, F@0.002 R 0.974. See [[07-Results]].
 
-**Next action** — when the level runs finish: evaluate L1, L2, L4, L5; compare quality vs cost across levels; team to confirm the evaluation method.
+- Level chain finished (scratch loop): L2 sparse 1,346 s + dense 1,363 s; L1 sparse 5,273 s (matching 4,826 s) + dense 2,841 s, peak 4.7 GB; all images registered at every level. Commit `4793548` (Kshiti).
+- Re-ran L5 and L4 with `--overwrite` on an idle machine: L5 205 s, L4 475 s (first runs 5–15 % slower because of concurrent work).
+- First evaluation attempt did nothing (`/usr/bin/time` missing in Git Bash) — re-ran without it: `evaluate_run.py` L5/L4/L2/L1 → exit 0, 4–15 s each (reference cached).
+- Added `src/heritage3d/compare.py`, `scripts/compare_levels.py`, `tests/test_compare.py`; `pip install matplotlib` → 3.11.2. `pytest tests -q` → 36 passed.
+- `compare_levels.py --artifact Ark_HM_272_HI` → CSV + plot. Best dense-cloud quality at L4 (F@0.002 R 0.991); precision falls with more images; mesh F flat 0.988–0.994 for L4–L1; L5 loses completeness (recall 0.926). See [[07-Results]].
+
+**Next action** — team: review the level comparison, choose the main artifact set and whether every artifact gets L1; confirm evaluation Option A.

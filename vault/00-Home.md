@@ -5,8 +5,9 @@
 
 > Updating this vault at the end of every session is **mandatory** (see `CLAUDE.md`).
 
-## Current status (updated 2026-10-29)
+## Current status (updated 2026-10-30)
 
+- **Pilot complete on `Ark_HM_272_HI`: all five levels reconstructed and evaluated.** L4 (47 images, 7.9 min) gave the best dense-cloud quality (F@0.002 R 0.991); L1 (362 images) took 135 min / 4.7 GB and scored lower (0.905, precision drops as images increase). Mesh quality flat 0.988–0.994 from L4 to L1. One artifact only — see [[07-Results]].
 - Phase: **pilot**. Subset generator, environment check, dataset inspection and pipeline runner written and tested; first measured result: full pilot reconstruction of `Ark_HM_272_HI` at L3 (2026-10-30).
 - Repository created and scaffolded (README, CLAUDE.md, vault, literature workbook).
 - CHSD Zenodo records identified; file names, sizes and license confirmed from the record pages.
@@ -18,7 +19,7 @@
 
 ## Next action
 
-1. Pilot `Ark_HM_272_HI` L3 done end to end and evaluated (18.2 min, 2.0 GB; Chamfer 0.00075 R, F@0.002 R 0.974 — [[07-Results]]). L1/L2/L4/L5 runs in progress; then evaluate each and compare quality vs cost.
+1. Team: review the pilot level comparison ([[07-Results]], `experiments/plots/Ark_HM_272_HI_levels.png`) and choose the main artifact set (well-framed artifacts from [[03-Dataset-CHSD]]). Full L1–L5 per artifact ≈ 3.5 h on this laptop (L1 alone 2.3 h) — decide whether every artifact gets L1.
 2. Team: confirm the evaluation method (Option A, decoded CHSD depth — [[04-Methodology]]).
 3. The zips in `Downloads` can be kept as backup or deleted (team's choice).
 4. Team: try to get the companion paper PDF (doi 10.1007/978-3-032-06389-2_15) via the university library.
