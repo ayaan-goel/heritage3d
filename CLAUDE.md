@@ -34,7 +34,8 @@ Team: Ayaan Goel, Kshiti Bhavsar. Mentor: Ms. Komal Singh.
 The team laptop is an HP Envy x360 16" with **Intel Iris Xe (no NVIDIA GPU, no CUDA)**, 16 GB RAM, Windows.
 - COLMAP dense MVS needs CUDA → not available. Use COLMAP (no-CUDA build, CPU) for SfM and **OpenMVS (CPU)** for densify / mesh / texture.
 - Pilot on one artifact before scaling. Record runtime and peak RAM.
-- Commands given to the team must work on Windows (PowerShell).
+- From 2026-10-29 the agent runs **locally on this laptop** (Claude Code in `D:\heritage3d`). It can run COLMAP, OpenMVS, Python and git itself; use Windows paths and PowerShell-compatible commands.
+- Before any experiment session run `python scripts/check_env.py`. Long runs (dense MVS) should log runtime and peak RAM.
 
 ## 5. Data and Git
 
@@ -50,11 +51,19 @@ The team laptop is an HP Envy x360 16" with **Intel Iris Xe (no NVIDIA GPU, no C
   | Ayaan Goel | `Ayaan Goel <goel30july@gmail.com>` | ayaan-goel |
   | Kshiti Bhavsar | `Kshiti Bhavsar <kshitibhavsar@gmail.com>` | Kshitii05 |
 
-  Set **both author and committer** per commit (otherwise GitHub shows "X authored and Y committed"), e.g.:
-  `GIT_COMMITTER_NAME="Kshiti Bhavsar" GIT_COMMITTER_EMAIL="kshitibhavsar@gmail.com" git commit --author="Kshiti Bhavsar <kshitibhavsar@gmail.com>" -m "..."`
+  Set **both author and committer** per commit (otherwise GitHub shows "X authored and Y committed"). This form works in PowerShell and bash:
+  `git -c user.name="Kshiti Bhavsar" -c user.email="kshitibhavsar@gmail.com" commit -m "..."`
+  `git -c user.name="Ayaan Goel" -c user.email="goel30july@gmail.com" commit -m "..."`
   Check `git log -5 --format='%an / %cn'` to see the current run before choosing.
 - **Clean commits only.** One commit = one meaningful, working unit of project work (a script with its tests, a pipeline stage, an analysis, a museum feature), with a clear imperative message (e.g. `Add subset generator for azimuth-step levels`).
   - No standalone commits for vault notes, small rule tweaks, typo fixes or chat-driven housekeeping: include those in the next real work commit.
   - Never commit half-finished or broken work; run tests/checks first.
   - Don't fix a previous commit with a follow-up "fix" commit when it can be folded into the next real commit.
 - Prefer small, testable milestones over generating the whole system at once.
+- Push to `origin main` after each commit (the repo has only the two of us).
+
+## 7. Working style the team expects
+
+- Explain technical terms plainly; the team is learning the 3D pipeline as it goes.
+- Before running anything long or heavy (full dataset, L1 runs), say how long it may take and confirm.
+- When something can only be checked on real data, say so instead of guessing.

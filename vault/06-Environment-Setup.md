@@ -32,6 +32,9 @@ Python 3.13 is kept: Open3D 0.20.0 ships wheels for 3.10–3.14 (checked on PyPI
 
 Check before each experiment session: `python scripts/check_env.py --out <run folder>\environment.json`.
 
-## Cloud agent session
+Verified on the laptop 2026-10-25: `pytest tests` → 12 passed; `check_env.py` → COLMAP 4.2.1 (gpu: false), OpenMVS 2.4.0, all 5 OpenMVS tools on PATH, hardware i7-1255U / 12 logical CPUs / 15.72 GB.
 
-4 CPUs, 15 GB RAM, ~30 GB free disk, no GPU, ephemeral; zenodo.org and gitlab.com blocked by network policy. Used for code, docs, tests and the museum — not for full experiments.
+## Agent
+
+- 2026-10-25 → 2026-10-29: Claude Code **cloud** session (no GPU, limited disk, Zenodo/GitLab blocked). Wrote code and docs; the team ran laptop commands and pasted output.
+- From 2026-10-29: Claude Code **locally on the laptop** in `D:\heritage3d`. The agent runs tools and experiments directly.

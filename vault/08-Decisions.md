@@ -8,10 +8,11 @@
 | 2026-10-25 | Subset levels by azimuth step: 3°, 6°, 12°, 24°, 45° (L1–L5) | Integer counts, uniform coverage, ~halving; replaces 100/50/25/12.5/6.25% |
 | 2026-10-25 | Depth maps used for evaluation only, never as reconstruction input | Using the reference as input makes evaluation circular and turns the study into RGB-D fusion, against the camera-only cost-effective goal |
 | 2026-10-25 | COLMAP (CPU) for SfM + OpenMVS (CPU) for dense/mesh/texture | Laptop has Intel Iris Xe, no CUDA |
-| 2026-10-25 | Experiments run on the team laptop; cloud agent writes code/docs/museum | Cloud session: no GPU, limited disk, ephemeral, Zenodo blocked |
+| 2026-10-25 | Experiments run on the team laptop; cloud agent writes code/docs/museum (superseded 2026-10-29: agent now local) | Cloud session: no GPU, limited disk, ephemeral, Zenodo blocked |
 | 2026-10-25 | Data stored on D: outside the repo | More free space; keeps repo small |
 | 2026-10-25 | Vault updates are mandatory every session | Context must survive agent/session switches |
 | 2026-10-25 | Commit authorship split between Ayaan and Kshiti, switching after an irregular number of commits; no AI attribution | Both work together on one machine and direct every session (replaces the earlier per-director rule) |
 | 2026-10-25 | Keep Python 3.13 on the laptop (no downgrade) | Open3D 0.20.0 has 3.13 wheels; avoids reinstalling |
 | 2026-10-25 | Tools in `C:\tools\colmap` and `C:\tools\openmvs`, both on user PATH | Scripts call `colmap` / OpenMVS tools by name |
+| 2026-10-29 | Agent moves from cloud session to local Claude Code on the laptop | Team prefers working offline; agent can now run tools and experiments directly |
 | 2026-10-25 | Presentation rules dropped for now | Focus is the working project; presentation discussed later |

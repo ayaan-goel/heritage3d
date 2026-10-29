@@ -5,21 +5,23 @@
 
 > Updating this vault at the end of every session is **mandatory** (see `CLAUDE.md`).
 
-## Current status (updated 2026-10-25)
+## Current status (updated 2026-10-29)
 
 - Phase: **setup**. Subset generator and environment check written and unit-tested; no reconstruction, no results yet.
 - Repository created and scaffolded (README, CLAUDE.md, vault, literature workbook).
 - CHSD Zenodo records identified; file names, sizes and license confirmed from the record pages.
 - Dataset **download in progress** (team laptop).
-- Laptop toolchain verified: COLMAP 4.2.1 (CPU), OpenMVS 2.4.0, Python 3.13.15; repo cloned to `D:\heritage3d`, 7/7 tests passed there.
+- Laptop toolchain verified: COLMAP 4.2.1 (CPU), OpenMVS 2.4.0, Python 3.13.15; repo at `D:\heritage3d`; 12/12 tests pass and `check_env.py` reports everything (2026-10-25).
+- **Agent moved from the cloud to a local Claude Code session on the laptop (2026-10-29).** Read [[sources/handoff-2026-10-29]] first.
 - Hardware confirmed: Intel Iris Xe, no CUDA → CPU pipeline (COLMAP SfM + OpenMVS).
 
 ## Next action
 
-1. Team: download both CHSD zips to `D:\heritage3d-data\raw\`, check MD5, extract with 7-Zip (see [[06-Environment-Setup]]).
-2. Team: `git pull`, then run `python scripts/check_env.py` on the laptop and send the output.
-3. Team: send the folder tree + a few file names of one artifact; try to get the companion paper PDF (doi 10.1007/978-3-032-06389-2_15) via the university library.
-4. Agent: set the real `rgb_pattern` / `pole_rings` in `configs/experiment.toml` and write `scripts/inspect_dataset.py` once the real layout is known.
+1. Finish the CHSD download to `D:\heritage3d-data\raw\`, check MD5 against Zenodo (`certutil -hashfile <zip> MD5`), extract with 7-Zip to `D:\heritage3d-data\chsd\rgb` and `\depth`.
+2. Agent: inspect the extracted files directly (folder layout, naming, resolution, background, depth encoding, ±90° views) → write `scripts/inspect_dataset.py`, record facts in [[03-Dataset-CHSD]].
+3. Agent: set the real `rgb_pattern` / `pole_rings` in `configs/experiment.toml`; run `create_subsets.py --check` on one artifact.
+4. Agent: pilot reconstruction on one artifact at L3 (150 images): COLMAP SfM (CPU) → OpenMVS; record runtime and peak RAM.
+5. Team: try to get the companion paper PDF (doi 10.1007/978-3-032-06389-2_15) via the university library.
 
 ## Notes
 

@@ -4,6 +4,15 @@ Newest first. Every session must add an entry (see `CLAUDE.md`).
 
 ---
 
+## 2026-10-29 — Handoff (directed by Ayaan Goel and Kshiti Bhavsar)
+
+- Team switched from the cloud session to a local Claude Code session on the laptop.
+- Wrote `vault/sources/handoff-2026-10-29.md` (context that existed only in the chat), updated `CLAUDE.md` for local work (agent runs tools itself; commit command that sets author and committer in PowerShell).
+- Dataset download still in progress.
+
+
+---
+
 ## 2026-10-25 — Session 1 (directed by Ayaan Goel)
 
 **What happened**
@@ -39,5 +48,6 @@ Newest first. Every session must add an entry (see `CLAUDE.md`).
 - Laptop: `git pull`, `pytest tests` → 11 passed; `check_env.py` → COLMAP 4.2.1 detected, all 5 OpenMVS tools found, but OpenMVS version "unknown" and hardware empty (OpenMVS writes its banner to the Windows console, not stdout).
 - Fixed `environment.py`: hardware now read from Windows registry / `GlobalMemoryStatusEx` (or `/proc` on Linux); OpenMVS run in a temp folder without a console and its `*.log` read for the version.
   - Cloud: `pytest tests` → 12 passed; simulated OpenMVS that only writes a log file → version 2.4.0 parsed. Windows behaviour **to verify** on the laptop.
+- Laptop: `git pull`, `pytest tests` → 12 passed; `check_env.py` → OpenMVS 2.4.0 and hardware (i7-1255U, 12 CPUs, 15.72 GB) now reported. Windows fix verified.
 
 **Next action** — see [[00-Home]].
