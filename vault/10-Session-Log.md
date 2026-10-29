@@ -84,4 +84,15 @@ Newest first. Every session must add an entry (see `CLAUDE.md`).
 - `inspect_dataset.py` (all 81) → exit 0, ~40 s: complete 360×5 grid everywhere; RGB 800×600 8-bit on black; depth 16-bit, 0 = background, ~2,048 levels, larger = nearer; ±90° spin IoU ≥ 0.991 on well-framed artifacts; 41/81 artifacts cut off by the frame in some sample views. Details in [[03-Dataset-CHSD]].
 - `create_subsets.py --artifact Ark_HM_272_HI --out D:\heritage3d-data\runs\Ark_HM_272_HI --check` → exit 0, L1 362, L2 182, L3 92, L4 47, L5 26.
 
-**Next action** — team confirms pilot artifact (proposed `Ark_HM_272_HI`); then pilot L3 (92 images) COLMAP SfM (CPU) → OpenMVS, recording time and peak RAM.
+- 2026-10-30: team confirmed pilot artifact `Ark_HM_272_HI`.
+- Wrote `src/heritage3d/pipeline.py` (COLMAP/OpenMVS stage commands; `run_stage` logs output and records wall time + peak memory of the process tree via a Windows job object, started suspended so child processes are counted) + `tests/test_pipeline.py`, and `scripts/run_pipeline.py` (`--stages sparse|dense`, metrics + logs copied to `experiments/`). Added `[pipeline]` settings to the config (`SIMPLE_PINHOLE`, single camera, `exhaustive_matcher`, densify resolution level 1).
+  - `pytest tests -q` → 23 passed.
+- `run_pipeline.py --artifact Ark_HM_272_HI --level L3 --stages sparse` → exit 0: feature extraction 11.7 s, exhaustive matching 283.4 s, mapper 51.9 s; peak 2.0 GB; **92/92 images registered**, 35,995 points, reprojection error 0.19 px. See [[07-Results]].
+
+- Team approved the dense stage. `run_pipeline.py ... --stages dense` → exit 0, 742 s total (densify 547 s, mesh 84 s, texture 111 s), peak 1.2 GB; 1,194,573 dense points from 91/92 depth maps (none for the single top view `0001_90_`), mesh 240,838 v / 481,612 f. See [[07-Results]].
+  - Checked: 92 undistorted images present; OpenMVS's own memory report matches the job-object figure (650 vs 649 MB).
+- Added `src/heritage3d/ply.py` (PLY vertex reader, handles OpenMVS per-vertex lists) + `tests/test_ply.py`, and `scripts/preview_cloud.py` (three-view splat picture). Preview → `experiments/plots/Ark_HM_272_HI_L3_dense.jpg`: pot clearly reconstructed. `pytest tests -q` → 26 passed.
+- `run_pipeline.py` now also copies OpenMVS's own `*.log` files into `experiments/logs/`.
+- Team went to sleep and asked the agent to keep working overnight with clean commits balanced between Ayaan and Kshiti (history before tonight: Ayaan 9, Kshiti 4).
+
+**Next action** — run the other levels (L1, L2, L4, L5) on `Ark_HM_272_HI`; then design the evaluation against CHSD depth.

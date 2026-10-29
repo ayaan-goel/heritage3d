@@ -18,6 +18,17 @@ pole_rings = [-90, 90]
 rgb_pattern = '{artifact}/RGB/{frame:04d}_{elevation}_.png'
 depth_pattern = '{artifact}/Z/{frame:04d}_{elevation}_.png'
 
+# Reconstruction settings: identical for every level and artifact.
+[pipeline]
+# Renders have square pixels and no lens distortion -> focal length + principal point only.
+camera_model = 'SIMPLE_PINHOLE'
+# All five Blender cameras assumed to share one lens (hypothesis; check reprojection error).
+single_camera = true
+# exhaustive_matcher compares every image pair; fine up to a few hundred images. Fixed after the pilot.
+matcher = 'exhaustive_matcher'
+# OpenMVS DensifyPointCloud: 0 = full resolution, 1 = half (default); never below 640 px.
+densify_resolution_level = 1
+
 # Image-input levels: azimuth step in degrees, applied uniformly on every ring.
 [levels]
 L1 = 3

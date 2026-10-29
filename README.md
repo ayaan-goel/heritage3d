@@ -4,7 +4,7 @@ A cost-effective image-based 3D digitization framework for cultural heritage art
 
 This project studies how input-image density affects 3D reconstruction quality, computation and storage, and turns an optimized reconstruction into an interactive artifact in a web-based virtual museum.
 
-**Status:** setup phase. No reconstruction has been run yet. See [`vault/00-Home.md`](vault/00-Home.md).
+**Status:** pilot phase. First reconstruction (one artifact, 92 images) done; evaluation not built yet. See [`vault/00-Home.md`](vault/00-Home.md).
 
 ## Pipeline
 
@@ -25,8 +25,9 @@ CHSD RGB images → controlled image subsets (L1–L5)
 | `src/heritage3d/` | Library code |
 | `scripts/` | Command-line entry points |
 | `tests/` | Unit tests (`python -m pytest tests`) |
+| `experiments/` | Committed metrics (`results/`), logs and plots of real runs |
 
-More folders (`experiments/`, `museum/`) are added as each milestone is built.
+A `museum/` folder is added when the virtual museum is built.
 
 ## Environment check
 
@@ -39,6 +40,10 @@ Prints COLMAP/OpenMVS versions and hardware; exits with an error if a tool is no
 
 Uniform azimuth step on the −45°/0°/45° rings plus one top and one bottom view: L1 3° (362 images), L2 6° (182), L3 12° (92), L4 24° (47), L5 45° (26).
 
+```
+python scripts/create_subsets.py --artifact <name> --out D:\heritage3d-data\runs\<name> --check
+```
+
 ## Dataset inspection
 
 ```
@@ -47,9 +52,14 @@ python scripts/inspect_dataset.py
 
 Checks every CHSD artifact for missing files, image format, depth values, framing and pole views; writes `experiments/results/dataset_inspection.json`.
 
+## Reconstruction
+
 ```
-python scripts/create_subsets.py --artifact <name> --out D:\heritage3d-data\runs\<name> --check
+python scripts/run_pipeline.py --artifact <name> --level L3 --stages sparse
+python scripts/run_pipeline.py --artifact <name> --level L3 --stages dense
 ```
+
+Sparse: COLMAP feature extraction, matching, mapping (CPU). Dense: undistortion, then OpenMVS densify, mesh, texture. Settings come from `[pipeline]` in the config and are the same for every level. Each stage's wall time and peak memory go to `experiments/results/runs/<name>_<level>.json`, logs to `experiments/logs/`. Workspaces stay in `D:\heritage3d-data\runs`.
 
 ## Dataset
 

@@ -7,7 +7,7 @@
 
 ## Current status (updated 2026-10-29)
 
-- Phase: **setup → pilot**. Subset generator, environment check and dataset inspection written and tested on real data; no reconstruction, no results yet.
+- Phase: **pilot**. Subset generator, environment check, dataset inspection and pipeline runner written and tested; first measured result: full pilot reconstruction of `Ark_HM_272_HI` at L3 (2026-10-30).
 - Repository created and scaffolded (README, CLAUDE.md, vault, literature workbook).
 - CHSD Zenodo records identified; file names, sizes and license confirmed from the record pages.
 - Dataset **downloaded, MD5-verified, extracted and inspected** (2026-10-29): 81 artifacts, complete 360 × 5 grid, RGB 800×600 on black, 16-bit depth; ±90° are pole views; 41/81 artifacts cut off by the frame in some views. See [[03-Dataset-CHSD]].
@@ -18,8 +18,8 @@
 
 ## Next action
 
-1. Team: confirm the pilot artifact (proposed `Ark_HM_272_HI`). The zips in `Downloads` can be kept as backup or deleted.
-2. Agent: pilot reconstruction on that artifact at L3 (92 images): COLMAP SfM (CPU) → OpenMVS; record runtime and peak RAM; check registered-image count before going dense.
+1. Pilot `Ark_HM_272_HI` L3 done end to end: 18.2 min, 2.0 GB peak, 1.19 M dense points, 482k-face textured mesh ([[07-Results]]). Next: run L1, L2, L4, L5 on the same artifact; then build the evaluation against CHSD depth.
+2. The zips in `Downloads` can be kept as backup or deleted (team's choice).
 3. Team: try to get the companion paper PDF (doi 10.1007/978-3-032-06389-2_15) via the university library.
 
 ## Notes
