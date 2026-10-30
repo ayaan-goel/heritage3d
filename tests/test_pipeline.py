@@ -48,3 +48,14 @@ def test_run_stage_records_time_memory_and_log(tmp_path):
 def test_run_stage_reports_failure(tmp_path):
     result = run_stage("fail", [sys.executable, "-c", "raise SystemExit(3)"], tmp_path / "fail.log")
     assert result["returncode"] == 3
+
+
+def test_clean_workspace_keeps_results(tmp_path):
+    from heritage3d.pipeline import clean_workspace
+    keep = ["metrics.json", "sparse/0/points3D.bin", "mvs/scene_dense.ply", "mvs/scene_dense_texture0.png"]
+    drop = ["mvs/depth0001.dmap", "mvs/depth0092.dmap", "database.db", "dense/images/0001_0_.png"]
+    for name in keep + drop:
+        (tmp_path / name).parent.mkdir(parents=True, exist_ok=True)
+        (tmp_path / name).write_bytes(b"x" * 10)
+    assert clean_workspace(tmp_path) == 40
+    assert all((tmp_path / n).exists() for n in keep) and not any((tmp_path / n).exists() for n in drop)

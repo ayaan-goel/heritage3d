@@ -143,3 +143,19 @@ def run_stage(name, cmd, log_path, cwd=None):
 def folder_bytes(path):
     path = Path(path)
     return sum(p.stat().st_size for p in path.rglob("*") if p.is_file()) if path.exists() else 0
+
+
+# Intermediates that can be regenerated and are not needed for evaluation or the museum:
+# per-view depth maps, the COLMAP feature database and the undistorted image copies.
+INTERMEDIATES = ("mvs/depth*.dmap", "database.db", "dense/images/*")
+
+
+def clean_workspace(ws):
+    """Delete regenerable intermediates from a finished workspace; returns bytes freed."""
+    freed = 0
+    for pattern in INTERMEDIATES:
+        for f in Path(ws).glob(pattern):
+            if f.is_file():
+                freed += f.stat().st_size
+                f.unlink()
+    return freed

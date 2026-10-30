@@ -75,6 +75,12 @@ def apply(transform, points):
     return points @ (scale * rotation).T + translation
 
 
+def failed_metrics(reference, thresholds):
+    """Metrics for a reconstruction that produced no points: nothing is complete, F = 0."""
+    return {"recon_points": 0, "reference_points": len(reference), "failed": True,
+            "fscore": {str(t): {"precision": None, "recall": 0.0, "f": 0.0} for t in thresholds}}
+
+
 def distance_metrics(recon, reference, thresholds):
     """Accuracy / completeness distances and precision / recall / F-score per threshold."""
     to_ref = cKDTree(reference).query(recon, workers=-1)[0]

@@ -112,3 +112,11 @@ Method: [[04-Methodology]] Option A (thresholds fixed before this comparison). F
 - With fixed OpenMVS settings, more neighbouring views per depth map means more small depth errors fused into the cloud (OpenMVS's fusion/filtering was tuned for fewer, wider-baseline views). Testing this would need a densify-parameter study, which is outside the frozen scope unless agreed.
 - One artifact is not a result. Needs repeating on more artifacts (well-framed ones from the inspection list) before any general claim.
 - For the museum, L4-level capture (47 images) gives a mesh as good as L1 at ~6 % of the time on this CPU laptop.
+
+## `Ark_HM_1260B_HI`, L5 (batch test) — 2026-10-30
+
+Smallest well-framed object (8 % of the frame; extent 0.09 × 0.50 × 0.18 R). Files: `experiments/results/runs/Ark_HM_1260B_HI_L5.json`, `_L5_eval.json`.
+- SfM: **7 / 26 images registered**, 273 points, 0.20 px. Total pipeline 5 s.
+- Densify: every registered image paired with 0 neighbour views → 0 depth maps, **no dense cloud** (F = 0).
+- Mesh (from the 273 sparse points): F@0.005 R 0.144 (precision 0.934, recall 0.078) — what exists is in the right place, but 92 % of the object is missing.
+- First measured case where a level **fails**: 45° steps are too sparse for a small, plain object. (Hypothesis: size × texture decide the lowest workable level — round 1 tests this.)

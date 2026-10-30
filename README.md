@@ -77,6 +77,16 @@ python scripts/compare_levels.py --artifact <name>
 
 Collects cost (time, RAM, file sizes) and quality (Chamfer, F-score) for every evaluated level into `experiments/results/<name>_levels.csv` and a plot `experiments/plots/<name>_levels.png`.
 
+## Main experiment (batch)
+
+```
+python scripts/select_artifacts.py                 # fixed run order -> configs/artifact_order.json
+python scripts/run_batch.py --count 12 --dry-run   # what would run
+python scripts/run_batch.py --count 12 --clean     # run, resume-safe
+```
+
+Runs every level of the first N artifacts in the fixed order (the 40 artifacts not cut off by the frame, ordered to cover object size and texture), skipping levels already evaluated. A level where SfM or MVS fails is still evaluated and recorded (F = 0 for missing output). `--clean` deletes regenerable intermediates after evaluation (~80 % of the space).
+
 ## Dataset
 
 Cultural Heritage Synthetic Depth Dataset (CHSD) by Arampatzakis, Arnaoutoglou, Koutsoudis & Pavlidis (2024), licensed **CC BY-NC-SA 4.0**:

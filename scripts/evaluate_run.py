@@ -23,7 +23,7 @@ import numpy as np
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from heritage3d.config import DEFAULT_CONFIG, REPO_ROOT, load_config  # noqa: E402
-from heritage3d.evaluate import align_to_reference, apply, distance_metrics, read_colmap_centres  # noqa: E402
+from heritage3d.evaluate import align_to_reference, apply, distance_metrics, failed_metrics, read_colmap_centres  # noqa: E402
 from heritage3d.pipeline import colmap_path  # noqa: E402
 from heritage3d.ply import read_vertices, xyz  # noqa: E402
 from heritage3d.reference import build_reference, voxel_downsample  # noqa: E402
@@ -68,23 +68,30 @@ def main(argv=None):
     ev = config["evaluation"]
     ws = Path(config["paths"]["runs"]) / args.artifact / args.level
     metrics = json.loads((ws / "metrics.json").read_text(encoding="utf-8"))
-    model = metrics.get("dense_from_model")
-    if model is None:
-        print("no dense run in this workspace", file=sys.stderr)
+    if metrics.get("sparse_models") is None:
+        print("no sparse run in this workspace", file=sys.stderr)
         return 1
+    model = metrics.get("dense_from_model")
 
     ref = reference_cloud(config, args.artifact, args.rebuild_reference)
-    transform, alignment = align_to_reference(read_colmap_centres(sparse_text_model(ws, model)))
     report = {"artifact": args.artifact, "level": args.level, "units": "R (camera-to-centre distance)",
-              "evaluation_config": ev, "alignment": alignment,
-              "reference_extent": (ref.max(0) - ref.min(0)).tolist()}
-    print(f"reference: {len(ref)} points; camera alignment rms {alignment['camera_error_rms']:.5f} R")
+              "evaluation_config": ev, "reference_extent": (ref.max(0) - ref.min(0)).tolist()}
+    centres = read_colmap_centres(sparse_text_model(ws, model)) if model is not None else {}
+    if len(centres) >= 3:  # a similarity transform needs at least three cameras
+        transform, report["alignment"] = align_to_reference(centres)
+        print(f"reference: {len(ref)} points; camera alignment rms {report['alignment']['camera_error_rms']:.5f} R")
+    else:
+        transform, report["alignment"] = None, {"cameras": len(centres)}
+        print(f"reconstruction failed: {len(centres)} registered cameras")
 
     for name, ply in [("dense_cloud", "scene_dense.ply"), ("mesh_vertices", "scene_dense_mesh.ply")]:
         path = ws / "mvs" / ply
-        if not path.exists():
+        vertices = read_vertices(path) if transform is not None and path.exists() else None
+        if vertices is None or len(vertices) == 0:
+            report[name] = failed_metrics(ref, ev["thresholds"])
+            print(f"{name}: no points (F = 0)")
             continue
-        points = voxel_downsample(apply(transform, xyz(read_vertices(path))), ev["voxel"])
+        points = voxel_downsample(apply(transform, xyz(vertices)), ev["voxel"])
         report[name] = distance_metrics(points, ref, ev["thresholds"])
         r = report[name]
         f = r["fscore"][str(ev["thresholds"][1])]

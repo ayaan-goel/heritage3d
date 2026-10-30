@@ -49,3 +49,14 @@ def test_collect_skips_levels_without_evaluation_and_keeps_order(tmp_path):
     write_csv(rows, tmp_path / "out.csv")
     with open(tmp_path / "out.csv", newline="") as f:
         assert [r["images"] for r in csv.DictReader(f)] == ["362", "26"]
+
+
+def test_level_row_for_failed_dense_and_no_model():
+    from heritage3d.evaluate import failed_metrics
+    run = fake_run("L5", 26)
+    del run["stages"]["DensifyPointCloud"]
+    run["sparse_models"], run["dense_from_model"], run["outputs_bytes"] = {}, None, {}
+    failed = failed_metrics([[0, 0, 0]] * 5, [0.002])
+    row = level_row(run, {"alignment": {"cameras": 0}, "dense_cloud": failed, "mesh_vertices": failed})
+    assert row["registered"] == 0 and row["cloud_f@0.002"] == 0.0 and row["cloud_recall@0.002"] == 0.0
+    assert row["cloud_chamfer"] is None and row["camera_rms"] is None and row["densify_s"] == 0

@@ -98,10 +98,15 @@ def main(argv=None):
                 print(f"model {name}: {stats}")
     else:
         metrics = json.loads(metrics_path.read_text(encoding="utf-8"))
-        models = metrics.get("sparse_models") or {}
-        if not models:
-            print("no sparse model; run --stages sparse first", file=sys.stderr)
+        if "sparse_models" not in metrics:
+            print("no sparse run; run --stages sparse first", file=sys.stderr)
             return 1
+        models = metrics["sparse_models"]
+        if not models:
+            print("SfM produced no model: nothing to densify", file=sys.stderr)
+            metrics["dense_from_model"] = None
+            metrics_path.write_text(json.dumps(metrics, indent=1, default=str), encoding="utf-8")
+            return 0
         best = max(models, key=lambda k: models[k].get("registered_images", 0))
         metrics["dense_from_model"] = best
         (ws / "mvs").mkdir(exist_ok=True)

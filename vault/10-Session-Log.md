@@ -110,4 +110,10 @@ Newest first. Every session must add an entry (see `CLAUDE.md`).
 - Added `src/heritage3d/compare.py`, `scripts/compare_levels.py`, `tests/test_compare.py`; `pip install matplotlib` → 3.11.2. `pytest tests -q` → 36 passed.
 - `compare_levels.py --artifact Ark_HM_272_HI` → CSV + plot. Best dense-cloud quality at L4 (F@0.002 R 0.991); precision falls with more images; mesh F flat 0.988–0.994 for L4–L1; L5 loses completeness (recall 0.926). See [[07-Results]].
 
-**Next action** — team: review the level comparison, choose the main artifact set and whether every artifact gets L1; confirm evaluation Option A.
+- Team: frozen settings approved; asked to work efficiently.
+- Added `src/heritage3d/selection.py` + `scripts/select_artifacts.py` → `configs/artifact_order.json` (40 candidates, farthest-point order in size × texture from the pilot; rank 1 `Ark_HM_1260B_HI` smallest, rank 2 `Ark_HM_470_HI` most textured, 2.8× the pilot). `tests/test_selection.py` (first texture test failed: a period-2 stripe cancels in Sobel; fixed the test pattern).
+- Added `clean_workspace` (pipeline.py) and `scripts/run_batch.py` (fixed order, resume by existing eval files, failures logged, optional cleanup). `--count 3 --dry-run` → 10 pending (pilot skipped).
+- Test run `run_batch.py --count 2 --levels L5 --clean` → `Ark_HM_1260B_HI` L5: **only 7/26 images registered**, densify 0 depth maps / 0 points (each image paired with 0 views), mesh from 273 sparse points; reference 63,126 points (54 s).
+- Made failures first-class: `evaluate_run.py` records F = 0 / recall 0 for missing output (and needs ≥ 3 cameras to align); `run_pipeline.py --stages dense` with no sparse model records it and exits 0; `compare.py` tolerates missing parts. Re-evaluated 1260B L5: dense F = 0, mesh F@0.005 0.144 (P 0.934, R 0.078). `pytest tests -q` → 41 passed.
+
+**Next action** — team: approve round 1 (`run_batch.py --count 12 --clean`).
