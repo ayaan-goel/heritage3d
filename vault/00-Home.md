@@ -20,7 +20,7 @@
 
 ## Next action
 
-1. Run round 1: `python scripts/run_batch.py --count 12 --clean` (est. 30–45 h of computing, resumable). Then:  ([[07-Results]], `experiments/plots/Ark_HM_272_HI_levels.png`) and choose the main artifact set (well-framed artifacts from [[03-Dataset-CHSD]]). Full L1–L5 per artifact ≈ 3.5 h on this laptop (L1 alone 2.3 h) — decide whether every artifact gets L1.
+1. Round 1 running since 2026-10-30 10:59 (`run_batch.py --count 13 --clean`: pilot + ranks 1–12, 59 level runs, est. 30–45 h; progress in `D:\heritage3d-data\runs\batch.log`; if interrupted, rerun the same command and it resumes). Then compare levels per artifact and write cross-artifact results ([[07-Results]]).
 2. Team: confirm the evaluation method (Option A, decoded CHSD depth — [[04-Methodology]]).
 3. The zips in `Downloads` can be kept as backup or deleted (team's choice).
 4. Team: try to get the companion paper PDF (doi 10.1007/978-3-032-06389-2_15) via the university library.

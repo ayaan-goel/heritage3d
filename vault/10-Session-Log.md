@@ -116,4 +116,15 @@ Newest first. Every session must add an entry (see `CLAUDE.md`).
 - Test run `run_batch.py --count 2 --levels L5 --clean` → `Ark_HM_1260B_HI` L5: **only 7/26 images registered**, densify 0 depth maps / 0 points (each image paired with 0 views), mesh from 273 sparse points; reference 63,126 points (54 s).
 - Made failures first-class: `evaluate_run.py` records F = 0 / recall 0 for missing output (and needs ≥ 3 cameras to align); `run_pipeline.py --stages dense` with no sparse model records it and exits 0; `compare.py` tolerates missing parts. Re-evaluated 1260B L5: dense F = 0, mesh F@0.005 0.144 (P 0.934, R 0.078). `pytest tests -q` → 41 passed.
 
-**Next action** — team: approve round 1 (`run_batch.py --count 12 --clean`).
+- Team approved round 1. `check_env.py` → exit 0; D: 299 GB free. `run_batch.py` now asks Windows not to idle-sleep while it runs (`SetThreadExecutionState`; lid close still sleeps).
+- Launched detached (`Start-Process`, PID 18148, 10:59:53): `run_batch.py --count 13 --clean` → 59 level runs pending (pilot + ranks 1–12). Progress: `D:\heritage3d-data\runs\batch.log`, output `D:\heritage3d-data\runs\round1.out` / `.err`.
+
+- Round 1 stopped by itself at ~11:47 during `Ark_HM_470_HI` L3 DensifyPointCloud — no error logged, no processes left. System log shows a Claude-app package event at 11:47:27 → the detached batch was most likely killed with the app's process tree (hypothesis). Done before that: `Ark_HM_1260B_HI` L1–L5 (all in 24 min), `Ark_HM_470_HI` L5, L4. Power source changed 6× at 11:37 (charger), during 470 L4 dense → its timing is suspect; re-run it.
+- Team leaving for college (lid will be closed): batch not restarted. Lid-close sleep would add sleep time to wall-clock timings and battery throttles the CPU.
+
+- Team asked to run the batch inside this session so its state is visible. Added `src/heritage3d/conditions.py` (AC status via `GetSystemPowerStatus`; time asleep = wall time − `QueryUnbiasedInterruptTime`) + `tests/test_conditions.py`. `run_batch.py`: waits for the charger before each level; stops a running level (whole process tree) when the charger is removed and redoes it; sets aside (`*.suspect`) and re-queues a level that slept or ran on battery (`--attempts`, default 3). `pytest tests -q` → 45 passed; simulated unplug stopped a two-process script and its child in 3 s.
+- Set aside 470 L4 (charger changes during its run). Started the batch as a session background task at 13:26:48.
+- 13:27 laptop entered standby (lid closed); woke 14:16 on battery → the guard stopped 470 L4 ("stopped after 2991 s: charger removed") and waited. 15:48 laptop put to sleep/hibernate from the Start menu → the background task ended (exit 4, nothing logged). No results affected.
+- 19:05 team back, on charger: batch resumed in this session (54 level runs pending).
+
+**Next action** — when round 1 finishes: check `batch.log` for failures/suspects, run `compare_levels.py` per artifact, write cross-artifact results, commit.
