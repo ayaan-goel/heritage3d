@@ -1,0 +1,82 @@
+{
+ "artifact": "Ark_HM_809_HI",
+ "level": "L1",
+ "units": "R (camera-to-centre distance)",
+ "evaluation_config": {
+  "reference_stride": 2,
+  "voxel": 0.002,
+  "thresholds": [
+   0.002,
+   0.005,
+   0.01
+  ]
+ },
+ "reference_extent": [
+  0.47997432725461364,
+  0.4997271228939708,
+  0.4163002202458378
+ ],
+ "alignment": {
+  "cameras": 362,
+  "camera_error_rms": 0.000547342632467098,
+  "camera_error_max": 0.0017341523684366118
+ },
+ "dense_cloud": {
+  "recon_points": 336477,
+  "reference_points": 325130,
+  "accuracy_mean": 0.0012495534856063859,
+  "accuracy_median": 0.0006637482917361407,
+  "completeness_mean": 0.0007233561667166606,
+  "completeness_median": 0.0006421384364216353,
+  "chamfer": 0.0009864548261615232,
+  "rmse": 0.002095826526676299,
+  "hausdorff": 0.07524455005202653,
+  "hausdorff_95": 0.004956649047504831,
+  "fscore": {
+   "0.002": {
+    "precision": 0.8447947407995198,
+    "recall": 0.9958078307138682,
+    "f": 0.9141063163270011
+   },
+   "0.005": {
+    "precision": 0.9512269783670206,
+    "recall": 1.0,
+    "f": 0.9750039220584181
+   },
+   "0.01": {
+    "precision": 0.995316173170826,
+    "recall": 1.0,
+    "f": 0.9976525891524596
+   }
+  }
+ },
+ "mesh_vertices": {
+  "recon_points": 184404,
+  "reference_points": 325130,
+  "accuracy_mean": 0.0007626424021215246,
+  "accuracy_median": 0.0006994617680351137,
+  "completeness_mean": 0.0009631023550407327,
+  "completeness_median": 0.0009366145317224818,
+  "chamfer": 0.0008628723785811287,
+  "rmse": 0.0009319363601500812,
+  "hausdorff": 0.016731848386302563,
+  "hausdorff_95": 0.0016813820696765952,
+  "fscore": {
+   "0.002": {
+    "precision": 0.9885685776881196,
+    "recall": 0.9868083535816443,
+    "f": 0.9876876813823031
+   },
+   "0.005": {
+    "precision": 0.9970065725255417,
+    "recall": 1.0,
+    "f": 0.9985010427528676
+   },
+   "0.01": {
+    "precision": 0.9996529359449904,
+    "recall": 1.0,
+    "f": 0.9998264378539041
+   }
+  }
+ }
+}

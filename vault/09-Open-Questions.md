@@ -5,8 +5,10 @@
 - [ ] Team: confirm evaluation Option A as implemented (see [[04-Methodology]]) and the thresholds τ = 0.002/0.005/0.01 R.
 - [ ] Companion paper: Arampatzakis, Arnaoutoglou, Koutsoudis & Pavlidis, "Deep Learning-Based Monocular Depth Estimation in Cultural Heritage", CAA-GR 2024 proceedings (Springer), doi 10.1007/978-3-032-06389-2_15 (to verify: does it describe camera setup and depth encoding?). Team to check access via university library.
 - [ ] Are the original Virtual Hampson Museum models obtainable, and under what license?
-- [ ] Why does dense-cloud precision fall as images increase (L4 0.985 → L1 0.829)? Hypothesis: fixed OpenMVS fusion settings. Check on more artifacts first.
-- [ ] Main artifact set: how many artifacts, and does each get L1 (2.3 h)?
+- [ ] Why does dense-cloud precision fall as images increase (L4 0.985 → L1 0.829)? Hypothesis: fixed OpenMVS fusion settings. Round 1: the same pattern on all six artifacts that reconstruct as one model.
+- [ ] Main artifact set: how many artifacts beyond round 1 (13 done; L1 takes 18–150 min per artifact)?
+- [ ] SfM splits into two models (one elevation ring + pole cut off) in 7/13 artifacts at some level; the pipeline densifies only the largest model. Keep as a finding under frozen settings, or change the pipeline (e.g. densify/merge all models) and re-run everything? Team decision.
+- [ ] Tolerance for small objects: τ is relative to R, harsh for `Ark_HM_1260B_HI` (F@0.002 0.06 but F@0.01 0.91 at L1). Also report a tolerance relative to object size?
 - [ ] Matcher choice (exhaustive vs vocabulary tree) — fixed after pilot, same for all levels.
 - [ ] Code license for the repository (separate from the CC BY-NC-SA data license).
 

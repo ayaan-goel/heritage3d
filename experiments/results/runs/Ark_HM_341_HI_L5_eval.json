@@ -1,0 +1,82 @@
+{
+ "artifact": "Ark_HM_341_HI",
+ "level": "L5",
+ "units": "R (camera-to-centre distance)",
+ "evaluation_config": {
+  "reference_stride": 2,
+  "voxel": 0.002,
+  "thresholds": [
+   0.002,
+   0.005,
+   0.01
+  ]
+ },
+ "reference_extent": [
+  0.49999028211858343,
+  0.48760538306267287,
+  0.18504615854123616
+ ],
+ "alignment": {
+  "cameras": 17,
+  "camera_error_rms": 0.0009187311450073514,
+  "camera_error_max": 0.0015687781700864435
+ },
+ "dense_cloud": {
+  "recon_points": 77424,
+  "reference_points": 252054,
+  "accuracy_mean": 0.0006710171757805509,
+  "accuracy_median": 0.000617968773513529,
+  "completeness_mean": 0.009253700842788846,
+  "completeness_median": 0.004679136329641448,
+  "chamfer": 0.004962359009284698,
+  "rmse": 0.0007889821060094337,
+  "hausdorff": 0.02774588227720579,
+  "hausdorff_95": 0.02242595977435609,
+  "fscore": {
+   "0.002": {
+    "precision": 0.9898610250051664,
+    "recall": 0.484971474366604,
+    "f": 0.6509950939096889
+   },
+   "0.005": {
+    "precision": 0.9980884480264517,
+    "recall": 0.5010950034516413,
+    "f": 0.6672127201187511
+   },
+   "0.01": {
+    "precision": 1.0,
+    "recall": 0.5174962508033992,
+    "f": 0.6820395774018211
+   }
+  }
+ },
+ "mesh_vertices": {
+  "recon_points": 69741,
+  "reference_points": 252054,
+  "accuracy_mean": 0.000683217711237538,
+  "accuracy_median": 0.0006542621033981371,
+  "completeness_mean": 0.009307966123739072,
+  "completeness_median": 0.0051105664702179605,
+  "chamfer": 0.004995591917488305,
+  "rmse": 0.0007455999098035517,
+  "hausdorff": 0.027753059143092843,
+  "hausdorff_95": 0.022451846192526874,
+  "fscore": {
+   "0.002": {
+    "precision": 0.9948953986894367,
+    "recall": 0.48602680378014235,
+    "f": 0.6530334002883319
+   },
+   "0.005": {
+    "precision": 0.9999856612322737,
+    "recall": 0.49961516183040144,
+    "f": 0.6663213173546818
+   },
+   "0.01": {
+    "precision": 1.0,
+    "recall": 0.5158339086068858,
+    "f": 0.6805942335476035
+   }
+  }
+ }
+}

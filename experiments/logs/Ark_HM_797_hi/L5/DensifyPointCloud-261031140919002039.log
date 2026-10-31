@@ -1,0 +1,70 @@
+14:09:19 [App     ] OpenMVS x64 v2.4.0
+14:09:19 [App     ] Build date: Jan 20 2026, 00:13:37
+14:09:19 [App     ] CPU: 12th Gen Intel(R) Core(TM) i7-1255U (12 cores)
+14:09:19 [App     ] RAM: 15.72GB Physical Memory 128.00TB Virtual Memory
+14:09:19 [App     ] OS: Windows 11+ x64
+14:09:19 [App     ] Disk: 287.96GB (488.28GB) space
+14:09:19 [App     ] SSE & AVX compatible CPU & OS detected
+14:09:19 [App     ] Command line: DensifyPointCloud -i D:\heritage3d-data\runs\Ark_HM_797_hi\L5\mvs\scene.mvs -o D:\heritage3d-data\runs\Ark_HM_797_hi\L5\mvs\scene_dense.mvs --resolution-level 1
+14:09:19 [Scene   ] Camera model loaded: platform 0; camera  0; f 1.252x1.252; poses 9
+14:09:19 [Scene   ] Scene loaded in interface format from 'scene.mvs' (1ms):
+	9 images (9 calibrated) with a total of 4.12 MPixels (0.46 MPixels/image)
+	275 points, 0 vertices, 0 faces
+14:09:19 [Scene   ] ROI estimated with position (0.109361,2.612232,2.584337) and extent (0.508474,1.195027,1.226071): scale 1.100000, up axis -1
+14:09:19 [PointCld] Point-cloud composed of 275 points with:
+ - points info:
+	275 points inside ROI (100.00%)
+	 inside ROI track length: 2 min / 3.71273 mean (0.946391 std) / 7 max
+	outside ROI track length: 1.79769e+308 min / -nan(ind) mean (-nan(ind) std) / -1.79769e+308 max
+ - visibility info (1021 views - 3.71 views/point):
+	        0 points with 1- views (0.00%)
+	       10 points with 2  views (3.64%)
+	      129 points with 3  views (46.91%)
+	      136 points with 4+ views (49.45%)
+	2 min / 3.71273 mean (0.946391 std) / 7 max
+14:09:19 [ScnDense] Preparing images for dense reconstruction completed: 9 images (32ms)
+14:09:19 [ScnDense] Select neighbor views by weighting inside ROI points with 0.70
+14:09:19 [ScnDense] Selecting images for dense reconstruction completed: 9 images (0ms)
+14:09:19 [ScnDense] Reference image   0 paired with 0 views
+14:09:19 [ScnDense] Reference image   1 paired with 0 views
+14:09:19 [ScnDense] Reference image   8 paired with 0 views
+14:09:19 [ScnDense] Reference image   5 paired with 0 views
+14:09:19 [ScnDense] Reference image   4 paired with 0 views
+14:09:19 [ScnDense] Reference image   6 paired with 0 views
+14:09:19 [ScnDense] Reference image   7 paired with 0 views
+14:09:19 [ScnDense] Reference image   2 paired with 0 views
+14:09:19 [ScnDense] Reference image   3 paired with 0 views
+14:09:19 [ScnDense] Reference image   0 paired with 0 views
+14:09:19 [ScnDense] Reference image   1 paired with 0 views
+14:09:19 [ScnDense] Reference image   8 paired with 0 views
+14:09:19 [ScnDense] Reference image   5 paired with 0 views
+14:09:19 [ScnDense] Reference image   4 paired with 0 views
+14:09:19 [ScnDense] Reference image   6 paired with 0 views
+14:09:19 [ScnDense] Reference image   7 paired with 0 views
+14:09:19 [ScnDense] Reference image   2 paired with 0 views
+14:09:19 [ScnDense] Reference image   3 paired with 0 views
+14:09:19 [ScnDense] Reference image   0 paired with 0 views
+14:09:19 [ScnDense] Reference image   1 paired with 0 views
+14:09:19 [ScnDense] Reference image   8 paired with 0 views
+14:09:19 [ScnDense] Reference image   5 paired with 0 views
+14:09:19 [ScnDense] Reference image   4 paired with 0 views
+14:09:19 [ScnDense] Reference image   6 paired with 0 views
+14:09:19 [ScnDense] Reference image   7 paired with 0 views
+14:09:19 [ScnDense] Reference image   2 paired with 0 views
+14:09:19 [ScnDense] Reference image   3 paired with 0 views
+14:09:19 [ScnDense] Depth-maps dense fused and filtered: 0 depth-maps, 0 depths, 0 points (-2147483648%%), -nan(ind) hits in -nan(ind) cached (0ms)
+14:09:19 [App     ] Densifying point-cloud completed: 0 points (61ms)
+14:09:19 [Scene   ] Scene saved in interface format to 'scene_dense.mvs' (0ms):
+	9 images (9 calibrated)
+	275 points, 0 vertices, 0 faces
+14:09:19 [App     ] MEMORYINFO: {
+14:09:19 [App     ] 	PageFaultCount 5933
+14:09:19 [App     ] 	PeakWorkingSetSize 22.37MB
+14:09:19 [App     ] 	WorkingSetSize 9.93MB
+14:09:19 [App     ] 	QuotaPeakPagedPoolUsage 87.34KB
+14:09:19 [App     ] 	QuotaPagedPoolUsage 87.34KB
+14:09:19 [App     ] 	QuotaPeakNonPagedPoolUsage 18.07KB
+14:09:19 [App     ] 	QuotaNonPagedPoolUsage 16.61KB
+14:09:19 [App     ] 	PagefileUsage 3.34MB
+14:09:19 [App     ] 	PeakPagefileUsage 20.35MB
+14:09:19 [App     ] } ENDINFO

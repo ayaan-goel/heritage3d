@@ -120,3 +120,48 @@ Smallest well-framed object (8 % of the frame; extent 0.09 × 0.50 × 0.18 R). F
 - Densify: every registered image paired with 0 neighbour views → 0 depth maps, **no dense cloud** (F = 0).
 - Mesh (from the 273 sparse points): F@0.005 R 0.144 (precision 0.934, recall 0.078) — what exists is in the right place, but 92 % of the object is missing.
 - First measured case where a level **fails**: 45° steps are too sparse for a small, plain object. (Hypothesis: size × texture decide the lowest workable level — round 1 tests this.)
+
+## Round 1 — pilot + ranks 1–12 (13 artifacts × 5 levels) — 2026-10-31
+
+Frozen config (see [[08-Decisions]]), same laptop, run by `run_batch.py --count 13 --clean` from 2026-10-30 10:59 to 2026-10-31 15:01 with the condition guard (no level counted that slept or ran on battery; 470 L4 and L3 were redone after charger removals). 65 / 65 level runs evaluated. Files: `experiments/results/runs/<artifact>_<level>{,_eval}.json`, per artifact `experiments/results/<artifact>_levels.csv` + `experiments/plots/<artifact>_levels.png`, all rows `experiments/results/round1_all.csv`, per level `experiments/results/round1_summary.csv`, plot `experiments/plots/round1_summary.png` (`scripts/summarize_round.py --count 13`).
+
+Dense-cloud F@0.002 R; in brackets, images in the densified SfM model / input images when not all:
+
+| Artifact | L1 | L2 | L3 | L4 | L5 | L1 time | Best |
+|---|---|---|---|---|---|---|---|
+| `Ark_HM_272_HI` | 0.905 | 0.942 | 0.974 | 0.991 | 0.959 | 135 min | L4 |
+| `Ark_HM_1260B_HI` | 0.062 (350/362) | 0.051 (98/182) | 0.151 (30/92) | 0.209 (14/47) | 0.000 (7/26) | 18 min | L4 |
+| `Ark_HM_470_HI` | 0.937 | 0.967 | 0.988 | 0.995 | 0.997 | 136 min | L5 |
+| `Ark_HM_795_HI` | 0.842 | 0.786 (121/182) | 0.823 (61/92) | 0.777 (31/47) | 0.295 (17/26) | 48 min | L1 |
+| `Ark_HM_714_HI` | 0.933 | 0.966 | 0.990 | 0.997 | 0.995 | 150 min | L4 |
+| `Ark_HM_341_HI` | 0.633 (241/362) | 0.651 (121/182) | 0.663 (61/92) | 0.666 (31/47) | 0.651 (17/26) | 44 min | L4 |
+| `Ark_HM_654_HI` | 0.878 | 0.931 | 0.971 | 0.967 | 0.345 (24/26) | 52 min | L3 |
+| `Ark_HM_725_HI` | 0.883 | 0.915 | 0.961 | 0.986 | 0.852 | 64 min | L4 |
+| `RL_907_HI` | 0.797 (360/362) | 0.845 (180/182) | 0.907 (90/92) | 0.273 (25/47) | 0.000 (5/26) | 23 min | L3 |
+| `Ark_HM_321_HI` | 0.914 | 0.943 | 0.969 | 0.820 (31/47) | 0.790 (17/26) | 78 min | L3 |
+| `Ark_HM_31_HI` | 0.649 (241/362) | 0.615 (121/182) | 0.669 (61/92) | 0.335 (20/47) | 0.000 (7/26) | 26 min | L3 |
+| `Ark_HM_809_HI` | 0.914 | 0.945 | 0.972 | 0.990 | 0.789 | 79 min | L4 |
+| `Ark_HM_797_hi` | 0.837 (241/362) | 0.850 (121/182) | 0.834 (61/92) | 0.662 (20/47) | 0.000 (9/26) | 27 min | L2 |
+
+Per level across the 13 (`round1_summary.csv`):
+
+| Level | Images | Median total time (max) | Median peak RAM | Median cloud F (min) | Median mesh F | Cloud F < 0.5 |
+|---|---|---|---|---|---|---|
+| L1 | 362 | 52.0 min (150.1) | 4.4 GB | 0.878 (0.062) | 0.983 | 1 / 13 |
+| L2 | 182 | 22.5 min (55.4) | 2.3 GB | 0.915 (0.051) | 0.981 | 1 / 13 |
+| L3 | 92 | 9.8 min (18.1) | 2.0 GB | **0.961** (0.151) | 0.983 | 1 / 13 |
+| L4 | 47 | 3.3 min (8.1) | 2.0 GB | 0.820 (0.209) | 0.821 | 3 / 13 |
+| L5 | 26 | 1.4 min (4.2) | 2.0 GB | 0.651 (0.000) | 0.653 | 6 / 13 |
+
+**Measured:**
+- Six artifacts reconstruct as one complete model at L1–L4 (272, 470, 714, 654, 725, 809). For them the pilot pattern repeats: cloud F rises from L1 to L3/L4 (precision falls with more images) and the mesh stays ≥ 0.97 from L4 up; best level L4 for four, L5 for 470, L3 for 654. At L5 three of the six lose quality (654 0.345, 809 0.789, 725 0.852).
+- **SfM splits into two models** in 7 artifacts at some level: all images register, but into two disconnected models, and the pipeline densifies only the larger one (`dense_from_model` = most registered images). At L1 in 341, 31 and 797 the split is exactly **one elevation ring plus its pole** (341: the +45° ring + top view; 31 and 797: the −45° ring + bottom view; checked from the COLMAP models, 2026-10-31) — that side of the object is never densified, hence F ≈ 0.63–0.84 flat across levels. 795 splits the same way from L2 down, 321 from L4, RL_907 at L4.
+- Hard failures (F = 0, no dense cloud): L5 of 1260B, RL_907, 31, 797 (5–9 / 26 images registered). Three of them crashed TextureMesh after 0-point densify; evaluated afterwards as failed reconstructions.
+- `Ark_HM_1260B_HI` (smallest, flat, plain, specular object) registers 350/362 at L1 in one model but is poorly placed: camera RMS 0.018 R (pilot 0.0003), cloud F@0.002 0.062, F@0.005 0.217, **F@0.01 0.912** — the shape is roughly right but off by ~0.5–1 % R.
+- Cost scales as in the pilot: median L1 52 min, L3 10 min, L5 1.4 min; L1 ranges 18–150 min depending on the object (matching dominates). Peak RAM ≤ 4.7 GB everywhere.
+- L3 (92 images, 12°) is the lowest level with no new breakdown on any artifact (its F < 0.5 case is 1260B, which fails at every level).
+
+**Interpretation (hypotheses, to verify):**
+- The split-model loss is a pipeline limitation (taking only the largest model), not missing coverage: merging or densifying both models would likely recover most of the missing side. Fixing it changes the frozen pipeline → team decision ([[09-Open-Questions]]).
+- Rings fail to connect when the object looks very different from above and below (plain or symmetric surfaces), so cross-ring matches are few; fewer images per ring make it worse (more splits at L4/L5).
+- τ = 0.002 R is harsh for small objects (1260B fills 8 % of the frame); a tolerance relative to object size may be fairer for them.

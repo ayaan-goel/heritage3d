@@ -4,7 +4,7 @@ A cost-effective image-based 3D digitization framework for cultural heritage art
 
 This project studies how input-image density affects 3D reconstruction quality, computation and storage, and turns an optimized reconstruction into an interactive artifact in a web-based virtual museum.
 
-**Status:** pilot phase. One artifact reconstructed and evaluated at all five subset levels (26–362 images). See [`vault/00-Home.md`](vault/00-Home.md).
+**Status:** main experiment. Round 1 done: 13 artifacts reconstructed and evaluated at all five subset levels (26–362 images). See [`vault/00-Home.md`](vault/00-Home.md).
 
 ## Pipeline
 
@@ -83,6 +83,7 @@ Collects cost (time, RAM, file sizes) and quality (Chamfer, F-score) for every e
 python scripts/select_artifacts.py                 # fixed run order -> configs/artifact_order.json
 python scripts/run_batch.py --count 12 --dry-run   # what would run
 python scripts/run_batch.py --count 12 --clean     # run, resume-safe
+python scripts/summarize_round.py --count 12      # per-level summary across artifacts
 ```
 
 Runs every level of the first N artifacts in the fixed order (the 40 artifacts not cut off by the frame, ordered to cover object size and texture), skipping levels already evaluated. A level where SfM or MVS fails is still evaluated and recorded (F = 0 for missing output). `--clean` deletes regenerable intermediates after evaluation (~80 % of the space).

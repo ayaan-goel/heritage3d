@@ -1,0 +1,33 @@
+08:42:41 [App     ] OpenMVS x64 v2.4.0
+08:42:41 [App     ] Build date: Jan 20 2026, 00:13:37
+08:42:41 [App     ] CPU: 12th Gen Intel(R) Core(TM) i7-1255U (12 cores)
+08:42:41 [App     ] RAM: 15.72GB Physical Memory 128.00TB Virtual Memory
+08:42:41 [App     ] OS: Windows 11+ x64
+08:42:41 [App     ] Disk: 289.18GB (488.28GB) space
+08:42:41 [App     ] SSE & AVX compatible CPU & OS detected
+08:42:41 [App     ] Command line: ReconstructMesh -i D:\heritage3d-data\runs\RL_907_HI\L2\mvs\scene_dense.mvs -o D:\heritage3d-data\runs\RL_907_HI\L2\mvs\scene_dense_mesh.ply
+08:42:41 [Scene   ] Camera model loaded: platform 0; camera  0; f 1.237x1.237; poses 180
+08:42:41 [Scene   ] Scene loaded in interface format from 'scene_dense.mvs' (9ms):
+	180 images (180 calibrated) with a total of 82.40 MPixels (0.46 MPixels/image)
+	3875 points, 0 vertices, 0 faces
+08:42:42 [PointCld] Point-cloud 'scene_dense.ply' loaded: 762594 points (312ms)
+08:42:44 [DepthMap] Delaunay tetrahedralization completed: 762594 points -> 98614 vertices, 617686 (+458) cells, 1235601 (+687) faces (2s502ms)
+08:42:52 [ScnRecnt] Delaunay tetrahedras weighting completed: 618144 cells, 1236288 faces (8s68ms)
+08:42:53 [ScnRecnt] Delaunay tetrahedras graph-cut completed (611720 flow): 69425 vertices, 138852 faces (837ms)
+08:42:53 [App     ] Mesh reconstruction completed: 69426 vertices, 138852 faces (11s582ms)
+08:42:53 [App     ] Mesh trimmed to ROI: 0 vertices and 0 faces removed (3ms)
+08:42:53 [Mesh    ] Cleaned mesh: 69426 vertices, 138852 faces (288ms)
+08:42:54 [Mesh    ] Cleaned mesh: 69426 vertices, 138852 faces (264ms)
+08:42:54 [Mesh    ] Cleaned mesh: 69426 vertices, 138852 faces (200ms)
+08:42:54 [Mesh    ] Mesh 'scene_dense_mesh.ply' saved: 69426 vertices, 138852 faces (11ms)
+08:42:54 [App     ] MEMORYINFO: {
+08:42:54 [App     ] 	PageFaultCount 180834
+08:42:54 [App     ] 	PeakWorkingSetSize 296.13MB
+08:42:54 [App     ] 	WorkingSetSize 13.05MB
+08:42:54 [App     ] 	QuotaPeakPagedPoolUsage 80.66KB
+08:42:54 [App     ] 	QuotaPagedPoolUsage 80.55KB
+08:42:54 [App     ] 	QuotaPeakNonPagedPoolUsage 19.00KB
+08:42:54 [App     ] 	QuotaNonPagedPoolUsage 17.54KB
+08:42:54 [App     ] 	PagefileUsage 7.23MB
+08:42:54 [App     ] 	PeakPagefileUsage 302.12MB
+08:42:54 [App     ] } ENDINFO

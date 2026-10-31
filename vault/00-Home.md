@@ -5,8 +5,9 @@
 
 > Updating this vault at the end of every session is **mandatory** (see `CLAUDE.md`).
 
-## Current status (updated 2026-10-30)
+## Current status (updated 2026-10-31)
 
+- **Round 1 complete: 13 artifacts × 5 levels, all 65 runs evaluated** (2026-10-31). Median cloud F@0.002 R by level: L1 0.878, L2 0.915, **L3 0.961**, L4 0.820, L5 0.651; median time L1 52 min → L3 10 min → L5 1.4 min. Six artifacts behave like the pilot (best at L3/L4, mesh ≥ 0.97); in 7 SfM splits off one ring into a second model that is not densified; L5 fails outright on 4. See [[07-Results]].
 - Settings frozen; main set = 40 well-framed artifacts in a fixed order (`configs/artifact_order.json`); resumable batch runner ready (`scripts/run_batch.py`). First batch test: small plain `Ark_HM_1260B_HI` **fails at L5** (7/26 images registered, no dense cloud) — L5 is not enough for every object.
 - **Pilot complete on `Ark_HM_272_HI`: all five levels reconstructed and evaluated.** L4 (47 images, 7.9 min) gave the best dense-cloud quality (F@0.002 R 0.991); L1 (362 images) took 135 min / 4.7 GB and scored lower (0.905, precision drops as images increase). Mesh quality flat 0.988–0.994 from L4 to L1. One artifact only — see [[07-Results]].
 - Phase: **pilot**. Subset generator, environment check, dataset inspection and pipeline runner written and tested; first measured result: full pilot reconstruction of `Ark_HM_272_HI` at L3 (2026-10-30).
@@ -20,10 +21,11 @@
 
 ## Next action
 
-1. Round 1 running since 2026-10-30 10:59 (`run_batch.py --count 13 --clean`: pilot + ranks 1–12, 59 level runs, est. 30–45 h; progress in `D:\heritage3d-data\runs\batch.log`; if interrupted, rerun the same command and it resumes). Then compare levels per artifact and write cross-artifact results ([[07-Results]]).
-2. Team: confirm the evaluation method (Option A, decoded CHSD depth — [[04-Methodology]]).
-3. The zips in `Downloads` can be kept as backup or deleted (team's choice).
-4. Team: try to get the companion paper PDF (doi 10.1007/978-3-032-06389-2_15) via the university library.
+1. Team: decide whether split SfM models stay a reported finding under frozen settings or the pipeline changes (densify/merge all models, then re-run) — [[09-Open-Questions]].
+2. Team: main-set size beyond round 1 (next ranks via `run_batch.py --count N --clean`), or move to museum preparation (decimate + GLB for the best artifacts) and the web museum.
+3. Team: confirm the evaluation method (Option A, decoded CHSD depth — [[04-Methodology]]).
+4. The zips in `Downloads` can be kept as backup or deleted (team's choice).
+5. Team: try to get the companion paper PDF (doi 10.1007/978-3-032-06389-2_15) via the university library.
 
 ## Notes
 

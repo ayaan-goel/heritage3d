@@ -1,0 +1,157 @@
+{
+ "artifact": "RL_907_HI",
+ "level": "L2",
+ "started": "2026-10-31T08:33:39",
+ "config": {
+  "paths": {
+   "chsd_rgb": "D:\\heritage3d-data\\chsd\\rgb\\CHSDD_RGB",
+   "chsd_depth": "D:\\heritage3d-data\\chsd\\depth\\CHSDD_depth",
+   "runs": "D:\\heritage3d-data\\runs"
+  },
+  "dataset": {
+   "rings": [
+    -90,
+    -45,
+    0,
+    45,
+    90
+   ],
+   "azimuth_step": 1,
+   "pole_rings": [
+    -90,
+    90
+   ],
+   "rgb_pattern": "{artifact}/RGB/{frame:04d}_{elevation}_.png",
+   "depth_pattern": "{artifact}/Z/{frame:04d}_{elevation}_.png"
+  },
+  "pipeline": {
+   "camera_model": "SIMPLE_PINHOLE",
+   "single_camera": true,
+   "matcher": "exhaustive_matcher",
+   "densify_resolution_level": 1
+  },
+  "evaluation": {
+   "reference_stride": 2,
+   "voxel": 0.002,
+   "thresholds": [
+    0.002,
+    0.005,
+    0.01
+   ]
+  },
+  "levels": {
+   "L1": 3,
+   "L2": 6,
+   "L3": 12,
+   "L4": 24,
+   "L5": 45
+  }
+ },
+ "environment": {
+  "python": "3.13.15",
+  "platform": "Windows-11-10.0.26300-SP0",
+  "colmap": {
+   "version": "4.2.1",
+   "commit": "bd1fcf6",
+   "gpu": false,
+   "path": "C:\\tools\\colmap\\colmap.BAT"
+  },
+  "openmvs": {
+   "version": "2.4.0"
+  },
+  "openmvs_tools": {
+   "InterfaceCOLMAP": "C:\\tools\\openmvs\\vc17\\x64\\Release\\InterfaceCOLMAP.EXE",
+   "DensifyPointCloud": "C:\\tools\\openmvs\\vc17\\x64\\Release\\DensifyPointCloud.EXE",
+   "ReconstructMesh": "C:\\tools\\openmvs\\vc17\\x64\\Release\\ReconstructMesh.EXE",
+   "RefineMesh": "C:\\tools\\openmvs\\vc17\\x64\\Release\\RefineMesh.EXE",
+   "TextureMesh": "C:\\tools\\openmvs\\vc17\\x64\\Release\\TextureMesh.EXE"
+  },
+  "hardware": {
+   "cpu": "12th Gen Intel(R) Core(TM) i7-1255U",
+   "logical_cpus": 12,
+   "ram_gb": 15.72
+  }
+ },
+ "input_images": 182,
+ "input_bytes": 37050092,
+ "stages": {
+  "feature_extractor": {
+   "stage": "feature_extractor",
+   "seconds": 15.2,
+   "peak_memory_mb": 2026.2,
+   "returncode": 0,
+   "log": "D:\\heritage3d-data\\runs\\RL_907_HI\\L2\\logs\\feature_extractor.log"
+  },
+  "exhaustive_matcher": {
+   "stage": "exhaustive_matcher",
+   "seconds": 37.6,
+   "peak_memory_mb": 1825.9,
+   "returncode": 0,
+   "log": "D:\\heritage3d-data\\runs\\RL_907_HI\\L2\\logs\\exhaustive_matcher.log"
+  },
+  "mapper": {
+   "stage": "mapper",
+   "seconds": 11.7,
+   "peak_memory_mb": 248.2,
+   "returncode": 0,
+   "log": "D:\\heritage3d-data\\runs\\RL_907_HI\\L2\\logs\\mapper.log"
+  },
+  "image_undistorter": {
+   "stage": "image_undistorter",
+   "seconds": 0.3,
+   "peak_memory_mb": 50.8,
+   "returncode": 0,
+   "log": "D:\\heritage3d-data\\runs\\RL_907_HI\\L2\\logs\\image_undistorter.log"
+  },
+  "InterfaceCOLMAP": {
+   "stage": "InterfaceCOLMAP",
+   "seconds": 0.1,
+   "peak_memory_mb": 4.0,
+   "returncode": 0,
+   "log": "D:\\heritage3d-data\\runs\\RL_907_HI\\L2\\logs\\InterfaceCOLMAP.log"
+  },
+  "DensifyPointCloud": {
+   "stage": "DensifyPointCloud",
+   "seconds": 476.1,
+   "peak_memory_mb": 2100.8,
+   "returncode": 0,
+   "log": "D:\\heritage3d-data\\runs\\RL_907_HI\\L2\\logs\\DensifyPointCloud.log"
+  },
+  "ReconstructMesh": {
+   "stage": "ReconstructMesh",
+   "seconds": 12.8,
+   "peak_memory_mb": 303.4,
+   "returncode": 0,
+   "log": "D:\\heritage3d-data\\runs\\RL_907_HI\\L2\\logs\\ReconstructMesh.log"
+  },
+  "TextureMesh": {
+   "stage": "TextureMesh",
+   "seconds": 79.2,
+   "peak_memory_mb": 804.3,
+   "returncode": 0,
+   "log": "D:\\heritage3d-data\\runs\\RL_907_HI\\L2\\logs\\TextureMesh.log"
+  }
+ },
+ "sparse_models": {
+  "0": {
+   "cameras": 1,
+   "images": 180,
+   "registered_images": 180,
+   "points": 3875,
+   "observations": 41144,
+   "mean_track_length": 10.617806,
+   "mean_observations_per_image": 228.577778,
+   "mean_reprojection_error_px": 0.342858
+  }
+ },
+ "finished": "2026-10-31T08:44:13",
+ "dense_from_model": "0",
+ "outputs_bytes": {
+  "sparse": 1840634,
+  "scene_dense.mvs": 851297,
+  "scene_dense.ply": 62907041,
+  "scene_dense_mesh.ply": 2638375,
+  "scene_dense_texture.ply": 6109757,
+  "scene_dense_texture0.png": 1549343
+ }
+}

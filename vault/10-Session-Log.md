@@ -128,3 +128,15 @@ Newest first. Every session must add an entry (see `CLAUDE.md`).
 - 19:05 team back, on charger: batch resumed in this session (54 level runs pending).
 
 **Next action** — when round 1 finishes: check `batch.log` for failures/suspects, run `compare_levels.py` per artifact, write cross-artifact results, commit.
+
+## 2026-10-30 19:05 → 2026-10-31 — round 1 finished (directed by Ayaan and Kshiti)
+
+- Batch ran in this session (background task) from 19:05 to 2026-10-31 15:01. Charger removed twice (19:17, 19:27): the guard stopped 470 L3 and redid it; no level slept or was set aside. `batch.log` end: `batch done: 51 ok, 3 failed ['RL_907_HI L5', 'Ark_HM_31_HI L5', 'Ark_HM_797_hi L5']`.
+- The 3 failures: 5–9/26 images registered, DensifyPointCloud 0 points, then TextureMesh exit 1 → `run_pipeline.py --stages dense` exit 1 and the batch skipped evaluation. Ran `evaluate_run.py --level L5` for the three → exit 0, F = 0 (no points); cleaned their workspaces. `run_batch.py` now evaluates a level whenever sparse succeeded, logging "dense stage failed: evaluated as a failed reconstruction".
+- `run_batch.py --count 13 --dry-run` → 0 pending.
+- Added `level_summary` (compare.py) + test, `scripts/summarize_round.py`; `compare_levels.py` prints registered images and handles failed runs (it crashed on a missing Chamfer). `pytest -q` → 46 passed.
+- `compare_levels.py` for all 13 artifacts and `summarize_round.py --count 13 --name round1` → CSVs + plots. See [[07-Results]].
+- Checked the split-model hypothesis with `colmap model_converter` (TXT into scratch): at L1, 341 / 31 / 797 lose exactly one ring + pole (120 + 1 images) into a second model; 1260B L1 one model, camera RMS 0.018 R; F@0.01 0.912.
+- Corrected during the session: the agent first said 809 was the last artifact; `--count 13` = pilot + ranks 1–12, so 797 (rank 12) was last.
+
+**Next action** — team: decide on the split-model question and the main-set size ([[09-Open-Questions]]); then either round 2 (next ranks) or museum preparation (decimate + GLB for the best artifacts).
