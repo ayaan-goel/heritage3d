@@ -140,3 +140,13 @@ Newest first. Every session must add an entry (see `CLAUDE.md`).
 - Corrected during the session: the agent first said 809 was the last artifact; `--count 13` = pilot + ranks 1–12, so 797 (rank 12) was last.
 
 **Next action** — team: decide on the split-model question and the main-set size ([[09-Open-Questions]]); then either round 2 (next ranks) or museum preparation (decimate + GLB for the best artifacts).
+- Team decision: split SfM models stay a reported finding (no pipeline change, no re-run). Recorded in [[08-Decisions]]; vault edits go into the next work commit.
+
+## 2026-10-31 afternoon — museum preparation (directed by Ayaan and Kshiti)
+
+- Team chose museum prep before round 2; asked whether artifacts can be added later → yes, same cost (batch resumes; museum reads a manifest).
+- `museum/` static site (index.html, style.css, app.js; `<model-viewer>` 3.5.0 from jsDelivr) reading `museum/artifacts.json`. Preview via `.claude/launch.json` (`python -m http.server 8765`).
+- `src/heritage3d/glb.py` (GLB read/write with embedded texture, z-up → y-up, surface sampling) + `tests/test_glb.py`; `scripts/export_glb.py`; `[museum]` config.
+- Debugging the black texture: first a wrong guess (V flip) and a sampler change; then OpenMVS's own GLB also rendered black; UV-over-texture plots showed faces mapped onto black blobs → `TextureMesh --global-seam-leveling 0 --local-seam-leveling 0`: black face centres 100 % → 0.2 % (either flag alone 91 % / 100 %). Flip reverted; sampler kept linear/no-mipmap/clamped like OpenMVS.
+- `export_glb.py --count 13` → exit 0: 8 exhibits, 5 skipped by the F ≥ 0.95 rule; 2.8–3.8 MB each; F unchanged (see [[07-Results]]). Checked 470, 809, RL_907 in the browser: textured and upright; phone width (375 px) layout stacks.
+- Fixed `clean_workspace`: `dense/images/*` missed the nested undistorted images (~170 MB per L1 workspace kept); now `dense/images/**/*`. Existing workspaces still hold them. `pytest -q` → 49 passed.

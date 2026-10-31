@@ -53,9 +53,10 @@ def test_run_stage_reports_failure(tmp_path):
 def test_clean_workspace_keeps_results(tmp_path):
     from heritage3d.pipeline import clean_workspace
     keep = ["metrics.json", "sparse/0/points3D.bin", "mvs/scene_dense.ply", "mvs/scene_dense_texture0.png"]
-    drop = ["mvs/depth0001.dmap", "mvs/depth0092.dmap", "database.db", "dense/images/0001_0_.png"]
+    drop = ["mvs/depth0001.dmap", "mvs/depth0092.dmap", "database.db", "dense/images/0001_0_.png",
+            "dense/images/art/RGB/0013_45_.png"]
     for name in keep + drop:
         (tmp_path / name).parent.mkdir(parents=True, exist_ok=True)
         (tmp_path / name).write_bytes(b"x" * 10)
-    assert clean_workspace(tmp_path) == 40
+    assert clean_workspace(tmp_path) == 50
     assert all((tmp_path / n).exists() for n in keep) and not any((tmp_path / n).exists() for n in drop)

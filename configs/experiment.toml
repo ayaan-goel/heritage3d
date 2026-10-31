@@ -45,3 +45,14 @@ L2 = 6
 L3 = 12
 L4 = 24
 L5 = 45
+
+# Museum models (scripts/export_glb.py). One capture level for every museum artifact.
+[museum]
+# L3 (92 images): best median dense-cloud quality in round 1 (2026-10-31).
+level = 'L3'
+# Target triangle count after decimation and largest texture side (px).
+faces = 100000
+texture = 2048
+jpeg_quality = 85
+# Only artifacts whose full mesh reaches this F@0.002 R at the museum level are exhibited.
+min_mesh_f = 0.95

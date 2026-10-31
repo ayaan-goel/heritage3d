@@ -165,3 +165,21 @@ Per level across the 13 (`round1_summary.csv`):
 - The split-model loss is a pipeline limitation (taking only the largest model), not missing coverage: merging or densifying both models would likely recover most of the missing side. Fixing it changes the frozen pipeline → team decision ([[09-Open-Questions]]).
 - Rings fail to connect when the object looks very different from above and below (plain or symmetric surfaces), so cross-ring matches are few; fewer images per ring make it worse (more splits at L4/L5).
 - τ = 0.002 R is harsh for small objects (1260B fills 8 % of the frame); a tolerance relative to object size may be fairer for them.
+
+## Museum models — optimized vs full (round-1 exhibits) — 2026-10-31
+
+`scripts/export_glb.py --count 13`, config `[museum]` (L3, ~100k triangles, texture ≤ 2048 px JPEG q85, seam leveling off). 8 of 13 artifacts pass the exhibit rule (full-mesh F@0.002 R ≥ 0.95 at L3); not exhibited: 1260B (0.128), 795 (0.830), 341 (0.667), 31 (0.665), 797 (0.854). Both versions re-textured by OpenMVS from the same L3 mesh, aligned into the CHSD frame, packed as one GLB (full: PNG texture ≤ 8192 px; museum: JPEG); accuracy from 1,000,000 surface samples voxelized at 0.002 R vs the CHSD reference. Files: `museum/models/*.glb`, `museum/artifacts.json`, `experiments/results/museum/<artifact>_glb.json`.
+
+| Artifact | Full mesh | Full GLB | Museum GLB | Size ratio | Surface F@0.002 full → museum | Chamfer museum |
+|---|---|---|---|---|---|---|
+| `Ark_HM_272_HI` | 481,612 tri | 18.21 MB | 3.09 MB | 17 % | 0.9853 → 0.9851 | 0.00078 R |
+| `Ark_HM_470_HI` | 487,210 tri | 22.27 MB | 3.82 MB | 17 % | 0.9986 → 0.9987 | 0.00056 R |
+| `Ark_HM_714_HI` | 406,484 tri | 16.34 MB | 3.13 MB | 19 % | 0.9738 → 0.9736 | 0.00145 R |
+| `Ark_HM_654_HI` | 456,782 tri | 16.22 MB | 2.83 MB | 17 % | 0.9782 → 0.9783 | 0.00119 R |
+| `Ark_HM_725_HI` | 419,517 tri | 15.24 MB | 2.92 MB | 19 % | 0.9804 → 0.9802 | 0.00084 R |
+| `RL_907_HI` | 133,138 tri | 5.01 MB | 2.79 MB | 56 % | 0.9801 → 0.9799 | 0.00090 R |
+| `Ark_HM_321_HI` | 325,530 tri | 12.52 MB | 2.99 MB | 24 % | 0.9847 → 0.9846 | 0.00085 R |
+| `Ark_HM_809_HI` | 521,125 tri | 18.88 MB | 2.91 MB | 15 % | 0.9876 → 0.9877 | 0.00075 R |
+
+**Measured:** median file 16.3 MB → 3.0 MB (all 8 exhibits 24.5 MB), surface F@0.002 changes by ≤ 0.0003 and Chamfer by < 1 % — decimating to 100k triangles costs no measurable accuracy at this tolerance; reconstruction error, not tessellation, dominates. Supports H3 on these 8 artifacts (load time / rendering cost not measured yet).
+- Found while exporting: OpenMVS seam leveling turns faces black on CHSD renders, so the pipeline's own textured meshes (`scene_dense_texture*`) are black. Does not affect any evaluation (geometry only); museum export turns it off ([[08-Decisions]]).

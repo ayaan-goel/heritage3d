@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>heritage3d Virtual Museum</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <h1>heritage3d <span>Virtual Museum</span></h1>
+      <p class="lede">Cultural heritage artifacts digitized from ordinary photographs, reconstructed on a laptop CPU and optimized for the web.</p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="stage">
+      <model-viewer id="viewer" camera-controls touch-action="pan-y" shadow-intensity="0"
+                    exposure="1" interaction-prompt="auto" alt="3D model of the selected artifact">
+        <div class="loading" slot="progress-bar"><span id="progress"></span></div>
+      </model-viewer>
+      <aside class="info" id="info" aria-live="polite">
+        <p class="muted">Loading collection…</p>
+      </aside>
+    </section>
+
+    <section>
+      <h2>Collection</h2>
+      <ul class="gallery" id="gallery"></ul>
+    </section>
+
+    <section class="about">
+      <h2>About this museum</h2>
+      <p>Each object was reconstructed from rendered photographs only, using open-source photogrammetry
+        (COLMAP structure-from-motion and OpenMVS dense reconstruction) on a laptop without a graphics card.
+        Every exhibit uses the same capture budget: <strong id="about-images">92</strong> photographs taken at
+        12° steps around the object. The resulting mesh was then reduced to about 100,000 triangles with a
+        compressed texture so it loads quickly in a browser.</p>
+      <p>The accuracy figure for each object compares the museum model with reference geometry decoded from the
+        dataset's depth maps: F@0.002 R is the share of surface that agrees within 0.2% of the camera distance
+        (1.0 = perfect).</p>
+      <p>Drag to rotate, scroll or pinch to zoom, right-drag or two-finger drag to pan.</p>
+    </section>
+  </main>
+
+  <footer class="wrap foot">
+    <p>Source images: <em>Cultural Heritage Synthetic Depth Dataset</em> (CHSD), V. Arampatzakis, F. Arnaoutoglou,
+      A. Koutsoudis &amp; G. Pavlidis, 2024 —
+      <a href="https://doi.org/10.5281/zenodo.11492154">doi:10.5281/zenodo.11492154</a>, rendered from models of the
+      Virtual Hampson Museum. Licensed
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>; these reconstructions are
+      shared under the same license, for non-commercial use.</p>
+    <p>heritage3d — Ayaan Goel &amp; Kshiti Bhavsar · Mentor: Ms. Komal Singh</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

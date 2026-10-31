@@ -88,6 +88,15 @@ python scripts/summarize_round.py --count 12      # per-level summary across art
 
 Runs every level of the first N artifacts in the fixed order (the 40 artifacts not cut off by the frame, ordered to cover object size and texture), skipping levels already evaluated. A level where SfM or MVS fails is still evaluated and recorded (F = 0 for missing output). `--clean` deletes regenerable intermediates after evaluation (~80 % of the space).
 
+## Virtual museum
+
+```
+python scripts/export_glb.py --count 13          # museum models for every eligible artifact
+python -m http.server 8000 --directory museum    # then open http://localhost:8000
+```
+
+`export_glb.py` re-textures each artifact's mesh at the museum level (`[museum]` in `configs/experiment.toml`: L3, ~100k triangles, 2048 px JPEG texture), turns it upright, packs one self-contained GLB into `museum/models/` and adds it to `museum/artifacts.json`. It also measures the optimized model against the reference (`experiments/results/museum/`). The site in `museum/` is static: open it through any web server.
+
 ## Dataset
 
 Cultural Heritage Synthetic Depth Dataset (CHSD) by Arampatzakis, Arnaoutoglou, Koutsoudis & Pavlidis (2024), licensed **CC BY-NC-SA 4.0**:

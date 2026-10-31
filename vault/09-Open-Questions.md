@@ -7,13 +7,16 @@
 - [ ] Are the original Virtual Hampson Museum models obtainable, and under what license?
 - [ ] Why does dense-cloud precision fall as images increase (L4 0.985 → L1 0.829)? Hypothesis: fixed OpenMVS fusion settings. Round 1: the same pattern on all six artifacts that reconstruct as one model.
 - [ ] Main artifact set: how many artifacts beyond round 1 (13 done; L1 takes 18–150 min per artifact)?
-- [ ] SfM splits into two models (one elevation ring + pole cut off) in 7/13 artifacts at some level; the pipeline densifies only the largest model. Keep as a finding under frozen settings, or change the pipeline (e.g. densify/merge all models) and re-run everything? Team decision.
 - [ ] Tolerance for small objects: τ is relative to R, harsh for `Ark_HM_1260B_HI` (F@0.002 0.06 but F@0.01 0.91 at L1). Also report a tolerance relative to object size?
 - [ ] Matcher choice (exhaustive vs vocabulary tree) — fixed after pilot, same for all levels.
 - [ ] Code license for the repository (separate from the CC BY-NC-SA data license).
 
+- [ ] Where to host the museum (GitHub Pages from this repo, university server, or local demo only)? Team decision; GLBs are ~4 MB each.
+- [ ] Why does OpenMVS seam leveling blacken faces on CHSD renders? (hypothesis: pure-black background pixels at silhouettes pull the colour correction to black). Not needed for the experiment; museum export avoids it.
+
 ## Closed
 
+- [x] Split SfM models (one ring + pole cut off, 7/13 artifacts at some level) → kept as a reported finding under frozen settings, no pipeline change (team, 2026-10-31).
 - [x] CPU runtime for L1 (362 images) → feasible: 135 min, peak 4.7 GB on the pilot (2026-10-30).
 - [x] Black background → SfM registered every image at every level with 0.16–0.24 px error; no masks needed on the pilot (2026-10-30).
 - [x] Depth encoding and intrinsics → decoded from the depth maps: z = R(1.5 − v/65535), f = 1000 px, ideal turntable rig (2026-10-30, [[03-Dataset-CHSD]]). Option A feasible.

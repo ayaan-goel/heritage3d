@@ -147,7 +147,8 @@ def folder_bytes(path):
 
 # Intermediates that can be regenerated and are not needed for evaluation or the museum:
 # per-view depth maps, the COLMAP feature database and the undistorted image copies.
-INTERMEDIATES = ("mvs/depth*.dmap", "database.db", "dense/images/*")
+# Undistorted images sit in subfolders named after the input paths (dense/images/<artifact>/RGB/...).
+INTERMEDIATES = ("mvs/depth*.dmap", "database.db", "dense/images/**/*")
 
 
 def clean_workspace(ws):
