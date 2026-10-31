@@ -77,10 +77,15 @@ def step(log, name, args, poll=5):
 
 def run_level(log, artifact, level, ws, clean):
     common = ["--artifact", artifact, "--level", level]
-    ok = (step(log, "run_pipeline.py", [*common, "--stages", "sparse", "--overwrite"])
-          and step(log, "run_pipeline.py", [*common, "--stages", "dense"])
-          and step(log, "evaluate_run.py", common))
-    if ok:
+    if not step(log, "run_pipeline.py", [*common, "--stages", "sparse", "--overwrite"]):
+        return False
+    # A dense tool can fail on a near-empty sparse model (e.g. TextureMesh with no mesh); that is a
+    # failed reconstruction, which evaluation records as F = 0, not a failed run.
+    dense_ok = step(log, "run_pipeline.py", [*common, "--stages", "dense"])
+    ok = step(log, "evaluate_run.py", common)
+    if ok and not dense_ok:
+        log("  dense stage failed: evaluated as a failed reconstruction")
+    if ok and dense_ok:
         step(log, "preview_cloud.py", [str(ws / "mvs" / "scene_dense.ply"), "--out",
                                        str(REPO_ROOT / "experiments" / "plots" / f"{artifact}_{level}_dense.jpg")])
         if clean:

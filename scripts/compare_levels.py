@@ -70,8 +70,9 @@ def main(argv=None):
     plot_path = REPO_ROOT / "experiments" / "plots" / f"{args.artifact}_levels.png"
     plot(rows, args.artifact, plot_path)
     for r in rows:
-        print(f"{r['level']}: {r['images']} images, {r['total_s'] / 60:.1f} min, peak {r['peak_mb']} MB, "
-              f"chamfer {r['cloud_chamfer']:.5f} R, F {r['cloud_f@0.002']:.3f}")
+        chamfer = "-" if r["cloud_chamfer"] is None else f"{r['cloud_chamfer']:.5f} R"
+        print(f"{r['level']}: {r['images']} images, {r['registered']} registered, {r['total_s'] / 60:.1f} min, "
+              f"peak {r['peak_mb']} MB, chamfer {chamfer}, F {r['cloud_f@0.002']:.3f}")
     print(f"-> {csv_path}\n-> {plot_path}")
     return 0
 

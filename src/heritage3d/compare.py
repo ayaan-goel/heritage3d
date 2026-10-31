@@ -61,3 +61,29 @@ def write_csv(rows, path):
         w = csv.DictWriter(f, fieldnames=list(rows[0]))
         w.writeheader()
         w.writerows(rows)
+
+
+def level_summary(rows_by_artifact, levels, tau="0.002", broken=0.5):
+    """Per level across artifacts: medians of cost and quality, worst F and how many broke (F < broken)."""
+    from statistics import median
+
+    out = []
+    for level in levels:
+        rows = [r for rs in rows_by_artifact.values() for r in rs if r["level"] == level]
+        if not rows:
+            continue
+        cloud = [r[f"cloud_f@{tau}"] for r in rows]
+        out.append({
+            "level": level,
+            "images": rows[0]["images"],
+            "artifacts": len(rows),
+            "median_registered_frac": round(median(r["registered"] / r["images"] for r in rows), 3),
+            "median_total_min": round(median(r["total_s"] for r in rows) / 60, 1),
+            "max_total_min": round(max(r["total_s"] for r in rows) / 60, 1),
+            "median_peak_mb": round(median(r["peak_mb"] for r in rows)),
+            f"median_cloud_f@{tau}": round(median(cloud), 3),
+            f"min_cloud_f@{tau}": round(min(cloud), 3),
+            f"median_mesh_f@{tau}": round(median(r[f"mesh_f@{tau}"] for r in rows), 3),
+            f"broken_f<{broken}": sum(f < broken for f in cloud),
+        })
+    return out

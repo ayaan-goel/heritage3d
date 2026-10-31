@@ -60,3 +60,12 @@ def test_level_row_for_failed_dense_and_no_model():
     row = level_row(run, {"alignment": {"cameras": 0}, "dense_cloud": failed, "mesh_vertices": failed})
     assert row["registered"] == 0 and row["cloud_f@0.002"] == 0.0 and row["cloud_recall@0.002"] == 0.0
     assert row["cloud_chamfer"] is None and row["camera_rms"] is None and row["densify_s"] == 0
+
+
+def test_level_summary_counts_broken_artifacts():
+    from heritage3d.compare import level_summary
+    good = [level_row(fake_run("L5", 26), fake_eval(0.95))]
+    bad = [level_row(fake_run("L5", 26), fake_eval(0.2))]
+    s = level_summary({"a": good, "b": bad, "c": good}, ["L1", "L5"])
+    assert len(s) == 1 and s[0]["artifacts"] == 3 and s[0]["broken_f<0.5"] == 1
+    assert s[0]["median_cloud_f@0.002"] == 0.95 and s[0]["min_cloud_f@0.002"] == 0.2
