@@ -17,11 +17,12 @@ export const PEDESTAL_TOP = 1.04;
 export const STEP = 3.2;             // between pedestal pairs along a gallery
 export const FIRST_PAIR = 2.6;       // from a gallery's start (and end) to its first (and last) pair
 const ROW = 2.2;                     // pedestal distance from a gallery's centre line
-const LOBBY = 3;                     // extra length of the entrance gallery, where visitors start
+const LOBBY = 5;                     // extra length of the entrance gallery, where visitors start
 const RING_R = 6.6;                  // rotunda pedestal ring
 const RING_DEG = [32, 58, 122, 148, 212, 238, 302, 328];
 const PEDESTAL_R = 0.52;             // circle around a pedestal's footprint
 const STAND_R = 0.75;                // information stand in the middle of the rotunda
+const BOARD_R = 0.75;                // entrance signboards
 
 export const GALLERIES = [
   { name: "South", heading: 0 },
@@ -79,7 +80,18 @@ export function planHall(n) {
   }));
   for (const g of [1, 2, 3]) add(`${GALLERIES[g].name} gallery`, slots(galleries[g]).slice(0, counts[g]));
 
-  const obstacles = [...spots.map(({ x, z }) => ({ x, z, r: PEDESTAL_R + BODY })), { x: 0, z: 0, r: STAND_R + BODY }];
+  // two signboards in the entrance lobby, either side of the aisle, turned towards where visitors start
+  const entrance = galleries[0].end, start = toWorld(0, entrance - 1.4, 0);
+  const boards = [-1, 1].map((side) => {
+    const [x, z] = toWorld(0, entrance - 4.6, side * 2.4);
+    return { x, z, yaw: facing(start[0] - x, start[1] - z), side };
+  });
+
+  const obstacles = [
+    ...spots.map(({ x, z }) => ({ x, z, r: PEDESTAL_R + BODY })),
+    { x: 0, z: 0, r: STAND_R + BODY },
+    ...boards.map(({ x, z }) => ({ x, z, r: BOARD_R + BODY })),
+  ];
   const roomR = ROTUNDA_R - PILASTER - BODY;
   const halfDoor = DOOR_W / 2 - BODY, halfGallery = GALLERY_W / 2 - PILASTER - BODY;
 
@@ -122,10 +134,9 @@ export function planHall(n) {
     return [x, z];
   }
 
-  const [sx, sz] = toWorld(0, galleries[0].end - 1.6, 0);
   return {
-    spots, zones, galleries,
-    spawn: { x: sx, z: sz, yaw: 0 },
+    spots, zones, galleries, boards,
+    spawn: { x: start[0], z: start[1], yaw: 0 },
     extent: Math.max(...galleries.map((g) => g.end)) + 0.5,
     move,
   };

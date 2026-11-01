@@ -187,3 +187,11 @@ Newest first. Every session must add an entry (see `CLAUDE.md`).
 - Checks: `node --check` on all modules → ok; floor-plan walking tests in Node (n = 3…48: spots/zones right, slides around the centre stand and along walls, stops at gallery walls). Browser pane: hall, rotunda, gallery, placard, close-up, deep link from the list, E in/out, walking with keys, no new console errors. Pointer lock is refused in the app's pane → added the drag-to-look fallback (after the first failure, or a second one). Stress test `?repeat=3` → numbers in [[07-Results]]. `pytest -q` → 54 passed.
 
 **Next action** — team: try the hall in a normal browser at full screen (pointer lock, feel); then round 4.
+
+## 2026-11-01 night — round 4 started, entrance boards (directed by Ayaan and Kshiti)
+
+- Team: the hall worked "perfect" in a normal browser (port 8765). Asked for round 4 to end around 06:30 and for entrance boards.
+- `check_env.py` → ok. 20:27 → 10 h left at ~2.1 h/artifact (rounds 2–3) → **4 artifacts** (ranks 23–26, ETA ~05:00–05:30; 5 would run to ~07:00). `run_batch.py --count 27 --clean` started in-session 20:28 (20 level runs: `Ark_HM_192_HI`, `Ark_HM_711_HI`, `Ark_HM_1286_HI`, `Ark_HM_1299_Hi`); first time under the 15-min unplug grace. `Ark_HM_192_HI` L5 dense finished in 2 s (few images registered, to check).
+- Museum: two signboards in the entrance lobby (lobby 3 → 5 m, spawn 1.4 m from the entrance): title board with the PDEU logo and name, team board. Checked in the browser pane (both readable, in view from the start); walking checks still pass; `pytest -q` → 54 passed.
+
+**Next action** — when round 4 finishes: compare, summarize, export, results into the vault, commit.

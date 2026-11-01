@@ -133,3 +133,86 @@ export function infoCanvas(artifacts, zones) {
   wrap(g, "Source images: CHSD (Arampatzakis, Arnaoutoglou, Koutsoudis & Pavlidis, 2024), rendered from models of the Virtual Hampson Museum · CC BY-NC-SA 4.0", w / 2, h - 72, w - 200, 30);
   return c;
 }
+
+// Entrance signboards (portrait, 800 × 1100 px): the exhibition title under the university's name and
+// logo, and the project team.
+function board(draw) {
+  const w = 800, h = 1100, c = canvas(w, h), g = c.getContext("2d");
+  g.fillStyle = "#f4eee2";
+  g.fillRect(0, 0, w, h);
+  g.strokeStyle = BRONZE;
+  g.lineWidth = 12;
+  g.strokeRect(18, 18, w - 36, h - 36);
+  g.lineWidth = 2;
+  g.strokeRect(40, 40, w - 80, h - 80);
+  g.textAlign = "center";
+  draw(g, w, h);
+  return c;
+}
+
+const rule = (g, w, y) => {
+  g.fillStyle = BRONZE;
+  g.fillRect(w / 2 - 160, y, 320, 3);
+};
+
+export function titleBoardCanvas(logo, count) {
+  return board((g, w, h) => {
+    if (logo) {
+      const lh = 300, lw = (logo.width / logo.height) * lh;
+      g.drawImage(logo, (w - lw) / 2, 80, lw, lh);
+    }
+    g.fillStyle = "#8a2a22";
+    g.font = `600 40px ${SERIF}`;
+    g.fillText("Pandit Deendayal Energy University", w / 2, 450);
+    g.font = `34px ${SERIF}`;
+    g.fillText("(PDEU)", w / 2, 498);
+    rule(g, w, 540);
+    g.fillStyle = BRONZE;
+    g.font = `600 30px ${SANS}`;
+    g.letterSpacing = "8px";
+    g.fillText("HERITAGE3D", w / 2, 620);
+    g.letterSpacing = "0px";
+    g.fillStyle = INK;
+    g.font = `84px ${SERIF}`;
+    g.fillText("Virtual Heritage", w / 2, 720);
+    g.fillText("Exhibition", w / 2, 815);
+    g.fillStyle = MUTED;
+    g.font = `30px ${SANS}`;
+    wrap(g, `${count} cultural heritage artifacts digitized from ordinary photographs`, w / 2, 900, w - 180, 42);
+    g.font = `italic 30px ${SERIF}`;
+    g.fillText("Welcome", w / 2, h - 90);
+  });
+}
+
+export function teamBoardCanvas() {
+  return board((g, w, h) => {
+    const name = (text, y) => {
+      g.fillStyle = INK;
+      g.font = `60px ${SERIF}`;
+      g.fillText(text, w / 2, y);
+    };
+    const heading = (text, y) => {
+      g.fillStyle = BRONZE;
+      g.font = `600 30px ${SANS}`;
+      g.letterSpacing = "8px";
+      g.fillText(text, w / 2, y);
+      g.letterSpacing = "0px";
+    };
+    g.fillStyle = INK;
+    g.font = `64px ${SERIF}`;
+    g.fillText("Project Team", w / 2, 170);
+    rule(g, w, 215);
+    heading("CREATED BY", 330);
+    name("Ayaan Goel", 420);
+    name("Kshiti Bhavsar", 510);
+    rule(g, w, 590);
+    heading("MENTOR", 690);
+    name("Prof. Komal Singh", 780);
+    g.fillStyle = MUTED;
+    g.font = `30px ${SANS}`;
+    wrap(g, "Image-based 3D digitization of cultural heritage artifacts for a web-based virtual museum", w / 2, 860, w - 180, 42);
+    g.fillStyle = "#8a2a22";
+    g.font = `600 30px ${SERIF}`;
+    g.fillText("Pandit Deendayal Energy University", w / 2, h - 90);
+  });
+}

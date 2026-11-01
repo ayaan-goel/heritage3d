@@ -187,14 +187,30 @@ function pedestal(add, spot, M, placard, aniso) {
   put(new THREE.PlaneGeometry(0.46, 0.29).rotateX(-0.2).translate(0, 0.62, 0.331), label);
 }
 
-// The whole building as one group: placards[i] belongs to plan.spots[i], signs[i] to GALLERIES[i].
-export function buildHall(plan, { aniso, placards, signs, info }) {
+// Freestanding signboard on two bronze posts; the panel (1.6 × 2.2 m) faces the board's front (+z).
+function signboard(add, spot, M, picture, aniso) {
+  const at = new THREE.Matrix4().makeRotationY(spot.yaw).setPosition(spot.x, 0, spot.z);
+  const put = (g, material) => add(g.applyMatrix4(at), material);
+  for (const side of [-1, 1]) {
+    put(new THREE.BoxGeometry(0.07, 2.75, 0.07).translate(side * 0.72, 1.375, -0.06), M.bronze);
+    put(new THREE.BoxGeometry(0.12, 0.05, 0.5).translate(side * 0.72, 0.025, -0.06), M.bronze);
+  }
+  put(new THREE.BoxGeometry(1.72, 2.32, 0.05).translate(0, 1.55, 0), M.dark);
+  put(new THREE.PlaneGeometry(1.8, 1.8).rotateX(-Math.PI / 2).translate(0, 0.003, 0), M.shadow);
+  const face = new THREE.MeshStandardMaterial({ map: T.texture(picture, aniso), roughness: 0.8, color: 0xd8d0c2 });
+  put(new THREE.PlaneGeometry(1.6, 2.2).translate(0, 1.55, 0.026), face);
+}
+
+// The whole building as one group: placards[i] belongs to plan.spots[i], signs[i] to GALLERIES[i] and
+// boards[i] to plan.boards[i].
+export function buildHall(plan, { aniso, placards, signs, info, boards }) {
   const M = materials(aniso);
   const parts = new Map();
   const add = (geometry, material) => (parts.get(material) ?? parts.set(material, []).get(material)).push(geometry);
   rotunda(add, M, aniso, signs, info);
   for (const gal of plan.galleries) gallery(add, gal, M);
   plan.spots.forEach((spot, i) => pedestal(add, spot, M, placards[i], aniso));
+  plan.boards.forEach((spot, i) => signboard(add, spot, M, boards[i], aniso));
 
   const group = new THREE.Group();
   for (const [material, list] of parts) {

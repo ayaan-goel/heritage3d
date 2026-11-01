@@ -7,7 +7,7 @@ import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 import { buildHall } from "./building.js";
-import { infoCanvas, placardCanvas, signCanvas } from "./labels.js";
+import { infoCanvas, placardCanvas, signCanvas, teamBoardCanvas, titleBoardCanvas } from "./labels.js";
 import { EYE, GALLERIES, GALLERY_W, PEDESTAL_TOP, ROTUNDA_R, planHall, toWorld } from "./layout.js";
 
 const DISPLAY = 0.46;        // largest side of an exhibit on its pedestal, m (CHSD gives no real sizes)
@@ -74,11 +74,15 @@ const signs = GALLERIES.map((g) => {
   const zone = plan.zones.find((z) => z.name === `${g.name} gallery`);
   return signCanvas(`${g.name} Gallery`, [g.heading === 0 && "Entrance", zone && numbers(zone)].filter(Boolean).join(" · "));
 });
+const logo = new Image();
+logo.src = "hall/pdeu-logo.png";
+const logoReady = await logo.decode().then(() => logo, () => null);  // the board still shows without it
 scene.add(buildHall(plan, {
   aniso,
   placards: entries.map((e, i) => placardCanvas(e, i + 1)),
   signs,
   info: infoCanvas(artifacts, plan.zones.map((z) => `${z.name}: ${numbers(z)}`)),
+  boards: plan.boards.map((b) => (b.side < 0 ? titleBoardCanvas(logoReady, artifacts.length) : teamBoardCanvas())),
 }));
 
 const exhibits = entries.map((entry, i) => {
