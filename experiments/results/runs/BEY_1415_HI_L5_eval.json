@@ -1,0 +1,82 @@
+{
+ "artifact": "BEY_1415_HI",
+ "level": "L5",
+ "units": "R (camera-to-centre distance)",
+ "evaluation_config": {
+  "reference_stride": 2,
+  "voxel": 0.002,
+  "thresholds": [
+   0.002,
+   0.005,
+   0.01
+  ]
+ },
+ "reference_extent": [
+  0.23630527376395033,
+  0.5001570938280954,
+  0.4346516063955844
+ ],
+ "alignment": {
+  "cameras": 10,
+  "camera_error_rms": 0.002376582047411595,
+  "camera_error_max": 0.0051381508091476605
+ },
+ "dense_cloud": {
+  "recon_points": 41723,
+  "reference_points": 155702,
+  "accuracy_mean": 0.001419279118290366,
+  "accuracy_median": 0.0014053867384771308,
+  "completeness_mean": 0.02083743727096842,
+  "completeness_median": 0.0034607270431911636,
+  "chamfer": 0.011128358194629394,
+  "rmse": 0.0015141971311972517,
+  "hausdorff": 0.0833263710152315,
+  "hausdorff_95": 0.06678157016887888,
+  "fscore": {
+   "0.002": {
+    "precision": 0.9091148766867195,
+    "recall": 0.3909904818178315,
+    "f": 0.5468099355768553
+   },
+   "0.005": {
+    "precision": 0.9977230783980059,
+    "recall": 0.5147974977842289,
+    "f": 0.6791647694966468
+   },
+   "0.01": {
+    "precision": 1.0,
+    "recall": 0.5440007193228089,
+    "f": 0.704663815909885
+   }
+  }
+ },
+ "mesh_vertices": {
+  "recon_points": 36135,
+  "reference_points": 155702,
+  "accuracy_mean": 0.0014641032950468331,
+  "accuracy_median": 0.0014472656677385913,
+  "completeness_mean": 0.02090654819263636,
+  "completeness_median": 0.003493845075877214,
+  "chamfer": 0.011185325743841595,
+  "rmse": 0.001594959712684908,
+  "hausdorff": 0.08339503104259789,
+  "hausdorff_95": 0.06685438340046863,
+  "fscore": {
+   "0.002": {
+    "precision": 0.8920160509201606,
+    "recall": 0.3820117917560468,
+    "f": 0.5349343844344343
+   },
+   "0.005": {
+    "precision": 0.9976753839767538,
+    "recall": 0.5136928234704756,
+    "f": 0.6781916972669995
+   },
+   "0.01": {
+    "precision": 0.9994465199944652,
+    "recall": 0.542048271698501,
+    "f": 0.7028869143607022
+   }
+  }
+ }
+}

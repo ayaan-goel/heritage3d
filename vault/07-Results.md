@@ -233,3 +233,40 @@ Per level across all 20 artifacts (`round2_summary.csv`):
 (MB as printed by the script, 1 decimal; exact bytes in `experiments/results/museum/<artifact>_glb.json`.)
 
 **Measured:** decimation again costs ≤ 0.001 surface F. Surface-sampled F is below the vertex-based mesh F used for the exhibit rule (1304: 0.948 vs 0.993; round 1 714: 0.974 vs 0.999) — surface sampling also counts large faces, e.g. hole fills, that have few vertices (hypothesis for the gap). Checked 1304 and 11 in the browser: textured and upright.
+
+## Round 3 — ranks 20–22 (3 artifacts × 5 levels) — 2026-11-01
+
+Same frozen config (still the strict power guard), `run_batch.py --count 23 --clean` in-session 2026-11-01 08:48 → 14:49, `batch done: 15 ok, 0 failed`, no charger removal or sleep. Team chose a 3-artifact round (briefly 2, then back to 3). All 23: `experiments/results/round3_all.csv`, `round3_summary.csv`, `experiments/plots/round3_summary.png`.
+
+| Artifact | L1 | L2 | L3 | L4 | L5 | L1 time | Best |
+|---|---|---|---|---|---|---|---|
+| `Ark_HM_746_HI` | 0.881 | 0.927 | 0.967 | 0.988 | 0.915 | 100 min | L4 |
+| `Ark_HM_522_HI` | 0.909 | 0.946 | 0.978 | 0.991 | 0.896 | 69 min | L4 |
+| `BEY_1415_HI` | 0.902 | 0.905 (181/182) | 0.627 (44/92) | 0.582 (20/47) | 0.547 (10/26) | 42 min | L2 |
+
+Per level across all 23 artifacts (`round3_summary.csv`):
+
+| Level | Images | Median total time (max) | Median peak RAM | Median cloud F (min) | Median mesh F | Cloud F < 0.5 |
+|---|---|---|---|---|---|---|
+| L1 | 362 | 60.0 min (150.1) | 4.4 GB | 0.883 (0.062) | 0.983 | 2 / 23 |
+| L2 | 182 | 24.1 min (55.4) | 2.3 GB | 0.920 (0.051) | 0.981 | 2 / 23 |
+| L3 | 92 | 9.9 min (18.1) | 2.0 GB | 0.964 (0.151) | 0.988 | 2 / 23 |
+| L4 | 47 | 3.9 min (8.1) | 2.0 GB | **0.984** (0.000) | 0.990 | 4 / 23 |
+| L5 | 26 | 1.4 min (4.2) | 2.0 GB | 0.679 (0.000) | 0.689 | 7 / 23 |
+
+**Measured:**
+- 746 and 522 are clean at every level (one model, all images) and best at L4; both keep F ≈ 0.90–0.92 at L5, among the best L5 results so far. Clean artifacts: 14 / 23.
+- `BEY_1415_HI` (first artifact from the BEY collection) is complete at L1/L2 (F ≈ 0.90) but from L3 down SfM registers only part of the images, into two models at L3/L4 (44 + 31, 20 + 15) → F 0.55–0.63. Its breakdown point is 12° steps (L3); others broke from L2 (795), from L4 (321, RL_907) or at every level (1260B, 38).
+- Per-level medians barely move from 20 to 23 artifacts; L4 remains best when it works (0.984), L3 the lowest level without extra breakdowns.
+
+## Museum models — round-3 exhibits — 2026-11-01
+
+`export_glb.py --artifacts Ark_HM_746_HI Ark_HM_522_HI BEY_1415_HI`; not exhibited: `BEY_1415_HI` (L3 mesh F 0.593). Museum now **16 exhibits, 49 MB**.
+
+| Artifact | Full mesh | Full GLB | Museum GLB | Surface F@0.002 full → museum | Chamfer museum |
+|---|---|---|---|---|---|
+| `Ark_HM_746_HI` | 433,507 tri | 15.8 MB | 2.9 MB | 0.982 → 0.981 | 0.00092 R |
+| `Ark_HM_522_HI` | 354,525 tri | 13.1 MB | 2.9 MB | 0.991 → 0.991 | 0.00073 R |
+
+Checked both in the browser: textured, upright.
+

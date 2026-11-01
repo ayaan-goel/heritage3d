@@ -171,3 +171,12 @@ Newest first. Every session must add an entry (see `CLAUDE.md`).
 
 **Next action** — when round 3 finishes: batch.log check, compare/summarize, export, results into the vault, commit.
 
+## 2026-11-01 afternoon — round 3 finished (directed by Ayaan and Kshiti)
+
+- Team first cut round 3 to 2 artifacts (agent armed an auto-stop for when `BEY_1415_HI` would start), then back to 3 (laptop stays home); auto-stop cancelled before it fired, batch untouched.
+- `batch.log`: `2026-11-01 14:49:55 batch done: 15 ok, 0 failed []`, no charger removal or sleep.
+- `compare_levels.py` for 746, 522, BEY_1415; `summarize_round.py --count 23 --name round3`. BEY_1415 L3: 44 + 31 / 92 images in two models, F 0.627.
+- `export_glb.py --artifacts Ark_HM_746_HI Ark_HM_522_HI BEY_1415_HI` → exit 0: 746 and 522 added (2.9 MB each), BEY skipped (0.593); manifest 16. Checked both in the browser.
+
+**Next action** — team: round 4 size/timing; how to reach 30 exhibits ([[09-Open-Questions]]).
+

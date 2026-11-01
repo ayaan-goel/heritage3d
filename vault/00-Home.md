@@ -7,6 +7,7 @@
 
 ## Current status (updated 2026-11-01)
 
+- **Round 3 complete: 23 of 40 artifacts × 5 levels** (2026-11-01 14:49, 15 / 15 runs, no failures). 746 and 522 clean (best L4); `BEY_1415_HI` breaks from L3 down (partial registration, two models). Per-level medians barely changed (L4 0.984, L3 0.964). **Museum: 16 exhibits, 49 MB.** See [[07-Results]].
 - **Round 2 complete: 20 of 40 artifacts × 5 levels** (2026-11-01, 35 / 35 runs, no failures). Median cloud F@0.002 R across 20: L1 0.881, L2 0.920, L3 0.963, **L4 0.980**, L5 0.679; L4 is best when it works but breaks on 4 / 20 (L3: 2 / 20, both low-texture objects that fail at every level). 12 / 20 artifacts reconstruct cleanly. New failure: `Ark_HM_38_HI` (smooth plain vessel). See [[07-Results]].
 - **Museum: 14 exhibits** (6 added from round 2), 2.8–3.8 MB each, 43 MB in all.
 - **Virtual museum started** (`museum/`): 8 round-1 artifacts exhibited from L3 as ~100k-triangle GLBs (median 16.3 MB → 3.0 MB, accuracy unchanged). Static site, grows by running `export_glb.py`. See [[07-Results]].
@@ -24,7 +25,7 @@
 
 ## Next action
 
-1. Round 3 running (3 artifacts, ranks 20–22: 746, 522, BEY_1415; started 2026-11-01 08:48). Then: compare, summarize (`--count 23`), `export_glb.py`, commit. From round 4 the power guard allows 15-min unplugs.
+1. Round 4 when the team is ready: `run_batch.py --count N --clean` (next ranks from 23; the guard now tolerates unplugs up to 15 min). Then compare, summarize, `export_glb.py`, commit.
 2. Team: how to reach the **30-exhibit minimum** ([[09-Open-Questions]]).
 3. Team: review the museum (`python -m http.server 8000 --directory museum`) and decide where to host it ([[09-Open-Questions]]); later: load-time measurement for RQ3.
 4. Team: confirm the evaluation method (Option A, decoded CHSD depth — [[04-Methodology]]).

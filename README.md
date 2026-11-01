@@ -4,7 +4,7 @@ A cost-effective image-based 3D digitization framework for cultural heritage art
 
 This project studies how input-image density affects 3D reconstruction quality, computation and storage, and turns an optimized reconstruction into an interactive artifact in a web-based virtual museum.
 
-**Status:** main experiment. Rounds 1–2 done: 20 artifacts reconstructed and evaluated at all five subset levels (26–362 images); 14 exhibited in the virtual museum. See [`vault/00-Home.md`](vault/00-Home.md).
+**Status:** main experiment. Rounds 1–3 done: 23 artifacts reconstructed and evaluated at all five subset levels (26–362 images); 16 exhibited in the virtual museum. See [`vault/00-Home.md`](vault/00-Home.md).
 
 ## Pipeline
 
