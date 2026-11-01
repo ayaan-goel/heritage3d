@@ -1,0 +1,82 @@
+{
+ "artifact": "Ark_HM_299_HI",
+ "level": "L2",
+ "units": "R (camera-to-centre distance)",
+ "evaluation_config": {
+  "reference_stride": 2,
+  "voxel": 0.002,
+  "thresholds": [
+   0.002,
+   0.005,
+   0.01
+  ]
+ },
+ "reference_extent": [
+  0.4996271247504896,
+  0.49775524688164197,
+  0.39163403591688106
+ ],
+ "alignment": {
+  "cameras": 182,
+  "camera_error_rms": 0.00040040290257843393,
+  "camera_error_max": 0.0012274262288929276
+ },
+ "dense_cloud": {
+  "recon_points": 282928,
+  "reference_points": 305408,
+  "accuracy_mean": 0.001133576276722758,
+  "accuracy_median": 0.0006682535367772378,
+  "completeness_mean": 0.000786831402239308,
+  "completeness_median": 0.0007021538681989074,
+  "chamfer": 0.000960203839481033,
+  "rmse": 0.0017743564106410756,
+  "hausdorff": 0.08949186300817186,
+  "hausdorff_95": 0.004243737183619535,
+  "fscore": {
+   "0.002": {
+    "precision": 0.8554932703726743,
+    "recall": 0.9924920106873428,
+    "f": 0.9189145008283114
+   },
+   "0.005": {
+    "precision": 0.9699393485268337,
+    "recall": 0.999996725691534,
+    "f": 0.984738728672772
+   },
+   "0.01": {
+    "precision": 0.9987770740259005,
+    "recall": 1.0,
+    "f": 0.9993881628972078
+   }
+  }
+ },
+ "mesh_vertices": {
+  "recon_points": 163633,
+  "reference_points": 305408,
+  "accuracy_mean": 0.0007745620563936876,
+  "accuracy_median": 0.0007274353327983571,
+  "completeness_mean": 0.001029077599323839,
+  "completeness_median": 0.0009941752774713089,
+  "chamfer": 0.0009018198278587633,
+  "rmse": 0.0008679877103240271,
+  "hausdorff": 0.011158088123479591,
+  "hausdorff_95": 0.001821040402818935,
+  "fscore": {
+   "0.002": {
+    "precision": 0.9923242866658926,
+    "recall": 0.9737989836546521,
+    "f": 0.9829743601514164
+   },
+   "0.005": {
+    "precision": 0.9996272145594104,
+    "recall": 0.9997904442581727,
+    "f": 0.9997088227458679
+   },
+   "0.01": {
+    "precision": 0.9999755550530761,
+    "recall": 1.0,
+    "f": 0.9999877773771474
+   }
+  }
+ }
+}

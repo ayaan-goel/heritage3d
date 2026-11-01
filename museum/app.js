@@ -45,9 +45,13 @@ fetch("artifacts.json")
       gallery.append(li);
       return b;
     });
-    const wanted = decodeURIComponent(location.hash.slice(1));
-    const i = Math.max(0, artifacts.findIndex((e) => e.id === wanted));
-    show(artifacts[i], buttons[i]);
+    const fromHash = () => {
+      const wanted = decodeURIComponent(location.hash.slice(1));
+      const i = Math.max(0, artifacts.findIndex((e) => e.id === wanted));
+      show(artifacts[i], buttons[i]);
+    };
+    window.addEventListener("hashchange", fromHash);
+    fromHash();
   })
   .catch((err) => {
     info.innerHTML = `<p class="muted">Could not load the collection (${err.message}). Serve this folder over HTTP, e.g. <code>python -m http.server</code>.</p>`;

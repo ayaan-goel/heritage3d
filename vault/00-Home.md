@@ -5,8 +5,10 @@
 
 > Updating this vault at the end of every session is **mandatory** (see `CLAUDE.md`).
 
-## Current status (updated 2026-10-31)
+## Current status (updated 2026-11-01)
 
+- **Round 2 complete: 20 of 40 artifacts × 5 levels** (2026-11-01, 35 / 35 runs, no failures). Median cloud F@0.002 R across 20: L1 0.881, L2 0.920, L3 0.963, **L4 0.980**, L5 0.679; L4 is best when it works but breaks on 4 / 20 (L3: 2 / 20, both low-texture objects that fail at every level). 12 / 20 artifacts reconstruct cleanly. New failure: `Ark_HM_38_HI` (smooth plain vessel). See [[07-Results]].
+- **Museum: 14 exhibits** (6 added from round 2), 2.8–3.8 MB each, 43 MB in all.
 - **Virtual museum started** (`museum/`): 8 round-1 artifacts exhibited from L3 as ~100k-triangle GLBs (median 16.3 MB → 3.0 MB, accuracy unchanged). Static site, grows by running `export_glb.py`. See [[07-Results]].
 - **Round 1 complete: 13 artifacts × 5 levels, all 65 runs evaluated** (2026-10-31). Median cloud F@0.002 R by level: L1 0.878, L2 0.915, **L3 0.961**, L4 0.820, L5 0.651; median time L1 52 min → L3 10 min → L5 1.4 min. Six artifacts behave like the pilot (best at L3/L4, mesh ≥ 0.97); in 7 SfM splits off one ring into a second model that is not densified (kept as a reported finding, team 2026-10-31); L5 fails outright on 4. See [[07-Results]].
 - Settings frozen; main set = 40 well-framed artifacts in a fixed order (`configs/artifact_order.json`); resumable batch runner ready (`scripts/run_batch.py`). First batch test: small plain `Ark_HM_1260B_HI` **fails at L5** (7/26 images registered, no dense cloud) — L5 is not enough for every object.
@@ -22,7 +24,7 @@
 
 ## Next action
 
-1. Round 2 overnight (`run_batch.py --count N --clean`, laptop plugged in, lid open); then `export_glb.py --count N` adds the new exhibits.
+1. Team: round 3 (`run_batch.py --count 27 --clean`, ranks 20–26, ~15 h overnight, plugged in, lid open) or stop at 20 artifacts ([[09-Open-Questions]]); then `export_glb.py` for the new exhibits.
 2. Team: review the museum (`python -m http.server 8000 --directory museum`) and decide where to host it ([[09-Open-Questions]]); later: load-time measurement for RQ3.
 3. Team: confirm the evaluation method (Option A, decoded CHSD depth — [[04-Methodology]]).
 4. The zips in `Downloads` can be kept as backup or deleted (team's choice).

@@ -166,6 +166,39 @@ Per level across the 13 (`round1_summary.csv`):
 - Rings fail to connect when the object looks very different from above and below (plain or symmetric surfaces), so cross-ring matches are few; fewer images per ring make it worse (more splits at L4/L5).
 - τ = 0.002 R is harsh for small objects (1260B fills 8 % of the frame); a tolerance relative to object size may be fairer for them.
 
+## Round 2 — ranks 13–19 (7 artifacts × 5 levels) — 2026-11-01
+
+Same frozen config, `run_batch.py --count 20 --clean` in-session from 2026-10-31 16:54 to 2026-11-01 07:37 → `batch done: 35 ok, 0 failed`. Charger removed three times (1303 L1, 299 L2 twice): the guard stopped each level and redid it; nothing slept or was set aside. Files as in round 1; all 20 artifacts: `experiments/results/round2_all.csv`, `round2_summary.csv`, `experiments/plots/round2_summary.png` (`summarize_round.py --count 20 --name round2`).
+
+Dense-cloud F@0.002 R; in brackets, images in the densified SfM model / input images when not all:
+
+| Artifact | L1 | L2 | L3 | L4 | L5 | L1 time | Best |
+|---|---|---|---|---|---|---|---|
+| `Ark_HM_1304_HI` | 0.890 | 0.928 | 0.964 | 0.986 | 0.724 | 56 min | L4 |
+| `Ark_HM_1303_HI` | 0.884 | 0.920 | 0.963 | 0.984 | 0.678 (17/26) | 60 min | L4 |
+| `Ark_HM_314_HI` | 0.869 | 0.911 | 0.963 | 0.989 | 0.723 | 79 min | L4 |
+| `Ark_HM_299_HI` | 0.877 | 0.919 | 0.966 | 0.988 | 0.817 | 123 min | L4 |
+| `Ark_HM_38_HI` | 0.175 (121/362) | 0.326 (61/182) | 0.494 (31/92) | 0.000 (2/47) | 0.000 (4/26) | 15 min | L3 |
+| `Ark_HM_747_HI` | 0.894 | 0.929 | 0.966 | 0.975 | 0.679 | 86 min | L4 |
+| `Ark_HM_11_HI` | 0.896 | 0.927 | 0.965 | 0.984 | 0.578 (17/26) | 52 min | L4 |
+
+Per level across all 20 artifacts (`round2_summary.csv`):
+
+| Level | Images | Median total time (max) | Median peak RAM | Median cloud F (min) | Median mesh F | Cloud F < 0.5 |
+|---|---|---|---|---|---|---|
+| L1 | 362 | 58.2 min (150.1) | 4.4 GB | 0.881 (0.062) | 0.980 | 2 / 20 |
+| L2 | 182 | 23.3 min (55.4) | 2.3 GB | 0.920 (0.051) | 0.980 | 2 / 20 |
+| L3 | 92 | 9.8 min (18.1) | 2.0 GB | 0.963 (0.151) | 0.986 | 2 / 20 |
+| L4 | 47 | 3.8 min (8.1) | 2.0 GB | **0.980** (0.000) | 0.983 | 4 / 20 |
+| L5 | 26 | 1.4 min (4.2) | 2.0 GB | 0.679 (0.000) | 0.687 | 7 / 20 |
+
+**Measured:**
+- Six of the seven round-2 artifacts behave like the pilot: one complete model at L1–L4, cloud F rising L1 → L4 (0.87–0.90 → 0.975–0.989), mesh F ≥ 0.97, best level L4 for all six; L5 drops to 0.58–0.82. Clean artifacts across both rounds: 12 / 20.
+- With them the **median best level moves from L3 (round 1) to L4** (0.980 vs 0.963), but L4 breaks down on more artifacts (4 vs 2 with F < 0.5): L4 is better when it works, L3 is the lowest level with no breakdown beyond the two artifacts that fail at every level (1260B, 38).
+- `Ark_HM_38_HI` fails at every level: SfM splits into 2–4 small models (L1: 121 + 121 + 53 + 52 images, 1,816 points in the largest; pilot ~35,000), L4/L5 register 2–4 images and the dense stage crashes (scored F = 0). The object is a smooth, plain round vessel: pixel colour std inside the object ≈ 8 / 255 (view 0001, −45°). Low texture → too few feature matches (hypothesis; consistent with 1260B).
+- Split models at L5 only in 1303, 747, 11 (two overlapping models; 747 densified a 26-image model and still scored 0.679).
+- Cost unchanged: median L1 58 min, L3 10 min, L5 1.4 min across 20; peak RAM ≤ 4.7 GB.
+
 ## Museum models — optimized vs full (round-1 exhibits) — 2026-10-31
 
 `scripts/export_glb.py --count 13`, config `[museum]` (L3, ~100k triangles, texture ≤ 2048 px JPEG q85, seam leveling off). 8 of 13 artifacts pass the exhibit rule (full-mesh F@0.002 R ≥ 0.95 at L3); not exhibited: 1260B (0.128), 795 (0.830), 341 (0.667), 31 (0.665), 797 (0.854). Both versions re-textured by OpenMVS from the same L3 mesh, aligned into the CHSD frame, packed as one GLB (full: PNG texture ≤ 8192 px; museum: JPEG); accuracy from 1,000,000 surface samples voxelized at 0.002 R vs the CHSD reference. Files: `museum/models/*.glb`, `museum/artifacts.json`, `experiments/results/museum/<artifact>_glb.json`.
@@ -183,3 +216,20 @@ Per level across the 13 (`round1_summary.csv`):
 
 **Measured:** median file 16.3 MB → 3.0 MB (all 8 exhibits 24.5 MB), surface F@0.002 changes by ≤ 0.0003 and Chamfer by < 1 % — decimating to 100k triangles costs no measurable accuracy at this tolerance; reconstruction error, not tessellation, dominates. Supports H3 on these 8 artifacts (load time / rendering cost not measured yet).
 - Found while exporting: OpenMVS seam leveling turns faces black on CHSD renders, so the pipeline's own textured meshes (`scene_dense_texture*`) are black. Does not affect any evaluation (geometry only); museum export turns it off ([[08-Decisions]]).
+
+## Museum models — round-2 exhibits — 2026-11-01
+
+`export_glb.py` for the 7 round-2 artifacts, same `[museum]` config. 6 pass the exhibit rule; not exhibited: `Ark_HM_38_HI` (L3 mesh F 0.486). Museum now **14 exhibits, 43 MB in all**.
+
+| Artifact | Full mesh | Full GLB | Museum GLB | Surface F@0.002 full → museum | Chamfer museum |
+|---|---|---|---|---|---|
+| `Ark_HM_1304_HI` | 278,552 tri | 11.3 MB | 2.9 MB | 0.948 → 0.948 | 0.00226 R |
+| `Ark_HM_1303_HI` | 283,373 tri | 10.7 MB | 2.9 MB | 0.985 → 0.985 | 0.00076 R |
+| `Ark_HM_314_HI` | 471,306 tri | 18.6 MB | 3.0 MB | 0.966 → 0.966 | 0.00156 R |
+| `Ark_HM_299_HI` | 474,849 tri | 17.9 MB | 3.1 MB | 0.985 → 0.985 | 0.00082 R |
+| `Ark_HM_747_HI` | 505,461 tri | 18.2 MB | 2.9 MB | 0.973 → 0.972 | 0.00088 R |
+| `Ark_HM_11_HI` | 426,382 tri | 15.4 MB | 2.9 MB | 0.969 → 0.969 | 0.00132 R |
+
+(MB as printed by the script, 1 decimal; exact bytes in `experiments/results/museum/<artifact>_glb.json`.)
+
+**Measured:** decimation again costs ≤ 0.001 surface F. Surface-sampled F is below the vertex-based mesh F used for the exhibit rule (1304: 0.948 vs 0.993; round 1 714: 0.974 vs 0.999) — surface sampling also counts large faces, e.g. hole fills, that have few vertices (hypothesis for the gap). Checked 1304 and 11 in the browser: textured and upright.

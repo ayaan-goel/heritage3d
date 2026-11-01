@@ -5,14 +5,15 @@
 - [ ] Team: confirm evaluation Option A as implemented (see [[04-Methodology]]) and the thresholds τ = 0.002/0.005/0.01 R.
 - [ ] Companion paper: Arampatzakis, Arnaoutoglou, Koutsoudis & Pavlidis, "Deep Learning-Based Monocular Depth Estimation in Cultural Heritage", CAA-GR 2024 proceedings (Springer), doi 10.1007/978-3-032-06389-2_15 (to verify: does it describe camera setup and depth encoding?). Team to check access via university library.
 - [ ] Are the original Virtual Hampson Museum models obtainable, and under what license?
-- [ ] Why does dense-cloud precision fall as images increase (L4 0.985 → L1 0.829)? Hypothesis: fixed OpenMVS fusion settings. Round 1: the same pattern on all six artifacts that reconstruct as one model.
-- [ ] Main artifact set: how many artifacts beyond round 1 (13 done; L1 takes 18–150 min per artifact)?
+- [ ] Why does dense-cloud precision fall as images increase (L4 0.985 → L1 0.829)? Hypothesis: fixed OpenMVS fusion settings. Round 1: the same pattern on all six artifacts that reconstruct as one model; round 2: on six more (12 / 20).
+- [ ] Main artifact set: how many artifacts beyond round 2 (20 of 40 done; a round of 7 took ~15 h overnight)?
 - [ ] Tolerance for small objects: τ is relative to R, harsh for `Ark_HM_1260B_HI` (F@0.002 0.06 but F@0.01 0.91 at L1). Also report a tolerance relative to object size?
 - [ ] Matcher choice (exhaustive vs vocabulary tree) — fixed after pilot, same for all levels.
 - [ ] Code license for the repository (separate from the CC BY-NC-SA data license).
 
 - [ ] Where to host the museum (GitHub Pages from this repo, university server, or local demo only)? Team decision; GLBs are ~4 MB each.
 - [ ] Why does OpenMVS seam leveling blacken faces on CHSD renders? (hypothesis: pure-black background pixels at silhouettes pull the colour correction to black). Not needed for the experiment; museum export avoids it.
+- [ ] Low-texture objects (`Ark_HM_1260B_HI`, `Ark_HM_38_HI`) fail at every level: report as a limitation only, or also measure texture per artifact and relate it to F? (hypothesis: too few SIFT matches)
 
 ## Closed
 

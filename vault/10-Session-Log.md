@@ -150,3 +150,15 @@ Newest first. Every session must add an entry (see `CLAUDE.md`).
 - Debugging the black texture: first a wrong guess (V flip) and a sampler change; then OpenMVS's own GLB also rendered black; UV-over-texture plots showed faces mapped onto black blobs → `TextureMesh --global-seam-leveling 0 --local-seam-leveling 0`: black face centres 100 % → 0.2 % (either flag alone 91 % / 100 %). Flip reverted; sampler kept linear/no-mipmap/clamped like OpenMVS.
 - `export_glb.py --count 13` → exit 0: 8 exhibits, 5 skipped by the F ≥ 0.95 rule; 2.8–3.8 MB each; F unchanged (see [[07-Results]]). Checked 470, 809, RL_907 in the browser: textured and upright; phone width (375 px) layout stacks.
 - Fixed `clean_workspace`: `dense/images/*` missed the nested undistorted images (~170 MB per L1 workspace kept); now `dense/images/**/*`. Existing workspaces still hold them. `pytest -q` → 49 passed.
+
+## 2026-10-31 16:54 → 2026-11-01 — round 2 (directed by Ayaan and Kshiti)
+
+- Team: "start round 2 now". `check_env.py` → exit 0; on AC; `run_batch.py --count 20 --dry-run` → 35 pending; D: 288 GB free. Started in-session (background task) 16:54:32: `run_batch.py --count 20 --clean` (ranks 13–19: 1304, 1303, 314, 299, 38, 747, 11).
+- Charger removed at 19:50 (1303 L1), 23:56 and 00:32 (299 L2): each level stopped and redone. `batch.log` end 2026-11-01 07:37:09: `batch done: 35 ok, 0 failed []`. `Ark_HM_38_HI` L4/L5: dense stage exit 1 (2 / 4 images registered) → evaluated as failed reconstructions.
+- Looked at `Ark_HM_38_HI` input images: smooth plain round vessel, colour std ≈ 8/255 inside the object → low-texture failure at every level (hypothesis), not a pipeline error.
+- `compare_levels.py` for the 7 artifacts; `summarize_round.py --count 20 --name round2` → median cloud F L1 0.881, L2 0.920, L3 0.963, **L4 0.980**, L5 0.679 (see [[07-Results]]).
+- `export_glb.py --artifacts <the 7>` → exit 0: 6 new exhibits (2.9–3.1 MB), 38 skipped; manifest 14 artifacts, 43 MB.
+- Museum: opening a `#<artifact>` link on an already-open page did nothing → `app.js` now listens for `hashchange`; checked in the browser (hash switch, button click, no console errors).
+- Opened questions: low-texture objects; main-set size updated to 20 / 40.
+
+**Next action** — team: decide whether to run round 3 (ranks 20–26) and where to host the museum.
