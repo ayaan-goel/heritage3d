@@ -5,8 +5,10 @@
 
 > Updating this vault at the end of every session is **mandatory** (see `CLAUDE.md`).
 
-## Current status (updated 2026-11-01)
+## Current status (updated 2026-11-02)
 
+- **Round 5 running** (started 2026-11-02 04:03): 1 artifact, `Ark_HM_1260C_HI` (rank 27), all five levels, ETA ≈ 06:00–06:30. Team rule: start one more artifact if round 4 ended before 04:30.
+- **Round 4 complete: 27 of 40 artifacts × 5 levels** (2026-11-02 04:02, 20 / 20 runs, no failures, no unplugs). All four (192, 711, 1286, 1299) clean L1–L4 and best at L4; 192 fails at L5 (6 / 26 registered). Medians across 27: L3 0.965, **L4 0.984**, L5 0.651. **Museum: 20 exhibits, 60 MB** (all four added). Entrance signboards (PDEU title, project team) in the hall. See [[07-Results]].
 - **Museum is now a walkable 3D hall** (`museum/index.html`): domed rotunda + four galleries, WASD + mouse, pedestals with research-fact placards, E for a 360° close-up. Layout grows from `artifacts.json`. Measured in the app's browser pane on this laptop: 16 exhibits 60 fps, 48 (stress test) 59–60 fps. The old page is the List view (`list.html`). See [[07-Results]].
 - **Round 3 complete: 23 of 40 artifacts × 5 levels** (2026-11-01 14:49, 15 / 15 runs, no failures). 746 and 522 clean (best L4); `BEY_1415_HI` breaks from L3 down (partial registration, two models). Per-level medians barely changed (L4 0.984, L3 0.964). **Museum: 16 exhibits, 49 MB.** See [[07-Results]].
 - **Round 2 complete: 20 of 40 artifacts × 5 levels** (2026-11-01, 35 / 35 runs, no failures). Median cloud F@0.002 R across 20: L1 0.881, L2 0.920, L3 0.963, **L4 0.980**, L5 0.679; L4 is best when it works but breaks on 4 / 20 (L3: 2 / 20, both low-texture objects that fail at every level). 12 / 20 artifacts reconstruct cleanly. New failure: `Ark_HM_38_HI` (smooth plain vessel). See [[07-Results]].
@@ -26,7 +28,7 @@
 
 ## Next action
 
-1. Round 4 when the team is ready: `run_batch.py --count N --clean` (next ranks from 23; the guard now tolerates unplugs up to 15 min). Then compare, summarize, `export_glb.py`, commit.
+1. When round 5 finishes: compare, `summarize_round.py --count 28 --name round5`, `export_glb.py --artifacts Ark_HM_1260C_HI`, vault, commit. Further rounds from rank 28 (12 artifacts left, ≈ 2.1 h each).
 2. Team: how to reach the **30-exhibit minimum** ([[09-Open-Questions]]).
 3. Team: walk the new hall in a normal browser (`python -m http.server 8000 --directory museum`), check the feel (speed, mouse sensitivity, placards) and decide where to host it ([[09-Open-Questions]]); later: load-time measurement for RQ3.
 4. Team: confirm the evaluation method (Option A, decoded CHSD depth — [[04-Methodology]]).

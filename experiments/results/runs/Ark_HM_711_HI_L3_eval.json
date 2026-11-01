@@ -1,0 +1,82 @@
+{
+ "artifact": "Ark_HM_711_HI",
+ "level": "L3",
+ "units": "R (camera-to-centre distance)",
+ "evaluation_config": {
+  "reference_stride": 2,
+  "voxel": 0.002,
+  "thresholds": [
+   0.002,
+   0.005,
+   0.01
+  ]
+ },
+ "reference_extent": [
+  0.48741500324687737,
+  0.4997243537292267,
+  0.38828729208703366
+ ],
+ "alignment": {
+  "cameras": 92,
+  "camera_error_rms": 0.0005259378991571185,
+  "camera_error_max": 0.0011873776961503185
+ },
+ "dense_cloud": {
+  "recon_points": 249176,
+  "reference_points": 322374,
+  "accuracy_mean": 0.0008421429687712766,
+  "accuracy_median": 0.0006635318896961707,
+  "completeness_mean": 0.0008355391228260794,
+  "completeness_median": 0.0007809510726704051,
+  "chamfer": 0.000838841045798678,
+  "rmse": 0.0012756645170461148,
+  "hausdorff": 0.027735032132473848,
+  "hausdorff_95": 0.00191264981795238,
+  "fscore": {
+   "0.002": {
+    "precision": 0.9531014222878608,
+    "recall": 0.9947390298225043,
+    "f": 0.9734751972132847
+   },
+   "0.005": {
+    "precision": 0.990845827848589,
+    "recall": 1.0,
+    "f": 0.9954018678777836
+   },
+   "0.01": {
+    "precision": 0.9983024047259769,
+    "recall": 1.0,
+    "f": 0.9991504812935177
+   }
+  }
+ },
+ "mesh_vertices": {
+  "recon_points": 178019,
+  "reference_points": 322374,
+  "accuracy_mean": 0.000798402736519812,
+  "accuracy_median": 0.0007449221790902423,
+  "completeness_mean": 0.0009991195253129792,
+  "completeness_median": 0.0009808769521286501,
+  "chamfer": 0.0008987611309163957,
+  "rmse": 0.001020552761429431,
+  "hausdorff": 0.02752115314489195,
+  "hausdorff_95": 0.001692618792864685,
+  "fscore": {
+   "0.002": {
+    "precision": 0.9904223706458299,
+    "recall": 0.9882993045344848,
+    "f": 0.989359698620041
+   },
+   "0.005": {
+    "precision": 0.9973823018891242,
+    "recall": 0.9997921668620918,
+    "f": 0.998585780459268
+   },
+   "0.01": {
+    "precision": 0.9990618978873042,
+    "recall": 0.9999348582702079,
+    "f": 0.9994981874681841
+   }
+  }
+ }
+}

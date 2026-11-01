@@ -195,3 +195,13 @@ Newest first. Every session must add an entry (see `CLAUDE.md`).
 - Museum: two signboards in the entrance lobby (lobby 3 → 5 m, spawn 1.4 m from the entrance): title board with the PDEU logo and name, team board. Checked in the browser pane (both readable, in view from the start); walking checks still pass; `pytest -q` → 54 passed.
 
 **Next action** — when round 4 finishes: compare, summarize, export, results into the vault, commit.
+
+## 2026-11-02 early morning — round 4 finished, round 5 started (directed by Ayaan and Kshiti)
+
+- `batch.log`: `2026-11-02 04:02:33 batch done: 20 ok, 0 failed []`; no charger removal or sleep. `Ark_HM_192_HI` L5: 6 / 26 images registered → empty dense cloud, evaluated as failed (F 0); its preview step exit 1 (no points).
+- Team rule (given during the run): if round 4 ends before 04:30, start one more artifact as round 5. Ended 04:02 → `check_env.py` → ok; `run_batch.py --count 28 --clean` started in-session 04:03 (`Ark_HM_1260C_HI`, 5 level runs).
+- `compare_levels.py` for 192, 711, 1286, 1299; `summarize_round.py --count 27 --name round4` → see [[07-Results]].
+- `export_glb.py --artifacts Ark_HM_192_HI Ark_HM_711_HI Ark_HM_1286_HI Ark_HM_1299_Hi` → exit 0 (ran ~11 min alongside round 5): all four added, 2.8–2.9 MB; manifest 20. 1299 surface F 0.924 (lowest exhibit; passes the mesh-vertex rule).
+- Browser pane: hall plans 20 exhibits (South 1–3, Rotunda 4–11, East 12–14, North 15–17, West 18–20); close-ups of all four new exhibits by deep link (full reload; a hash change during a close-up is ignored by design). The pane renders black while hidden — show it before screenshots.
+
+**Next action** — when round 5 finishes: compare, summarize (`--count 28 --name round5`), export, vault, commit.

@@ -270,6 +270,46 @@ Per level across all 23 artifacts (`round3_summary.csv`):
 
 Checked both in the browser: textured, upright.
 
+## Round 4 — ranks 23–26 (4 artifacts × 5 levels) — 2026-11-02
+
+Same frozen config, `run_batch.py --count 27 --clean` in-session 2026-11-01 20:28 → 2026-11-02 04:02 (7.6 h), `batch done: 20 ok, 0 failed`, no charger removal or sleep (first round under the 15-min unplug grace). Sized to end before 06:30 (team). All 27: `experiments/results/round4_all.csv`, `round4_summary.csv`, `experiments/plots/round4_summary.png`.
+
+| Artifact | L1 | L2 | L3 | L4 | L5 | L1 time | Best |
+|---|---|---|---|---|---|---|---|
+| `Ark_HM_192_HI` | 0.922 | 0.960 | 0.985 | 0.987 | 0.000 (6/26) | 55 min | L4 |
+| `Ark_HM_711_HI` | 0.920 | 0.944 | 0.973 | 0.988 | 0.560 | 83 min | L4 |
+| `Ark_HM_1286_HI` | 0.918 | 0.956 | 0.983 | 0.996 | 0.588 | 66 min | L4 |
+| `Ark_HM_1299_Hi` | 0.893 | 0.928 | 0.965 | 0.973 | 0.594 (25/26) | 53 min | L4 |
+
+Per level across all 27 artifacts (`round4_summary.csv`):
+
+| Level | Images | Median total time (max) | Median peak RAM | Median cloud F (min) | Median mesh F | Cloud F < 0.5 |
+|---|---|---|---|---|---|---|
+| L1 | 362 | 60.0 min (150.1) | 4.4 GB | 0.890 (0.062) | 0.986 | 2 / 27 |
+| L2 | 182 | 24.1 min (55.4) | 2.3 GB | 0.927 (0.051) | 0.983 | 2 / 27 |
+| L3 | 92 | 9.9 min (18.1) | 2.0 GB | 0.965 (0.151) | 0.989 | 2 / 27 |
+| L4 | 47 | 3.9 min (8.1) | 2.0 GB | **0.984** (0.000) | 0.990 | 4 / 27 |
+| L5 | 26 | 1.4 min (4.2) | 2.0 GB | 0.651 (0.000) | 0.653 | 8 / 27 |
+
+**Measured:**
+- All four are clean from L1 to L4 (one model, all or all-but-one images) and best at L4, with the usual pattern: F rises as images drop from 362 to 47, then collapses at 26.
+- `Ark_HM_192_HI` L5: only 6 / 26 images registered, dense step produced no points (2 s) → recorded as failed, F 0. The other three register 25–26 / 26 at L5 but reach only F 0.56–0.59 (chamfer 0.008–0.038 R, 10–50× L4).
+- Per-level medians stay put from 23 to 27 artifacts (L4 0.984, L3 0.965); L5 failures 8 / 27.
+
+## Museum models — round-4 exhibits — 2026-11-02
+
+`export_glb.py --artifacts Ark_HM_192_HI Ark_HM_711_HI Ark_HM_1286_HI Ark_HM_1299_Hi` → exit 0; all four pass the rule (L3 mesh-vertex F ≥ 0.95). Museum now **20 exhibits, 60 MB**.
+
+| Artifact | Full mesh | Full GLB | Museum GLB | Surface F@0.002 full → museum | Chamfer museum |
+|---|---|---|---|---|---|
+| `Ark_HM_192_HI` | 500,880 tri | 17.6 MB | 2.8 MB | 0.983 → 0.983 | 0.00113 R |
+| `Ark_HM_711_HI` | 509,047 tri | 18.2 MB | 2.9 MB | 0.985 → 0.985 | 0.00086 R |
+| `Ark_HM_1286_HI` | 476,704 tri | 17.4 MB | 2.9 MB | 0.984 → 0.984 | 0.00107 R |
+| `Ark_HM_1299_Hi` | 302,374 tri | 12.3 MB | 2.9 MB | 0.924 → 0.924 | 0.00236 R |
+
+- `Ark_HM_1299_Hi` passes the exhibit rule (which uses the evaluation's mesh-vertex F) but its surface-sample F (0.924) is the lowest of any exhibit so far. It is a joined double pot; the narrow gap between the two bodies is a likely cause **(hypothesis)**.
+- Checked all four in the 3D hall (browser pane): textured, upright, placards No. 17–20.
+
 ## Museum hall — rendering cost on the team laptop — 2026-11-01
 
 Measured in the Claude desktop app's browser pane (Chromium) on the HP Envy x360 (Intel Iris Xe), pane 800 × 675 px, pixel ratio 1.25, display capped at 60 fps; models served from `localhost`. `?repeat=3` shows the 16 exhibits three times (stress test for a ~40–50-exhibit museum).
