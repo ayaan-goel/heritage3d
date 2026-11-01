@@ -162,3 +162,12 @@ Newest first. Every session must add an entry (see `CLAUDE.md`).
 - Opened questions: low-texture objects; main-set size updated to 20 / 40.
 
 **Next action** — team: decide whether to run round 3 (ranks 20–26) and where to host the museum.
+
+## 2026-11-01 morning — round 3 start, power-guard change (directed by Ayaan and Kshiti)
+
+- Team: museum needs at least 30 exhibits; round 3 only 3 artifacts (laptop may be shut). `check_env.py` → exit 0; on AC; D: 283 GB free; `run_batch.py --count 23 --clean` started in-session 08:48:49 (15 level runs: `Ark_HM_746_HI`, `Ark_HM_522_HI`, `BEY_1415_HI`). Runs with the old (strict) power guard — the process loaded the code before the change below.
+- Team asked: don't stop on a brief charger removal; stop only after 15 min unplugged. `conditions.py`: `ConditionMonitor` tracks the current and longest unbroken battery stretch; `clean(max_unplugged_s=...)`. `run_batch.py`: `--unplug-grace` (min, default 15), stops a level only when the stretch reaches it, logs kept battery time, writes `conditions` into the run's metrics JSON. Tests: 2 new in `tests/test_conditions.py`, new `tests/test_run_batch.py` (3: keeps running within grace, stops at grace, conditions recorded). `pytest -q` → 54 passed.
+- Flagged to the team: at the current pass rate the 40-artifact set gives ≈ 28 exhibits, below 30 (open question).
+
+**Next action** — when round 3 finishes: batch.log check, compare/summarize, export, results into the vault, commit.
+

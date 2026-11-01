@@ -24,11 +24,12 @@
 
 ## Next action
 
-1. Team: round 3 (`run_batch.py --count 27 --clean`, ranks 20–26, ~15 h overnight, plugged in, lid open) or stop at 20 artifacts ([[09-Open-Questions]]); then `export_glb.py` for the new exhibits.
-2. Team: review the museum (`python -m http.server 8000 --directory museum`) and decide where to host it ([[09-Open-Questions]]); later: load-time measurement for RQ3.
-3. Team: confirm the evaluation method (Option A, decoded CHSD depth — [[04-Methodology]]).
-4. The zips in `Downloads` can be kept as backup or deleted (team's choice).
-5. Team: try to get the companion paper PDF (doi 10.1007/978-3-032-06389-2_15) via the university library.
+1. Round 3 running (3 artifacts, ranks 20–22: 746, 522, BEY_1415; started 2026-11-01 08:48). Then: compare, summarize (`--count 23`), `export_glb.py`, commit. From round 4 the power guard allows 15-min unplugs.
+2. Team: how to reach the **30-exhibit minimum** ([[09-Open-Questions]]).
+3. Team: review the museum (`python -m http.server 8000 --directory museum`) and decide where to host it ([[09-Open-Questions]]); later: load-time measurement for RQ3.
+4. Team: confirm the evaluation method (Option A, decoded CHSD depth — [[04-Methodology]]).
+5. The zips in `Downloads` can be kept as backup or deleted (team's choice).
+6. Team: try to get the companion paper PDF (doi 10.1007/978-3-032-06389-2_15) via the university library.
 
 ## Notes
 

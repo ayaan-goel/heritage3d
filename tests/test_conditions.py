@@ -34,3 +34,30 @@ def test_real_readings_work():
     assert isinstance(on_ac(), bool)
     a = awake_seconds()
     assert a > 0 and awake_seconds() >= a
+
+
+class Power:
+    """Scripted mains/battery readings: True = on AC; the last value repeats."""
+
+    def __init__(self, *readings):
+        self.readings = list(readings)
+
+    def __call__(self):
+        return self.readings.pop(0) if len(self.readings) > 1 else self.readings[0]
+
+
+def test_short_unplug_within_grace_is_clean_and_recorded():
+    m = ConditionMonitor(poll=1.0, power=Power(True, False, False, True, True))
+    for _ in range(5):
+        m._sample()
+    assert m.battery_s == 2.0 and m.longest_unplugged_s == 2.0 and m.unplugged_s == 0.0
+    assert not m.clean()  # strict default: any battery time invalidates
+    assert m.clean(max_unplugged_s=900)
+
+
+def test_unplug_stretches_are_not_added_together():
+    m = ConditionMonitor(poll=1.0, power=Power(False, False, True, False, False, False, True))
+    for _ in range(7):
+        m._sample()
+    assert m.battery_s == 5.0 and m.longest_unplugged_s == 3.0
+    assert m.clean(max_unplugged_s=4) and not m.clean(max_unplugged_s=3)

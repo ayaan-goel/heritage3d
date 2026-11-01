@@ -3,11 +3,14 @@
 For each of the first --count artifacts in configs/artifact_order.json and each level
 (cheapest first): skip if its evaluation already exists in experiments/results/runs/;
 otherwise run sparse, dense, evaluation and preview with the frozen config. A failed level is
-logged and the batch moves on. Each level starts only on mains power and is stopped if the
-charger is removed (then redone once it is back). A level during which the laptop slept (lid
-closed) or ran on battery has distorted timings: its results are set aside (*.suspect) and it is
-queued again (up to --attempts times). With --clean, regenerable intermediates (depth maps,
-feature database, undistorted images) are deleted after a level is evaluated (~80 % of the space).
+logged and the batch moves on. Each level starts only on mains power. If the charger is removed
+the level keeps running; only when it stays out for --unplug-grace minutes (default 15) is the
+level stopped, and it is redone once the charger is back. Time on battery is logged and recorded
+with the run ("conditions" in experiments/results/runs/<artifact>_<level>.json). A level during
+which the laptop slept (lid closed) has distorted timings: its results are set aside (*.suspect)
+and it is queued again (up to --attempts times). With --clean, regenerable intermediates (depth
+maps, feature database, undistorted images) are deleted after a level is evaluated (~80 % of the
+space).
 Progress is appended to <runs>/batch.log.
 
 Usage (PowerShell):
@@ -54,40 +57,55 @@ def set_aside(artifact, level):
             f.replace(f.with_name(f.name + ".suspect"))
 
 
+def record_conditions(artifact, level, cond):
+    """Add the level's run conditions (time asleep / on battery) to its committed metrics file."""
+    f = RESULTS / f"{artifact}_{level}.json"
+    if f.exists():
+        metrics = json.loads(f.read_text(encoding="utf-8"))
+        metrics["conditions"] = {"slept_s": round(cond.slept_s), "battery_s": round(cond.battery_s),
+                                 "longest_unplugged_s": round(cond.longest_unplugged_s)}
+        f.write_text(json.dumps(metrics, indent=1), encoding="utf-8")
+
+
 class Unplugged(Exception):
-    """The charger was removed while a level was running."""
+    """The charger stayed out for the whole grace period while a level was running."""
 
 
-def step(log, name, args, poll=5):
-    """Run one script; stop it (and its child tools) if the laptop switches to battery."""
+def run_step(log, name, args, cond, grace_s, poll=5):
+    """Run one script; stop it (and its child tools) once the laptop has been on battery for grace_s."""
     start = time.perf_counter()
     proc = subprocess.Popen([sys.executable, str(SCRIPTS / name), *args])
     while proc.poll() is None:
         try:
             proc.wait(poll)
         except subprocess.TimeoutExpired:
-            if not on_ac():
+            if cond.unplugged_s and cond.unplugged_s >= grace_s:
                 subprocess.run(["taskkill", "/PID", str(proc.pid), "/T", "/F"], capture_output=True)
                 proc.wait()
-                log(f"  {name} stopped after {time.perf_counter() - start:.0f} s: charger removed")
+                log(f"  {name} stopped after {time.perf_counter() - start:.0f} s: "
+                    f"charger out for {cond.unplugged_s / 60:.0f} min")
                 raise Unplugged
     log(f"  {name} {' '.join(args)} -> exit {proc.returncode}, {time.perf_counter() - start:.0f} s")
     return proc.returncode == 0
 
 
-def run_level(log, artifact, level, ws, clean):
+def run_level(log, artifact, level, ws, clean, cond, grace_s):
     common = ["--artifact", artifact, "--level", level]
-    if not step(log, "run_pipeline.py", [*common, "--stages", "sparse", "--overwrite"]):
+
+    def step(name, args):
+        return run_step(log, name, args, cond, grace_s)
+
+    if not step("run_pipeline.py", [*common, "--stages", "sparse", "--overwrite"]):
         return False
     # A dense tool can fail on a near-empty sparse model (e.g. TextureMesh with no mesh); that is a
     # failed reconstruction, which evaluation records as F = 0, not a failed run.
-    dense_ok = step(log, "run_pipeline.py", [*common, "--stages", "dense"])
-    ok = step(log, "evaluate_run.py", common)
+    dense_ok = step("run_pipeline.py", [*common, "--stages", "dense"])
+    ok = step("evaluate_run.py", common)
     if ok and not dense_ok:
         log("  dense stage failed: evaluated as a failed reconstruction")
     if ok and dense_ok:
-        step(log, "preview_cloud.py", [str(ws / "mvs" / "scene_dense.ply"), "--out",
-                                       str(REPO_ROOT / "experiments" / "plots" / f"{artifact}_{level}_dense.jpg")])
+        step("preview_cloud.py", [str(ws / "mvs" / "scene_dense.ply"), "--out",
+                                  str(REPO_ROOT / "experiments" / "plots" / f"{artifact}_{level}_dense.jpg")])
         if clean:
             log(f"  cleaned {clean_workspace(ws) / 2**30:.2f} GB")
     return ok
@@ -99,6 +117,8 @@ def main(argv=None):
     p.add_argument("--levels", nargs="+", help="default: all levels in the config, cheapest first")
     p.add_argument("--clean", action="store_true", help="delete regenerable intermediates after evaluation")
     p.add_argument("--attempts", type=int, default=3, help="tries per level when conditions were not clean")
+    p.add_argument("--unplug-grace", type=float, default=15.0,
+                   help="minutes the charger may stay out before the running level is stopped")
     p.add_argument("--dry-run", action="store_true")
     p.add_argument("--config", type=Path, default=DEFAULT_CONFIG)
     p.add_argument("--order", type=Path, default=REPO_ROOT / "configs" / "artifact_order.json")
@@ -125,6 +145,7 @@ def main(argv=None):
     if sys.platform == "win32":  # no idle sleep while the batch runs (ES_CONTINUOUS | ES_SYSTEM_REQUIRED)
         import ctypes
         ctypes.windll.kernel32.SetThreadExecutionState(0x80000001)
+    grace_s = args.unplug_grace * 60
     failed, tries = [], {}
     queue = list(todo)
     while queue:
@@ -134,13 +155,17 @@ def main(argv=None):
         log(f"{artifact} {level}" + (f" (attempt {tries[artifact, level]})" if tries[artifact, level] > 1 else ""))
         try:
             with ConditionMonitor() as cond:
-                ok = run_level(log, artifact, level, runs / artifact / level, args.clean)
+                ok = run_level(log, artifact, level, runs / artifact / level, args.clean, cond, grace_s)
         except Unplugged:  # not the level's fault: redo it next, without using up an attempt
             set_aside(artifact, level)
             tries[artifact, level] -= 1
             queue.insert(0, (artifact, level))
             continue
-        if not cond.clean():
+        record_conditions(artifact, level, cond)
+        if cond.battery_s and cond.clean(max_unplugged_s=grace_s):
+            log(f"  on battery {cond.battery_s:.0f} s in this level (longest stretch "
+                f"{cond.longest_unplugged_s:.0f} s, under the {args.unplug_grace:g} min grace): kept, recorded")
+        if not cond.clean(max_unplugged_s=grace_s):
             log(f"  conditions not clean (asleep {cond.slept_s:.0f} s, on battery {cond.battery_s:.0f} s): timings invalid")
             set_aside(artifact, level)
             if tries[artifact, level] < args.attempts:
