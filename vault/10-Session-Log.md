@@ -180,3 +180,10 @@ Newest first. Every session must add an entry (see `CLAUDE.md`).
 
 **Next action** — team: round 4 size/timing; how to reach 30 exhibits ([[09-Open-Questions]]).
 
+## 2026-11-01 evening — walkable 3D museum hall (directed by Ayaan and Kshiti)
+
+- Team asked for a museum palace with a dome: first-person walking (WASD), artifacts on pedestals with details below, 360° view when near. Agent asked first; team chose: dome + galleries, E for close-up, placards with research facts only, laptop/desktop only.
+- New `museum/index.html` + `museum/hall/` (`main.js`, `layout.js`, `building.js`, `textures.js`, `labels.js`, `hall.css`); three.js 0.170.0 via import map from jsDelivr; all textures procedural (canvas), no new image files. Old page renamed `list.html` / `list.js`, linked both ways by `#<artifact>`; `style.css` link style.
+- Checks: `node --check` on all modules → ok; floor-plan walking tests in Node (n = 3…48: spots/zones right, slides around the centre stand and along walls, stops at gallery walls). Browser pane: hall, rotunda, gallery, placard, close-up, deep link from the list, E in/out, walking with keys, no new console errors. Pointer lock is refused in the app's pane → added the drag-to-look fallback (after the first failure, or a second one). Stress test `?repeat=3` → numbers in [[07-Results]]. `pytest -q` → 54 passed.
+
+**Next action** — team: try the hall in a normal browser at full screen (pointer lock, feel); then round 4.

@@ -1,4 +1,4 @@
-// Loads artifacts.json (written by scripts/export_glb.py) and shows one model at a time.
+// List view: loads artifacts.json (written by scripts/export_glb.py) and shows one model at a time.
 const viewer = document.getElementById("viewer");
 const info = document.getElementById("info");
 const gallery = document.getElementById("gallery");
@@ -21,7 +21,8 @@ function show(entry, button) {
       <dt>Full model</dt><dd>${int(entry.full_faces)} tri, ${fmt(entry.full_glb_mb)} MB</dd>
       <dt>Accuracy F@0.002 R</dt><dd>${fmt(entry["f@0.002"], 3)}</dd>
       <dt>Full model F@0.002 R</dt><dd>${fmt(entry["full_f@0.002"], 3)}</dd>
-    </dl>`;
+    </dl>
+    <p class="to-hall"><a href="index.html#${encodeURIComponent(entry.id)}">See it in the 3D hall →</a></p>`;
   history.replaceState(null, "", `#${encodeURIComponent(entry.id)}`);
 }
 

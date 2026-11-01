@@ -4,57 +4,65 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>heritage3d Virtual Museum</title>
-  <link rel="stylesheet" href="style.css">
-  <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
+  <meta name="description" content="Walk through a domed virtual museum of cultural heritage artifacts digitized from ordinary photographs.">
+  <link rel="stylesheet" href="hall/hall.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+      }
+    }
+  </script>
+  <script type="module" src="hall/main.js"></script>
 </head>
 <body>
-  <header class="top">
-    <div class="wrap">
+  <canvas id="scene" aria-label="3D museum hall"></canvas>
+
+  <div class="hud" aria-hidden="true">
+    <div class="crosshair"></div>
+    <canvas class="map" id="map"></canvas>
+    <p class="fps" id="fps" hidden></p>
+    <p class="loading" id="loading">Exhibits <span>0 / 0</span> <b><i></i></b></p>
+  </div>
+  <p class="prompt" id="prompt" hidden></p>
+  <p class="credit">CHSD · Virtual Hampson Museum · CC BY-NC-SA 4.0 · <a href="list.html">List view</a></p>
+
+  <aside class="panel" id="panel" hidden aria-live="polite">
+    <button type="button" class="back" id="back">← Back to walking <kbd>E</kbd></button>
+    <div id="panel-body"></div>
+    <p class="hint">Drag to turn · scroll to zoom · right-drag to move</p>
+  </aside>
+
+  <section class="menu" id="menu">
+    <div class="card">
       <h1>heritage3d <span>Virtual Museum</span></h1>
-      <p class="lede">Cultural heritage artifacts digitized from ordinary photographs, reconstructed on a laptop CPU and optimized for the web.</p>
+      <p class="lede">Cultural heritage artifacts digitized from ordinary photographs, reconstructed on a laptop CPU
+        and optimized for the web. Walk through the hall and step up to any exhibit for a 360° view.</p>
+      <p class="status" id="status">Preparing the hall…</p>
+      <button type="button" class="enter" id="enter" disabled>Enter the museum</button>
+      <p class="touch-note">The 3D hall needs a keyboard and mouse. On this device the
+        <a href="list.html">List view</a> shows every exhibit.</p>
+      <dl class="keys">
+        <dt><kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd></dt><dd>walk (or the arrow keys), <kbd>Shift</kbd> to go faster</dd>
+        <dt>Mouse</dt><dd>look around</dd>
+        <dt><kbd>E</kbd> or click</dt><dd>360° view of the exhibit in front of you</dd>
+        <dt><kbd>M</kbd></dt><dd>show or hide the map</dd>
+        <dt><kbd>Esc</kbd></dt><dd>pause</dd>
+      </dl>
+      <p class="alt"><a href="list.html">List view</a>: every exhibit on one page, also for phones.</p>
+      <footer>
+        <p>Source images: <em>Cultural Heritage Synthetic Depth Dataset</em> (CHSD), V. Arampatzakis, F. Arnaoutoglou,
+          A. Koutsoudis &amp; G. Pavlidis, 2024 —
+          <a href="https://doi.org/10.5281/zenodo.11492154">doi:10.5281/zenodo.11492154</a>, rendered from models of the
+          Virtual Hampson Museum. Licensed
+          <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>; these reconstructions are
+          shared under the same license, for non-commercial use.</p>
+        <p>heritage3d — Ayaan Goel &amp; Kshiti Bhavsar · Mentor: Ms. Komal Singh</p>
+      </footer>
     </div>
-  </header>
+  </section>
 
-  <main class="wrap">
-    <section class="stage">
-      <model-viewer id="viewer" camera-controls touch-action="pan-y" shadow-intensity="0"
-                    exposure="1" interaction-prompt="auto" alt="3D model of the selected artifact">
-        <div class="loading" slot="progress-bar"><span id="progress"></span></div>
-      </model-viewer>
-      <aside class="info" id="info" aria-live="polite">
-        <p class="muted">Loading collection…</p>
-      </aside>
-    </section>
-
-    <section>
-      <h2>Collection</h2>
-      <ul class="gallery" id="gallery"></ul>
-    </section>
-
-    <section class="about">
-      <h2>About this museum</h2>
-      <p>Each object was reconstructed from rendered photographs only, using open-source photogrammetry
-        (COLMAP structure-from-motion and OpenMVS dense reconstruction) on a laptop without a graphics card.
-        Every exhibit uses the same capture budget: <strong id="about-images">92</strong> photographs taken at
-        12° steps around the object. The resulting mesh was then reduced to about 100,000 triangles with a
-        compressed texture so it loads quickly in a browser.</p>
-      <p>The accuracy figure for each object compares the museum model with reference geometry decoded from the
-        dataset's depth maps: F@0.002 R is the share of surface that agrees within 0.2% of the camera distance
-        (1.0 = perfect).</p>
-      <p>Drag to rotate, scroll or pinch to zoom, right-drag or two-finger drag to pan.</p>
-    </section>
-  </main>
-
-  <footer class="wrap foot">
-    <p>Source images: <em>Cultural Heritage Synthetic Depth Dataset</em> (CHSD), V. Arampatzakis, F. Arnaoutoglou,
-      A. Koutsoudis &amp; G. Pavlidis, 2024 —
-      <a href="https://doi.org/10.5281/zenodo.11492154">doi:10.5281/zenodo.11492154</a>, rendered from models of the
-      Virtual Hampson Museum. Licensed
-      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>; these reconstructions are
-      shared under the same license, for non-commercial use.</p>
-    <p>heritage3d — Ayaan Goel &amp; Kshiti Bhavsar · Mentor: Ms. Komal Singh</p>
-  </footer>
-
-  <script src="app.js"></script>
+  <noscript><p class="noscript">The 3D hall needs JavaScript. The <a href="list.html">List view</a> shows every exhibit.</p></noscript>
 </body>
 </html>

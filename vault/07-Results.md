@@ -270,3 +270,16 @@ Per level across all 23 artifacts (`round3_summary.csv`):
 
 Checked both in the browser: textured, upright.
 
+## Museum hall — rendering cost on the team laptop — 2026-11-01
+
+Measured in the Claude desktop app's browser pane (Chromium) on the HP Envy x360 (Intel Iris Xe), pane 800 × 675 px, pixel ratio 1.25, display capped at 60 fps; models served from `localhost`. `?repeat=3` shows the 16 exhibits three times (stress test for a ~40–50-exhibit museum).
+
+| Exhibits | Hall ready | All models loaded | View | Triangles drawn | Draw calls | fps |
+|---|---|---|---|---|---|---|
+| 16 | 0.9–1.0 s | 3.6 s | entrance, looking in | 1.43 M | 48 | 60 |
+| 48 | 0.8 s | 7.9 s | entrance, looking in | 4.64 M | 113 | 59 |
+| 48 | | | rotunda | 1.74 M | 51 | 60 |
+| 48 | | | east gallery | 0.83 M | 25 | 60 |
+
+- The building itself (merged by material) is a few draw calls; each exhibit is one draw call plus its placard.
+- Not measured yet: full-screen at the laptop's native resolution, a normal browser window, or loading over the internet (to measure with the hosting decision). Frame rate at full screen may be lower (to verify).

@@ -7,6 +7,7 @@
 
 ## Current status (updated 2026-11-01)
 
+- **Museum is now a walkable 3D hall** (`museum/index.html`): domed rotunda + four galleries, WASD + mouse, pedestals with research-fact placards, E for a 360° close-up. Layout grows from `artifacts.json`. Measured in the app's browser pane on this laptop: 16 exhibits 60 fps, 48 (stress test) 59–60 fps. The old page is the List view (`list.html`). See [[07-Results]].
 - **Round 3 complete: 23 of 40 artifacts × 5 levels** (2026-11-01 14:49, 15 / 15 runs, no failures). 746 and 522 clean (best L4); `BEY_1415_HI` breaks from L3 down (partial registration, two models). Per-level medians barely changed (L4 0.984, L3 0.964). **Museum: 16 exhibits, 49 MB.** See [[07-Results]].
 - **Round 2 complete: 20 of 40 artifacts × 5 levels** (2026-11-01, 35 / 35 runs, no failures). Median cloud F@0.002 R across 20: L1 0.881, L2 0.920, L3 0.963, **L4 0.980**, L5 0.679; L4 is best when it works but breaks on 4 / 20 (L3: 2 / 20, both low-texture objects that fail at every level). 12 / 20 artifacts reconstruct cleanly. New failure: `Ark_HM_38_HI` (smooth plain vessel). See [[07-Results]].
 - **Museum: 14 exhibits** (6 added from round 2), 2.8–3.8 MB each, 43 MB in all.
@@ -27,7 +28,7 @@
 
 1. Round 4 when the team is ready: `run_batch.py --count N --clean` (next ranks from 23; the guard now tolerates unplugs up to 15 min). Then compare, summarize, `export_glb.py`, commit.
 2. Team: how to reach the **30-exhibit minimum** ([[09-Open-Questions]]).
-3. Team: review the museum (`python -m http.server 8000 --directory museum`) and decide where to host it ([[09-Open-Questions]]); later: load-time measurement for RQ3.
+3. Team: walk the new hall in a normal browser (`python -m http.server 8000 --directory museum`), check the feel (speed, mouse sensitivity, placards) and decide where to host it ([[09-Open-Questions]]); later: load-time measurement for RQ3.
 4. Team: confirm the evaluation method (Option A, decoded CHSD depth — [[04-Methodology]]).
 5. The zips in `Downloads` can be kept as backup or deleted (team's choice).
 6. Team: try to get the companion paper PDF (doi 10.1007/978-3-032-06389-2_15) via the university library.
