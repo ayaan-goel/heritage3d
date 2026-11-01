@@ -1,0 +1,61 @@
+04:02:55 [App     ] OpenMVS x64 v2.4.0
+04:02:55 [App     ] Build date: Jan 20 2026, 00:13:37
+04:02:55 [App     ] CPU: 12th Gen Intel(R) Core(TM) i7-1255U (12 cores)
+04:02:55 [App     ] RAM: 15.72GB Physical Memory 128.00TB Virtual Memory
+04:02:55 [App     ] OS: Windows 11+ x64
+04:02:55 [App     ] Disk: 276.87GB (488.28GB) space
+04:02:55 [App     ] SSE & AVX compatible CPU & OS detected
+04:02:55 [App     ] Command line: DensifyPointCloud -i D:\heritage3d-data\runs\Ark_HM_1260C_HI\L5\mvs\scene.mvs -o D:\heritage3d-data\runs\Ark_HM_1260C_HI\L5\mvs\scene_dense.mvs --resolution-level 1
+04:02:55 [Scene   ] Camera model loaded: platform 0; camera  0; f 1.249x1.249; poses 6
+04:02:55 [Scene   ] Scene loaded in interface format from 'scene.mvs' (0ms):
+	6 images (6 calibrated) with a total of 2.75 MPixels (0.46 MPixels/image)
+	242 points, 0 vertices, 0 faces
+04:02:55 [Scene   ] ROI estimated with position (-0.060314,1.733585,3.865820) and extent (0.049556,0.442511,1.423085): scale 1.100000, up axis -1
+04:02:55 [PointCld] Point-cloud composed of 242 points with:
+ - points info:
+	230 points inside ROI (95.04%)
+	 inside ROI track length: 2 min / 3.85652 mean (0.875426 std) / 6 max
+	outside ROI track length: 3 min / 3.75 mean (0.829156 std) / 5 max
+ - visibility info (932 views - 3.85 views/point):
+	        0 points with 1- views (0.00%)
+	        3 points with 2  views (1.24%)
+	       95 points with 3  views (39.26%)
+	      144 points with 4+ views (59.50%)
+	2 min / 3.85124 mean (0.873495 std) / 6 max
+04:02:55 [ScnDense] Preparing images for dense reconstruction completed: 6 images (20ms)
+04:02:55 [ScnDense] Select neighbor views by weighting inside ROI points with 0.70
+04:02:55 [ScnDense] Selecting images for dense reconstruction completed: 6 images (0ms)
+04:02:55 [ScnDense] Reference image   0 paired with 0 views
+04:02:55 [ScnDense] Reference image   1 paired with 0 views
+04:02:55 [ScnDense] Reference image   5 paired with 0 views
+04:02:55 [ScnDense] Reference image   2 paired with 0 views
+04:02:55 [ScnDense] Reference image   4 paired with 0 views
+04:02:55 [ScnDense] Reference image   3 paired with 0 views
+04:02:55 [ScnDense] Reference image   0 paired with 0 views
+04:02:55 [ScnDense] Reference image   1 paired with 0 views
+04:02:55 [ScnDense] Reference image   5 paired with 0 views
+04:02:55 [ScnDense] Reference image   2 paired with 0 views
+04:02:55 [ScnDense] Reference image   4 paired with 0 views
+04:02:55 [ScnDense] Reference image   3 paired with 0 views
+04:02:55 [ScnDense] Reference image   0 paired with 0 views
+04:02:55 [ScnDense] Reference image   1 paired with 0 views
+04:02:55 [ScnDense] Reference image   5 paired with 0 views
+04:02:55 [ScnDense] Reference image   2 paired with 0 views
+04:02:55 [ScnDense] Reference image   4 paired with 0 views
+04:02:55 [ScnDense] Reference image   3 paired with 0 views
+04:02:55 [ScnDense] Depth-maps dense fused and filtered: 0 depth-maps, 0 depths, 0 points (-2147483648%%), -nan(ind) hits in -nan(ind) cached (0ms)
+04:02:55 [App     ] Densifying point-cloud completed: 0 points (34ms)
+04:02:55 [Scene   ] Scene saved in interface format to 'scene_dense.mvs' (0ms):
+	6 images (6 calibrated)
+	242 points, 0 vertices, 0 faces
+04:02:55 [App     ] MEMORYINFO: {
+04:02:55 [App     ] 	PageFaultCount 4820
+04:02:55 [App     ] 	PeakWorkingSetSize 18.12MB
+04:02:55 [App     ] 	WorkingSetSize 9.79MB
+04:02:55 [App     ] 	QuotaPeakPagedPoolUsage 87.34KB
+04:02:55 [App     ] 	QuotaPagedPoolUsage 87.34KB
+04:02:55 [App     ] 	QuotaPeakNonPagedPoolUsage 17.54KB
+04:02:55 [App     ] 	QuotaNonPagedPoolUsage 16.74KB
+04:02:55 [App     ] 	PagefileUsage 3.82MB
+04:02:55 [App     ] 	PeakPagefileUsage 14.52MB
+04:02:55 [App     ] } ENDINFO

@@ -204,4 +204,7 @@ Newest first. Every session must add an entry (see `CLAUDE.md`).
 - `export_glb.py --artifacts Ark_HM_192_HI Ark_HM_711_HI Ark_HM_1286_HI Ark_HM_1299_Hi` → exit 0 (ran ~11 min alongside round 5): all four added, 2.8–2.9 MB; manifest 20. 1299 surface F 0.924 (lowest exhibit; passes the mesh-vertex rule).
 - Browser pane: hall plans 20 exhibits (South 1–3, Rotunda 4–11, East 12–14, North 15–17, West 18–20); close-ups of all four new exhibits by deep link (full reload; a hash change during a close-up is ignored by design). The pane renders black while hidden — show it before screenshots.
 
-**Next action** — when round 5 finishes: compare, summarize (`--count 28 --name round5`), export, vault, commit.
+- Round 4 committed as Ayaan (`e5b8393`) and pushed.
+- Round 5: `batch.log` `2026-11-02 04:23:50 batch done: 5 ok, 0 failed []` (21 min). `compare_levels.py --artifact Ark_HM_1260C_HI` → 153 / 56 / 26 / 12 / 6 registered, F 0.070 / 0.082 / 0.050 / 0.632 / 0.000; `summarize_round.py --count 28 --name round5`; `export_glb.py --artifacts Ark_HM_1260C_HI` → not exhibited (L3 mesh F 0.045), manifest still 20. `pytest -q` → 54 passed.
+
+**Next action** — team: round 6 size/timing (12 artifacts left); the 30-exhibit question is now likely short ([[09-Open-Questions]]).

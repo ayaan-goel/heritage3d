@@ -11,7 +11,7 @@
 - [ ] Matcher choice (exhaustive vs vocabulary tree) — fixed after pilot, same for all levels.
 - [ ] Code license for the repository (separate from the CC BY-NC-SA data license).
 
-- [ ] Museum needs **≥ 30 exhibits** (team minimum, 2026-11-01). At the current pass rate (20 / 27 at L3, F ≥ 0.95, after round 4) all 40 main-set artifacts give ≈ 29–30 (estimate) — still borderline. Options: exhibit a fallback level when L3 fails the rule; reconstruct some of the 41 cut-off artifacts for the museum only (outside the experiment); lower the bar. Team decision after round 3.
+- [ ] Museum needs **≥ 30 exhibits** (team minimum, 2026-11-01). At the current pass rate (20 / 28 at L3, F ≥ 0.95, after round 5) all 40 main-set artifacts give ≈ 28–29 (estimate) — likely short of 30. Options: exhibit a fallback level when L3 fails the rule; reconstruct some of the 41 cut-off artifacts for the museum only (outside the experiment); lower the bar. Team decision after round 3.
 - [ ] Where to host the museum (GitHub Pages from this repo, university server, or local demo only)? Team decision; GLBs are ~4 MB each.
 - [ ] Why does OpenMVS seam leveling blacken faces on CHSD renders? (hypothesis: pure-black background pixels at silhouettes pull the colour correction to black). Not needed for the experiment; museum export avoids it.
 - [ ] Low-texture objects (`Ark_HM_1260B_HI`, `Ark_HM_38_HI`) fail at every level: report as a limitation only, or also measure texture per artifact and relate it to F? (hypothesis: too few SIFT matches)

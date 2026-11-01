@@ -296,6 +296,22 @@ Per level across all 27 artifacts (`round4_summary.csv`):
 - `Ark_HM_192_HI` L5: only 6 / 26 images registered, dense step produced no points (2 s) → recorded as failed, F 0. The other three register 25–26 / 26 at L5 but reach only F 0.56–0.59 (chamfer 0.008–0.038 R, 10–50× L4).
 - Per-level medians stay put from 23 to 27 artifacts (L4 0.984, L3 0.965); L5 failures 8 / 27.
 
+## Round 5 — rank 27 (1 artifact × 5 levels) — 2026-11-02
+
+`run_batch.py --count 28 --clean` in-session 04:02 → 04:23 (21 min), `batch done: 5 ok, 0 failed`. Started because round 4 ended before 04:30 (team rule). All 28: `experiments/results/round5_all.csv`, `round5_summary.csv`, `experiments/plots/round5_summary.png`.
+
+| Level | Images | Registered | Total time | Cloud F@0.002 R |
+|---|---|---|---|---|
+| L1 | 362 | 153 | 11.8 min | 0.070 |
+| L2 | 182 | 56 | 4.6 min | 0.082 |
+| L3 | 92 | 26 | 1.9 min | 0.050 |
+| L4 | 47 | 12 | 1.1 min | 0.632 |
+| L5 | 26 | 6 | 0.1 min | 0.000 (no dense cloud) |
+
+**Measured:**
+- `Ark_HM_1260C_HI` fails at every level: SfM registers only 25–42 % of the images (L1–L4), so the clouds cover a fraction of the object. Same pattern as its sibling `Ark_HM_1260B_HI` (batch test / round 1); together with `Ark_HM_38_HI` the third artifact that fails at all levels **(hypothesis: small, plain, low-texture surface — not checked)**. Not exhibited (L3 mesh F 0.045).
+- Per level across 28 (`round5_summary.csv`): median cloud F L1 0.887, L2 0.927, L3 0.965, **L4 0.984**, L5 0.622; cloud F < 0.5: 3 / 3 / 3 / 4 / 9 of 28.
+
 ## Museum models — round-4 exhibits — 2026-11-02
 
 `export_glb.py --artifacts Ark_HM_192_HI Ark_HM_711_HI Ark_HM_1286_HI Ark_HM_1299_Hi` → exit 0; all four pass the rule (L3 mesh-vertex F ≥ 0.95). Museum now **20 exhibits, 60 MB**.
