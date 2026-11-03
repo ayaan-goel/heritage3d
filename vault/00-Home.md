@@ -7,6 +7,9 @@
 
 ## Current status (updated 2026-11-03)
 
+- **Last round running** (started 08:43): final 5 main-set artifacts, ETA 15:00–19:00.
+- **Museum visit now starts at a 3D model of the PDEU main gate** (`museum/hall/gate.js`): walk into the rotating yellow arrow, fade, museum lobby. Links to an exhibit skip it. Team should check the feel in a normal browser.
+- **Excel summary** of all 81 artifacts: `experiments/results/artifact_status.xlsx`, rebuilt by `scripts/build_status_workbook.py` after every round or export.
 - **Round 6 complete: 35 of 40 artifacts × 5 levels** (2026-11-03 07:29, 35 / 35 runs, 8.4 h, no unplugs). 498, 596, 259, 557, 611 best at L4 and exhibited; 792 and 703 not exhibited. L5 yields no cloud on 6 / 7. Medians across 35: L3 0.964, **L4 0.984**, L5 0.578; L5 F < 0.5 on 15 / 35. **Museum: 25 exhibits, 75 MB.** See [[07-Results]].
 - **Round 5 complete: 28 of 40 artifacts** (2026-11-02 04:23, 5 / 5 runs). `Ark_HM_1260C_HI` fails at every level (25–42 % of images registered, F ≤ 0.08 except L4 0.632) → not exhibited; museum stays at **20**. Medians across 28: L3 0.965, **L4 0.984**, L5 0.622. See [[07-Results]].
 - **Round 4 complete: 27 of 40 artifacts × 5 levels** (2026-11-02 04:02, 20 / 20 runs, no failures, no unplugs). All four (192, 711, 1286, 1299) clean L1–L4 and best at L4; 192 fails at L5 (6 / 26 registered). Medians across 27: L3 0.965, **L4 0.984**, L5 0.651. **Museum: 20 exhibits, 60 MB** (all four added). Entrance signboards (PDEU title, project team) in the hall. See [[07-Results]].
@@ -29,7 +32,7 @@
 
 ## Next action
 
-1. Last round when the team says: `run_batch.py --count 40 --clean` (ranks 35–39, 5 artifacts, ≈ 1.2–2.1 h each). Then compare, `summarize_round.py --count 40 --name round7`, `export_glb.py`, commit.
+1. When the last round finishes: compare, `summarize_round.py --count 40 --name round7`, `export_glb.py`, `build_status_workbook.py`, vault, commit.
 2. Team: the **30-exhibit minimum** now needs all 5 remaining artifacts to pass ([[09-Open-Questions]]).
 3. Team: walk the new hall in a normal browser (`python -m http.server 8000 --directory museum`), check the feel (speed, mouse sensitivity, placards) and decide where to host it ([[09-Open-Questions]]); later: load-time measurement for RQ3.
 4. Team: confirm the evaluation method (Option A, decoded CHSD depth — [[04-Methodology]]).

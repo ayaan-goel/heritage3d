@@ -40,7 +40,9 @@ kbd {
   display: none;
 }
 body.locked .crosshair { display: block; }
-body.closeup .map { display: none; }
+body.closeup .map, body.outside .map { display: none; }
+.fade { position: fixed; inset: 0; background: #000; opacity: 0; pointer-events: none; transition: opacity .5s; }
+.fade.on { opacity: 1; }
 .map {
   position: absolute; right: 16px; top: 16px;
   width: 176px; height: 176px;

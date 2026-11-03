@@ -370,6 +370,10 @@ Checked all five in the 3D hall (browser pane): textured, upright, placards No. 
 - `Ark_HM_1299_Hi` passes the exhibit rule (which uses the evaluation's mesh-vertex F) but its surface-sample F (0.924) is the lowest of any exhibit so far. It is a joined double pot; the narrow gap between the two bodies is a likely cause **(hypothesis)**.
 - Checked all four in the 3D hall (browser pane): textured, upright, placards No. 17–20.
 
+## Museum gate scene — rendering cost — 2026-11-03
+
+Browser pane, 800×675, pixel ratio 1.25, batch running at the same time: **60 fps**, 25 draw calls, 67,368 triangles at the gate; 25 exhibits ready in 1.6 s, all loaded in 5.1 s (cached). Full-screen not measured.
+
 ## Museum hall — rendering cost on the team laptop — 2026-11-01
 
 Measured in the Claude desktop app's browser pane (Chromium) on the HP Envy x360 (Intel Iris Xe), pane 800 × 675 px, pixel ratio 1.25, display capped at 60 fps; models served from `localhost`. `?repeat=3` shows the 16 exhibits three times (stress test for a ~40–50-exhibit museum).

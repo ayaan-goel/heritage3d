@@ -219,3 +219,18 @@ Newest first. Every session must add an entry (see `CLAUDE.md`).
 - `export_glb.py --artifacts <the 7>` → exit 0: 5 added (2.8–2.9 MB), 792 and 703 skipped; manifest 25. Browser pane: close-ups of all five, zones right, no console errors. `pytest -q` → 54 passed.
 
 **Next action** — team: last round (5 artifacts, `--count 40`); 30 exhibits needs all five to pass ([[09-Open-Questions]]).
+
+## 2026-11-03 morning — last round started, 5 artifacts (directed by Ayaan and Kshiti)
+
+- `check_env.py` → exit 0; on AC; D: 273 GB free. `run_batch.py --count 40 --clean` started in-session 08:43 (25 level runs: `Ark_HM_658_HI`, `Ark_HM_393_HI`, `Ark_HM_1292_HI`, `Ark_HM_1288_HI`, `Ark_HM_209_HI`). Estimate 6–10 h (1.2–2.1 h/artifact in recent rounds).
+
+**Next action** — when it finishes: `batch.log` check, compare, `summarize_round.py --count 40 --name round7`, export, vault, commit.
+
+## 2026-11-03 morning — main gate and Excel summary (directed by Ayaan and Kshiti)
+
+- Team asked for a main-gate entrance with a rotating yellow arrow that leads into the museum, and supplied 6 photos of the gate; also a summary of all 81 artifacts, then an Excel version kept up to date.
+- `museum/hall/gate.js` (new): separate three.js scene (canopy, piers, closed gates, centre block with logo, guard room, forecourt, road, drive, trees, sky), arrow, ring, walk bounds. `main.js`: starts outside, `enterHall` fade, deep links and `teleport` go straight to the hall, map hidden at the gate; shadow map drawn once. `index.html`, `hall.css`: fade layer, menu text and button.
+- Checks: `node --check` ok. Browser pane: gate view from three positions; holding W walked into the arrow → hall lobby, map back; deep link `#Ark_HM_498_HI` → close-up in the hall; no console errors. Pointer lock not testable in the pane (drag-look used), so full-screen mouse feel is not checked.
+- `src/heritage3d/status.py`, `tests/test_status.py` (5 tests), `scripts/build_status_workbook.py`, `openpyxl` added (3.1.5). Run → `81 artifacts: 35 done, 1 in progress, 4 queued, 41 not run; museum 25 yes, 5 pending`; level medians computed from its cells match `round6_summary.csv` where the data is the same (L1 0.883, L4 0.984). **Formulas not recalculated here: LibreOffice is not installed and the file has not been opened in Excel by the agent** (Excel calculates them on opening). `pytest -q` → 59 passed.
+
+**Next action** — when the last round finishes: `batch.log` check, compare, `summarize_round.py --count 40 --name round7`, export, `build_status_workbook.py`, vault, commit.

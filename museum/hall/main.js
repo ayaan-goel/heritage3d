@@ -7,6 +7,7 @@ import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 import { buildHall } from "./building.js";
+import { buildGate } from "./gate.js";
 import { infoCanvas, placardCanvas, signCanvas, teamBoardCanvas, titleBoardCanvas } from "./labels.js";
 import { EYE, GALLERIES, GALLERY_W, PEDESTAL_TOP, ROTUNDA_R, planHall, toWorld } from "./layout.js";
 
@@ -42,6 +43,10 @@ try {
 renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
 renderer.setSize(innerWidth, innerHeight);
 renderer.toneMapping = THREE.NeutralToneMapping;
+renderer.shadowMap.enabled = true;    // only the gate has a shadow-casting light; drawn once, nothing there moves
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.shadowMap.autoUpdate = false;
+renderer.shadowMap.needsUpdate = true;
 const aniso = Math.min(8, renderer.capabilities.getMaxAnisotropy());
 
 const scene = new THREE.Scene();
@@ -84,6 +89,8 @@ scene.add(buildHall(plan, {
   info: infoCanvas(artifacts, plan.zones.map((z) => `${z.name}: ${numbers(z)}`)),
   boards: plan.boards.map((b) => (b.side < 0 ? titleBoardCanvas(logoReady, artifacts.length) : teamBoardCanvas())),
 }));
+
+const gate = buildGate({ logo: logoReady, aniso, environment: scene.environment });
 
 const exhibits = entries.map((entry, i) => {
   const spot = plan.spots[i];
@@ -178,9 +185,11 @@ function loadNext() {
 
 // ---- walking ---------------------------------------------------------------------------------------
 
-const me = { x: plan.spawn.x, z: plan.spawn.z, yaw: plan.spawn.yaw, pitch: -0.06, vx: 0, vz: 0 };
+const me = { x: gate.spawn.x, z: gate.spawn.z, yaw: gate.spawn.yaw, pitch: gate.spawn.pitch, vx: 0, vz: 0 };
 const keys = new Set();
-let mode = "menu";  // menu | walk | fly | closeup
+let mode = "menu";  // menu | walk | fly | closeup | fade
+let outside = true; // at the main gate; false once inside the museum
+document.body.classList.add("outside");
 let entered = false, dragLook = false, target = null, current = null, saved = null;
 
 function walk(dt) {
@@ -197,7 +206,31 @@ function walk(dt) {
   const k = 1 - Math.exp(-10 * dt);    // ease in and out of walking
   me.vx += (tx - me.vx) * k;
   me.vz += (tz - me.vz) * k;
-  [me.x, me.z] = plan.move(me.x, me.z, me.vx * dt, me.vz * dt);
+  [me.x, me.z] = (outside ? gate : plan).move(me.x, me.z, me.vx * dt, me.vz * dt);
+}
+
+// ---- from the main gate into the museum --------------------------------------------------------------
+
+const fade = $("fade");
+const FADE_MS = 500;
+
+function placeInHall() {
+  outside = false;
+  document.body.classList.remove("outside");
+  Object.assign(me, { x: plan.spawn.x, z: plan.spawn.z, yaw: plan.spawn.yaw, pitch: -0.06, vx: 0, vz: 0 });
+}
+
+function enterHall() {
+  mode = "fade";
+  fade.classList.add("on");
+  setTimeout(() => {
+    placeInHall();
+    camera.position.set(me.x, EYE, me.z);
+    camera.rotation.set(me.pitch, me.yaw, 0);
+    fade.classList.remove("on");
+    if (document.pointerLockElement === canvas || dragLook) mode = "walk";
+    else showMenu();
+  }, FADE_MS);
 }
 
 const fwd = new THREE.Vector3(), toward = new THREE.Vector3();
@@ -219,12 +252,13 @@ function findTarget() {  // the exhibit in reach that the visitor is looking at
 }
 
 const promptEl = $("prompt");
-let promptKey = "";
+let promptKey = "", nearGate = false;
 function showPrompt() {
-  const key = target ? `${target.number}:${target.state}` : "";
+  const key = nearGate ? "gate" : target ? `${target.number}:${target.state}` : "";
   if (key === promptKey) return;
   promptKey = key;
-  promptEl.hidden = !target;
+  promptEl.hidden = !key;
+  if (nearGate) promptEl.textContent = "Walk into the yellow arrow to enter the museum";
   if (!target) return;
   const name = `No. ${target.number} · ${target.entry.id}`;
   promptEl.innerHTML = {
@@ -238,7 +272,7 @@ function showPrompt() {
 function showMenu() {
   mode = "menu";
   keys.clear();
-  enter.textContent = entered ? "Resume" : "Enter the museum";
+  enter.textContent = entered ? "Resume" : "Start at the main gate";
   menu.hidden = false;
 }
 
@@ -430,6 +464,7 @@ function keepTarget() {  // panning may move the pivot a little, but not away fr
 // a link to list.html#<id> or index.html#<id> opens that exhibit's close-up
 function goTo(ex) {
   const fx = Math.sin(ex.spot.yaw), fz = Math.cos(ex.spot.yaw);
+  placeInHall();
   Object.assign(me, { x: ex.spot.x + fx * 1.5, z: ex.spot.z + fz * 1.5, yaw: Math.atan2(fx, fz), pitch: -0.25 });
   camera.position.set(me.x, EYE, me.z);
   camera.rotation.set(me.pitch, me.yaw, 0);
@@ -529,10 +564,15 @@ renderer.setAnimationLoop(() => {
     orbit.update(dt);
     keepTarget();
   }
-  target = mode === "walk" ? findTarget() : null;
+  if (outside) {
+    gate.animate(clock.elapsedTime);
+    if (mode === "walk" && gate.atPortal(me.x, me.z)) enterHall();
+  }
+  nearGate = outside && mode === "walk" && gate.distance(me.x, me.z) < 9;
+  target = mode === "walk" && !outside ? findTarget() : null;
   showPrompt();
-  drawMap();
-  renderer.render(scene, camera);
+  if (!outside) drawMap();
+  renderer.render(outside ? gate.scene : scene, camera);
 
   frames++;
   const now = performance.now();
@@ -552,7 +592,13 @@ window.hall = {
     drawCalls: renderer.info.render.calls, triangles: renderer.info.render.triangles,
     textures: renderer.info.memory.textures, pixelRatio: renderer.getPixelRatio(),
   }),
+  gate,
+  where: () => (outside ? "gate" : "hall"),
   teleport(x, z, yaw = me.yaw, pitch = me.pitch) {
+    placeInHall();
+    Object.assign(me, { x, z, yaw, pitch, vx: 0, vz: 0 });
+  },
+  teleportGate(x, z, yaw = me.yaw, pitch = me.pitch) {
     Object.assign(me, { x, z, yaw, pitch, vx: 0, vz: 0 });
   },
   closeup: (n) => openCloseup(exhibits[n - 1]),
@@ -560,5 +606,5 @@ window.hall = {
 
 followHash();
 for (let i = 0; i < 3; i++) loadNext();
-status.textContent = `${exhibits.length} exhibits in a domed rotunda and four galleries.`;
+status.textContent = `${exhibits.length} exhibits in a domed rotunda and four galleries, past the main gate.`;
 enter.disabled = false;

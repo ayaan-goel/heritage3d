@@ -11,6 +11,7 @@
 - [ ] Matcher choice (exhaustive vs vocabulary tree) — fixed after pilot, same for all levels.
 - [ ] Code license for the repository (separate from the CC BY-NC-SA data license).
 
+- [ ] Team: check with Prof. Singh that showing the PDEU gate and logo is fine, especially if the museum goes public.
 - [ ] Museum needs **≥ 30 exhibits** (team minimum, 2026-11-01). After round 6: 25 exhibits from 35 artifacts (L3, mesh F ≥ 0.95). 30 needs all 5 remaining artifacts to pass; at the current rate the 40 give ≈ 28–29 (estimate) — likely short of 30. Options: exhibit a fallback level when L3 fails the rule; reconstruct some of the 41 cut-off artifacts for the museum only (outside the experiment); lower the bar. Team decision after round 3.
 - [ ] Where to host the museum (GitHub Pages from this repo, university server, or local demo only)? Team decision; GLBs are ~4 MB each.
 - [ ] Why does OpenMVS seam leveling blacken faces on CHSD renders? (hypothesis: pure-black background pixels at silhouettes pull the colour correction to black). Not needed for the experiment; museum export avoids it.
