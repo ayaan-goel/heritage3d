@@ -372,7 +372,7 @@ Checked all five in the 3D hall (browser pane): textured, upright, placards No. 
 
 ## Museum gate scene — rendering cost — 2026-11-03
 
-Browser pane, 800×675, pixel ratio 1.25, batch running at the same time: first gate-only version 60 fps, 67,368 triangles. **With the street: 60 fps, 43 draw calls, 246,406 triangles at the start point**; page ready 3.3 s, 25 exhibits loaded in 6.9 s (cached). Full-screen not measured.
+Browser pane, 800×675, pixel ratio 1.25, batch running at the same time: first gate-only version 60 fps, 67,368 triangles. **With the street: 60 fps, 43 draw calls, 246,406 triangles at the start point**; page ready 3.3 s, 25 exhibits loaded in 6.9 s (cached). Full-screen not measured. Page-ready time varies with the batch: 3.0–3.3 s in most loads, once 17 s while a dense step was using the CPU.
 
 ## Museum hall — rendering cost on the team laptop — 2026-11-01
 

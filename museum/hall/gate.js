@@ -7,6 +7,7 @@
 import * as THREE from "three";
 import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
 import { BODY } from "./layout.js";
+import { buildPortal } from "./portal.js";
 import * as T from "./textures.js";
 
 const SERIF = 'Georgia, "Times New Roman", serif';
@@ -211,14 +212,6 @@ function awningTexture() {
     g.fillRect(i * 16, 0, 16, 64);
   }
   return c;
-}
-
-function arrowGeometry() {  // points down
-  const s = new THREE.Shape();
-  [[-0.17, 0.62], [0.17, 0.62], [0.17, 0.08], [0.44, 0.08], [0, -0.62], [-0.44, 0.08], [-0.17, 0.08]]
-    .forEach(([x, y], i) => (i ? s.lineTo(x, y) : s.moveTo(x, y)));
-  s.closePath();
-  return new THREE.ExtrudeGeometry(s, { depth: 0.14, bevelEnabled: true, bevelSize: 0.025, bevelThickness: 0.025, bevelSegments: 2 }).center();
 }
 
 export function buildGate({ logo, aniso, environment }) {
@@ -573,29 +566,8 @@ export function buildGate({ logo, aniso, environment }) {
     new THREE.MeshBasicMaterial({ map: skyTexture(aniso), side: THREE.BackSide, toneMapped: false, fog: false }),
   ));
 
-  // the arrow, a glowing ring on the ground and a faint column of light above the ring
-  const yellow = new THREE.MeshStandardMaterial({ color: 0xffd21f, emissive: 0xc89400, roughness: 0.45 });
-  const arrow = new THREE.Mesh(arrowGeometry(), yellow);
-  arrow.position.set(PORTAL.x, ARROW_Y, PORTAL.z);
-  arrow.scale.setScalar(1.45);
-  scene.add(arrow);
-  const glow = { color: 0xffd21f, transparent: true, depthWrite: false, toneMapped: false, fog: false };
-  const ring = new THREE.Mesh(new THREE.RingGeometry(PORTAL.r - 0.14, PORTAL.r, 64).rotateX(-Math.PI / 2),
-    new THREE.MeshBasicMaterial({ ...glow, opacity: 0.95, side: THREE.DoubleSide }));
-  ring.position.set(PORTAL.x, 0.03, PORTAL.z);
-  scene.add(ring);
-  const fadeUp = T.texture(T.vertical(4, 64, [[0, "rgba(255,255,255,0)"], [1, "rgba(255,255,255,0.28)"]]), aniso);
-  fadeUp.wrapT = THREE.ClampToEdgeWrapping;
-  const column = new THREE.Mesh(new THREE.CylinderGeometry(PORTAL.r - 0.05, PORTAL.r - 0.05, 1.5, 64, 1, true),
-    new THREE.MeshBasicMaterial({ ...glow, map: fadeUp, side: THREE.DoubleSide }));
-  column.position.set(PORTAL.x, 0.75, PORTAL.z);
-  scene.add(column);
-
-  function animate(t) {
-    arrow.rotation.y = t * 1.9;
-    arrow.position.y = ARROW_Y + Math.sin(t * 2.2) * 0.12;
-    ring.scale.setScalar(1 + Math.sin(t * 3) * 0.03);
-  }
+  const arrow = buildPortal({ ...PORTAL, arrowY: ARROW_Y, arrowScale: 1.45, aniso });
+  scene.add(arrow.group);
 
   // the street is open ground bounded by the gate line, the parked bikes, the fence and the ends of the view;
   // posts and bollards push the visitor out sideways, as the pedestals do in the hall
@@ -619,6 +591,6 @@ export function buildGate({ logo, aniso, environment }) {
     move,
     atPortal: (x, z) => Math.hypot(x - PORTAL.x, z - PORTAL.z) < PORTAL.r - BODY * 0.4,
     distance: (x, z) => Math.hypot(x - PORTAL.x, z - PORTAL.z),
-    animate,
+    animate: arrow.animate,
   };
 }

@@ -9,6 +9,7 @@ import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 import { buildHall } from "./building.js";
 import { CHARACTERS, buildCharacter } from "./character.js";
 import { buildGate } from "./gate.js";
+import { buildPortal } from "./portal.js";
 import { infoCanvas, placardCanvas, signCanvas, teamBoardCanvas, titleBoardCanvas } from "./labels.js";
 import { EYE, GALLERIES, GALLERY_W, PEDESTAL_TOP, ROTUNDA_R, planHall, toWorld } from "./layout.js";
 
@@ -93,6 +94,8 @@ scene.add(buildHall(plan, {
 }));
 
 const gate = buildGate({ logo: logoReady, aniso, environment: scene.environment });
+const backToGate = buildPortal({ ...plan.exit, arrowY: 2.3, arrowScale: 1.1, aniso });
+scene.add(backToGate.group);
 
 const exhibits = entries.map((entry, i) => {
   const spot = plan.spots[i];
@@ -259,14 +262,16 @@ function findTarget() {  // the exhibit in reach that the visitor is looking at
 }
 
 const promptEl = $("prompt");
-let promptKey = "", nearGate = false;
+let promptKey = "", hint = "";
 function showPrompt() {
-  const key = nearGate ? "gate" : target ? `${target.number}:${target.state}` : "";
+  const key = target ? `${target.number}:${target.state}` : hint;
   if (key === promptKey) return;
   promptKey = key;
   promptEl.hidden = !key;
-  if (nearGate) promptEl.textContent = "Walk into the yellow arrow to enter the museum";
-  if (!target) return;
+  if (!target) {
+    promptEl.textContent = hint;
+    return;
+  }
   const name = `No. ${target.number} · ${target.entry.id}`;
   promptEl.innerHTML = {
     ready: `<kbd>E</kbd> 360° view <span>${name}</span>`,
@@ -364,8 +369,6 @@ addEventListener("keydown", (e) => {
     else if (mode === "walk" && dragLook) showMenu();
   } else if (e.code === "KeyM") {
     map.hidden = !map.hidden;
-  } else if (mode === "walk" && e.code === "KeyG" && !outside) {
-    travel(placeAtGate);
   } else if (mode === "walk" && e.code === "KeyV") {
     third = !third;
     showWho();
@@ -573,6 +576,11 @@ const mapBase = (() => {
     const [x, y] = toMap(s.x, s.z);
     g.fillRect(x - 1.5, y - 1.5, 3, 3);
   }
+  const [exitX, exitY] = toMap(plan.exit.x, plan.exit.z);
+  g.fillStyle = "#ffd21f";
+  g.beginPath();
+  g.arc(exitX, exitY, 3, 0, Math.PI * 2);
+  g.fill();
   return c;
 })();
 
@@ -629,11 +637,17 @@ renderer.setAnimationLoop(() => {
     orbit.update(dt);
     keepTarget();
   }
+  hint = "";
   if (outside) {
     gate.animate(clock.elapsedTime);
     if (mode === "walk" && gate.atPortal(me.x, me.z)) travel(placeInHall);
+    else if (mode === "walk" && gate.distance(me.x, me.z) < 9) hint = "Walk into the yellow arrow to enter the museum";
+  } else {
+    backToGate.animate(clock.elapsedTime);
+    const away = Math.hypot(me.x - plan.exit.x, me.z - plan.exit.z);
+    if (mode === "walk" && away < plan.exit.r - 0.14) travel(placeAtGate);
+    else if (mode === "walk" && away < 3.5) hint = "Walk into the yellow arrow to go back to the main gate";
   }
-  nearGate = outside && mode === "walk" && gate.distance(me.x, me.z) < 9;
   target = mode === "walk" && !outside ? findTarget() : null;
   showPrompt();
   if (!outside) drawMap();

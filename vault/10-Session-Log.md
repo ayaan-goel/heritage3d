@@ -237,4 +237,6 @@ Newest first. Every session must add an entry (see `CLAUDE.md`).
 
 - Team: SBI name on the booth, no plants in front of the gate, gates stay shut, a way back to the gate, third-person toggle, character switch. Done (see [[08-Decisions]]). Browser pane: `V`, `C`, walking in third person into the arrow, third-person camera at a rotunda pedestal, `E` close-up in and out, `G` and the pause-menu button shown; no console errors. Standing at the hall's spawn point the camera has only 1 m of room, so the figure is hidden until the visitor steps forward.
 
-**Next action** — when the last round finishes: `batch.log` check, compare, `summarize_round.py --count 40 --name round7`, export, `build_status_workbook.py`, vault, commit. Team: choose the avatar route.
+- Team: go back to the gate by a circle inside the museum, not a key. `museum/hall/portal.js` (new, shared arrow and circle), lobby 5 → 7.5 m, circle beside the entrance doors, `G` removed, pause-menu button kept. A first placement on the centre line blocked the third-person view on arrival, so it moved 2.4 m to the side. Browser pane: gate → hall → circle → gate round trip, both views, map marker, hint text; no console errors. `pytest -q` → 59 passed.
+
+**Next action** — when the last round finishes: `batch.log` check, compare, `summarize_round.py --count 40 --name round7`, export, `build_status_workbook.py`, vault, commit. Team chose stylized characters, no photos, for now.

@@ -17,7 +17,7 @@ export const PEDESTAL_TOP = 1.04;
 export const STEP = 3.2;             // between pedestal pairs along a gallery
 export const FIRST_PAIR = 2.6;       // from a gallery's start (and end) to its first (and last) pair
 const ROW = 2.2;                     // pedestal distance from a gallery's centre line
-const LOBBY = 5;                     // extra length of the entrance gallery, where visitors start
+const LOBBY = 7.5;                   // extra length of the entrance gallery, where visitors start
 const RING_R = 6.6;                  // rotunda pedestal ring
 const RING_DEG = [32, 58, 122, 148, 212, 238, 302, 328];
 const PEDESTAL_R = 0.52;             // circle around a pedestal's footprint
@@ -80,10 +80,12 @@ export function planHall(n) {
   }));
   for (const g of [1, 2, 3]) add(`${GALLERIES[g].name} gallery`, slots(galleries[g]).slice(0, counts[g]));
 
-  // two signboards in the entrance lobby, either side of the aisle, turned towards where visitors start
-  const entrance = galleries[0].end, start = toWorld(0, entrance - 1.4, 0);
+  // the circle back to the main gate beside the entrance doors, then where visitors start, then two signboards
+  // either side of the aisle, turned towards the start
+  const entrance = galleries[0].end, start = toWorld(0, entrance - 3.4, 0);
+  const [exitX, exitZ] = toWorld(0, entrance - 1.6, -2.4);  // off the aisle, clear of a third-person camera
   const boards = [-1, 1].map((side) => {
-    const [x, z] = toWorld(0, entrance - 4.6, side * 2.4);
+    const [x, z] = toWorld(0, entrance - 6.6, side * 2.4);
     return { x, z, yaw: facing(start[0] - x, start[1] - z), side };
   });
 
@@ -136,6 +138,7 @@ export function planHall(n) {
 
   return {
     spots, zones, galleries, boards,
+    exit: { x: exitX, z: exitZ, r: 0.9 },
     spawn: { x: start[0], z: start[1], yaw: 0 },
     extent: Math.max(...galleries.map((g) => g.end)) + 0.5,
     move,
