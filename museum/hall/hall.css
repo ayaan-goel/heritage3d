@@ -43,6 +43,15 @@ body.locked .crosshair { display: block; }
 body.closeup .map, body.outside .map { display: none; }
 .fade { position: fixed; inset: 0; background: #000; opacity: 0; pointer-events: none; transition: opacity .5s; }
 .fade.on { opacity: 1; }
+body.closeup .who { display: none; }
+.who {
+  position: absolute; left: 16px; bottom: 50px; margin: 0;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: var(--glass);
+  font-size: 13px;
+  color: var(--muted);
+}
 .map {
   position: absolute; right: 16px; top: 16px;
   width: 176px; height: 176px;
@@ -141,6 +150,8 @@ body.closeup .map, body.outside .map { display: none; }
 }
 .enter:hover { filter: brightness(1.08); }
 .enter:disabled { opacity: .5; cursor: progress; }
+.enter.ghost { margin-left: 8px; background: transparent; border: 1px solid var(--accent); color: var(--accent); }
+.enter[hidden] { display: none; }
 .keys { display: grid; grid-template-columns: auto 1fr; gap: 7px 14px; margin: 18px 0 0; font-size: 14px; }
 .keys dt { white-space: nowrap; color: var(--muted); }
 .keys dd { margin: 0; }

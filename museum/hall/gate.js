@@ -190,15 +190,17 @@ function instituteSign() {
   return c;
 }
 
-function atmSign() {
+function bankSign() {
   const c = T.canvas(512, 128), g = c.getContext("2d");
   g.fillStyle = "#2c2c78";
   g.fillRect(0, 0, 512, 128);
   g.textAlign = "center";
   g.textBaseline = "middle";
   g.fillStyle = "#f4f4fa";
-  g.font = `600 64px ${SANS}`;
-  g.fillText("ATM", 256, 68);
+  g.font = `700 72px ${SANS}`;
+  g.fillText("SBI", 150, 68);
+  g.font = `500 54px ${SANS}`;
+  g.fillText("ATM", 340, 70);
   return c;
 }
 
@@ -376,13 +378,6 @@ export function buildGate({ logo, aniso, environment }) {
     add("maroon", box(a, a + 0.1, 0.08, 2.07, -0.05, 0.05));
     add("maroon", box(b - 0.1, b, 0.08, 2.07, -0.05, 0.05));
     for (let x = a + 0.2; x < b - 0.1; x += 0.13) add("maroon", box(x - 0.012, x + 0.012, 0.2, 1.95, -0.012, 0.012));
-    // low clay pots with plants along the closed gates
-    for (let x = 1.7; x < 5.2; x += 0.58) {
-      const px = side * x, pz = 0.95;
-      add("pot", new THREE.CylinderGeometry(0.23, 0.17, 0.3, 12).translate(px, 0.15, pz));
-      const tone = 0.75 + rand() * 0.35;
-      add("leaves", painted3d(new THREE.IcosahedronGeometry(0.27, 1).scale(1, 0.75, 1).translate(px, 0.44, pz), 0.25 * tone, 0.52 * tone, 0.2 * tone));
-    }
   }
   add("block", box(-BLOCK.w, BLOCK.w, 0, BLOCK.h, -0.3, 0.3));
 
@@ -568,7 +563,7 @@ export function buildGate({ logo, aniso, environment }) {
   decal(fasciaLetters(), 14.6, 1, 0, (CANOPY.y0 + CANOPY.y1) / 2, CANOPY.depth + 0.005);
   decal(blockPlate(logo), BLOCK.w * 2, (BLOCK.w * 2 * 560) / 640, 0, BLOCK.h / 2 + 0.05, 0.305);
   decal(instituteSign(), 5.4, 1.5, -28, 0.86, 0.805);
-  decal(atmSign(), 3.8, 0.95, 9.5, 3.5, 1.22, { transparent: false });
+  decal(bankSign(), 3.8, 0.95, 9.5, 3.5, 1.22, { transparent: false });
   const awning = decal(awningTexture(), 3.4, 1.05, -9.8, 2.75, 1.45, { transparent: false, side: THREE.DoubleSide });
   awning.rotation.x = 0.5;
   awning.castShadow = true;

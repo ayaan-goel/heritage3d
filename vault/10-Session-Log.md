@@ -235,4 +235,6 @@ Newest first. Every session must add an entry (see `CLAUDE.md`).
 
 - Team then supplied 9 Street View captures: `gate.js` rebuilt with the street (see [[08-Decisions]]), hazy sky, fog, 4096 px shadow map drawn once, clumped trees. Browser pane: views from the start point, the plaza's west side, the service road and the fence; Shift+W from the start → hall in 6.6 s; bounds checked with `hall.gate.move` (bikes, gate line, fence, street end); no console errors. If the pane is hidden when the page loads the canvas stays 0 × 0 until a reload (pane only, not seen in a normal tab; **to verify** in a normal browser).
 
-**Next action** — when the last round finishes: `batch.log` check, compare, `summarize_round.py --count 40 --name round7`, export, `build_status_workbook.py`, vault, commit.
+- Team: SBI name on the booth, no plants in front of the gate, gates stay shut, a way back to the gate, third-person toggle, character switch. Done (see [[08-Decisions]]). Browser pane: `V`, `C`, walking in third person into the arrow, third-person camera at a rotunda pedestal, `E` close-up in and out, `G` and the pause-menu button shown; no console errors. Standing at the hall's spawn point the camera has only 1 m of room, so the figure is hidden until the visitor steps forward.
+
+**Next action** — when the last round finishes: `batch.log` check, compare, `summarize_round.py --count 40 --name round7`, export, `build_status_workbook.py`, vault, commit. Team: choose the avatar route.

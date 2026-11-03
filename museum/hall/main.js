@@ -7,6 +7,7 @@ import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 import { buildHall } from "./building.js";
+import { CHARACTERS, buildCharacter } from "./character.js";
 import { buildGate } from "./gate.js";
 import { infoCanvas, placardCanvas, signCanvas, teamBoardCanvas, titleBoardCanvas } from "./labels.js";
 import { EYE, GALLERIES, GALLERY_W, PEDESTAL_TOP, ROTUNDA_R, planHall, toWorld } from "./layout.js";
@@ -16,6 +17,7 @@ const WALK = 2.2, RUN = 4.4; // m/s
 const LOOK = 0.0022;         // radians per pixel of mouse movement
 const REACH = 2.6;           // the 360° prompt appears within this distance of an exhibit, m
 const FOV = 70, CLOSE_FOV = 42;
+const BEHIND = 3;            // third-person camera's distance behind the visitor, m
 const PANEL_SHIFT = 180;     // px the close-up view moves left to make room for the details panel
 
 const params = new URLSearchParams(location.search);
@@ -220,13 +222,18 @@ function placeInHall() {
   Object.assign(me, { x: plan.spawn.x, z: plan.spawn.z, yaw: plan.spawn.yaw, pitch: -0.06, vx: 0, vz: 0 });
 }
 
-function enterHall() {
+function placeAtGate() {
+  outside = true;
+  document.body.classList.add("outside");
+  Object.assign(me, { ...gate.spawn, vx: 0, vz: 0 });
+}
+
+function travel(place) {
   mode = "fade";
   fade.classList.add("on");
   setTimeout(() => {
-    placeInHall();
-    camera.position.set(me.x, EYE, me.z);
-    camera.rotation.set(me.pitch, me.yaw, 0);
+    place();
+    behind = 0;
     fade.classList.remove("on");
     if (document.pointerLockElement === canvas || dragLook) mode = "walk";
     else showMenu();
@@ -273,6 +280,7 @@ function showMenu() {
   mode = "menu";
   keys.clear();
   enter.textContent = entered ? "Resume" : "Start at the main gate";
+  toGate.hidden = outside || !entered;
   menu.hidden = false;
 }
 
@@ -313,6 +321,14 @@ enter.addEventListener("click", () => {
   mode = "walk";
 });
 
+const toGate = $("to-gate");
+toGate.addEventListener("click", () => {
+  placeAtGate();
+  if (!dragLook) return requestLock();
+  hideMenu();
+  mode = "walk";
+});
+
 document.addEventListener("pointerlockchange", () => {
   const locked = document.pointerLockElement === canvas;
   document.body.classList.toggle("locked", locked);
@@ -348,10 +364,51 @@ addEventListener("keydown", (e) => {
     else if (mode === "walk" && dragLook) showMenu();
   } else if (e.code === "KeyM") {
     map.hidden = !map.hidden;
+  } else if (mode === "walk" && e.code === "KeyG" && !outside) {
+    travel(placeAtGate);
+  } else if (mode === "walk" && e.code === "KeyV") {
+    third = !third;
+    showWho();
+  } else if (mode === "walk" && e.code === "KeyC") {
+    wearing = (wearing + 1) % CHARACTERS.length;
+    figure.wear(CHARACTERS[wearing]);
+    showWho();
   }
 });
 addEventListener("keyup", (e) => keys.delete(e.code));
 addEventListener("blur", () => keys.clear());
+
+// ---- first or third person, and who the visitor is ---------------------------------------------------
+
+const figure = buildCharacter();
+let third = false, wearing = 0, behind = 0;
+figure.wear(CHARACTERS[wearing]);
+const whoEl = $("who");
+function showWho() {
+  whoEl.textContent = `${CHARACTERS[wearing].name} · ${third ? "third" : "first"} person`;
+}
+showWho();
+
+// Distance the camera can stand behind (x, z) before a wall or an obstacle gets in its way.
+function roomBehind(x, z, yaw, pitch) {
+  const world = outside ? gate : plan;
+  const dx = Math.sin(yaw) * Math.cos(pitch), dz = Math.cos(yaw) * Math.cos(pitch);
+  let room = 0;
+  for (let d = 0.25; d <= BEHIND; d += 0.25) {
+    const [ax, az] = world.move(x, z, dx * d, dz * d);
+    if (Math.hypot(ax - (x + dx * d), az - (z + dz * d)) > 0.02) break;
+    room = d;
+  }
+  return room;
+}
+
+function viewFrom(x, z, yaw, pitch, distance) {
+  return new THREE.Vector3(
+    x + Math.sin(yaw) * Math.cos(pitch) * distance,
+    Math.max(0.35, EYE + (distance > 0 ? 0.2 : 0) - Math.sin(pitch) * distance),
+    z + Math.cos(yaw) * Math.cos(pitch) * distance,
+  );
+}
 
 // ---- 360° close-up -----------------------------------------------------------------------------------
 
@@ -448,7 +505,9 @@ function closeCloseup(relock) {
   history.replaceState(null, "", location.pathname + location.search);
   if (relock && !dragLook) requestLock();
   const quat = new THREE.Quaternion().setFromEuler(new THREE.Euler(saved.pitch, saved.yaw, 0, "YXZ"));
-  fly(new THREE.Vector3(saved.x, EYE, saved.z), quat, FOV, 0, 0.6, () => {
+  const room = third ? roomBehind(saved.x, saved.z, saved.yaw, saved.pitch) : 0;
+  fly(viewFrom(saved.x, saved.z, saved.yaw, saved.pitch, room), quat, FOV, 0, 0.6, () => {
+    behind = room;
     Object.assign(me, saved, { vx: 0, vz: 0 });
     current = null;
     if (document.pointerLockElement === canvas || dragLook) mode = "walk";
@@ -556,9 +615,15 @@ renderer.setAnimationLoop(() => {
   const dt = Math.min(clock.getDelta(), 0.05);
   if (mode === "walk") walk(dt);
   if (mode === "walk" || mode === "menu") {
-    camera.position.set(me.x, EYE, me.z);
+    const room = third ? roomBehind(me.x, me.z, me.yaw, me.pitch) : 0;
+    behind = room < behind ? room : behind + (room - behind) * Math.min(1, dt * 6);  // in at once, out gently
+    camera.position.copy(viewFrom(me.x, me.z, me.yaw, me.pitch, behind));
     camera.rotation.set(me.pitch, me.yaw, 0);
   }
+  const world = outside ? gate.scene : scene;
+  if (figure.group.parent !== world) world.add(figure.group);
+  figure.group.visible = third && behind > 1 && (mode === "walk" || mode === "menu");
+  figure.pose(me.x, me.z, me.yaw, Math.hypot(me.vx, me.vz), dt);
   if (flight) stepFlight(dt);
   if (mode === "closeup") {
     orbit.update(dt);
@@ -566,7 +631,7 @@ renderer.setAnimationLoop(() => {
   }
   if (outside) {
     gate.animate(clock.elapsedTime);
-    if (mode === "walk" && gate.atPortal(me.x, me.z)) enterHall();
+    if (mode === "walk" && gate.atPortal(me.x, me.z)) travel(placeInHall);
   }
   nearGate = outside && mode === "walk" && gate.distance(me.x, me.z) < 9;
   target = mode === "walk" && !outside ? findTarget() : null;
@@ -594,6 +659,7 @@ window.hall = {
   }),
   gate,
   where: () => (outside ? "gate" : "hall"),
+  view: () => ({ third, behind: +behind.toFixed(2), wearing: CHARACTERS[wearing].name, figure: figure.group.visible }),
   teleport(x, z, yaw = me.yaw, pitch = me.pitch) {
     placeInHall();
     Object.assign(me, { x, z, yaw, pitch, vx: 0, vz: 0 });

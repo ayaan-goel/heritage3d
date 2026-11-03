@@ -23,6 +23,7 @@
     <div class="crosshair"></div>
     <canvas class="map" id="map"></canvas>
     <p class="fps" id="fps" hidden></p>
+    <p class="who" id="who"></p>
     <p class="loading" id="loading">Exhibits <span>0 / 0</span> <b><i></i></b></p>
   </div>
   <p class="prompt" id="prompt" hidden></p>
@@ -43,12 +44,16 @@
         and step up to any exhibit for a 360° view.</p>
       <p class="status" id="status">Preparing the hall…</p>
       <button type="button" class="enter" id="enter" disabled>Start at the main gate</button>
+      <button type="button" class="enter ghost" id="to-gate" hidden>Back to the main gate</button>
       <p class="touch-note">The 3D hall needs a keyboard and mouse. On this device the
         <a href="list.html">List view</a> shows every exhibit.</p>
       <dl class="keys">
         <dt><kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd></dt><dd>walk (or the arrow keys), <kbd>Shift</kbd> to go faster</dd>
         <dt>Mouse</dt><dd>look around</dd>
         <dt><kbd>E</kbd> or click</dt><dd>360° view of the exhibit in front of you</dd>
+        <dt><kbd>V</kbd></dt><dd>first or third person</dd>
+        <dt><kbd>C</kbd></dt><dd>switch character</dd>
+        <dt><kbd>G</kbd></dt><dd>back to the main gate, from inside the museum</dd>
         <dt><kbd>M</kbd></dt><dd>show or hide the map</dd>
         <dt><kbd>Esc</kbd></dt><dd>pause</dd>
       </dl>
