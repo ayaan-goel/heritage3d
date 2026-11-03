@@ -5,8 +5,9 @@
 
 > Updating this vault at the end of every session is **mandatory** (see `CLAUDE.md`).
 
-## Current status (updated 2026-11-02)
+## Current status (updated 2026-11-03)
 
+- **Round 6 complete: 35 of 40 artifacts × 5 levels** (2026-11-03 07:29, 35 / 35 runs, 8.4 h, no unplugs). 498, 596, 259, 557, 611 best at L4 and exhibited; 792 and 703 not exhibited. L5 yields no cloud on 6 / 7. Medians across 35: L3 0.964, **L4 0.984**, L5 0.578; L5 F < 0.5 on 15 / 35. **Museum: 25 exhibits, 75 MB.** See [[07-Results]].
 - **Round 5 complete: 28 of 40 artifacts** (2026-11-02 04:23, 5 / 5 runs). `Ark_HM_1260C_HI` fails at every level (25–42 % of images registered, F ≤ 0.08 except L4 0.632) → not exhibited; museum stays at **20**. Medians across 28: L3 0.965, **L4 0.984**, L5 0.622. See [[07-Results]].
 - **Round 4 complete: 27 of 40 artifacts × 5 levels** (2026-11-02 04:02, 20 / 20 runs, no failures, no unplugs). All four (192, 711, 1286, 1299) clean L1–L4 and best at L4; 192 fails at L5 (6 / 26 registered). Medians across 27: L3 0.965, **L4 0.984**, L5 0.651. **Museum: 20 exhibits, 60 MB** (all four added). Entrance signboards (PDEU title, project team) in the hall. See [[07-Results]].
 - **Museum is now a walkable 3D hall** (`museum/index.html`): domed rotunda + four galleries, WASD + mouse, pedestals with research-fact placards, E for a 360° close-up. Layout grows from `artifacts.json`. Measured in the app's browser pane on this laptop: 16 exhibits 60 fps, 48 (stress test) 59–60 fps. The old page is the List view (`list.html`). See [[07-Results]].
@@ -28,8 +29,8 @@
 
 ## Next action
 
-1. Round 6 when the team says: `run_batch.py --count N --clean` from rank 28 (12 artifacts left, ≈ 2.1 h each). Then compare, summarize, `export_glb.py`, commit.
-2. Team: how to reach the **30-exhibit minimum** ([[09-Open-Questions]]).
+1. Last round when the team says: `run_batch.py --count 40 --clean` (ranks 35–39, 5 artifacts, ≈ 1.2–2.1 h each). Then compare, `summarize_round.py --count 40 --name round7`, `export_glb.py`, commit.
+2. Team: the **30-exhibit minimum** now needs all 5 remaining artifacts to pass ([[09-Open-Questions]]).
 3. Team: walk the new hall in a normal browser (`python -m http.server 8000 --directory museum`), check the feel (speed, mouse sensitivity, placards) and decide where to host it ([[09-Open-Questions]]); later: load-time measurement for RQ3.
 4. Team: confirm the evaluation method (Option A, decoded CHSD depth — [[04-Methodology]]).
 5. The zips in `Downloads` can be kept as backup or deleted (team's choice).

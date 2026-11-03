@@ -312,6 +312,50 @@ Per level across all 27 artifacts (`round4_summary.csv`):
 - `Ark_HM_1260C_HI` fails at every level: SfM registers only 25–42 % of the images (L1–L4), so the clouds cover a fraction of the object. Same pattern as its sibling `Ark_HM_1260B_HI` (batch test / round 1); together with `Ark_HM_38_HI` the third artifact that fails at all levels **(hypothesis: small, plain, low-texture surface — not checked)**. Not exhibited (L3 mesh F 0.045).
 - Per level across 28 (`round5_summary.csv`): median cloud F L1 0.887, L2 0.927, L3 0.965, **L4 0.984**, L5 0.622; cloud F < 0.5: 3 / 3 / 3 / 4 / 9 of 28.
 
+## Round 6 — ranks 28–34 (7 artifacts × 5 levels) — 2026-11-03
+
+Same frozen config, `run_batch.py --count 35 --clean` in-session 2026-11-02 23:07 → 2026-11-03 07:29 (8.4 h; estimate was ~15 h), `batch done: 35 ok, 0 failed`, no charger removal or sleep. The team called this "round 5"; files use `round6` because `round5_*` already holds `Ark_HM_1260C_HI`. All 35: `experiments/results/round6_all.csv`, `round6_summary.csv`, `experiments/plots/round6_summary.png`.
+
+| Artifact | L1 | L2 | L3 | L4 | L5 | L1 time | Best |
+|---|---|---|---|---|---|---|---|
+| `Ark_HM_557_HI` | 0.870 | 0.907 | 0.956 | 0.969 (43/47) | 0.000 (10/26) | 30 min | L4 |
+| `Ark_HM_792_hi` | 0.677 | 0.658 | 0.479 | 0.598 (29/47) | 0.000 (11/26) | 38 min | L1 |
+| `Ark_HM_703_HI` | 0.773 (241/362) | 0.798 (121/182) | 0.840 (61/92) | 0.795 (29/47) | 0.000 (12/26) | 27 min | L3 |
+| `Ark_HM_498_HI` | 0.916 | 0.955 | 0.983 | 0.994 | 0.000 (16/26) | 48 min | L4 |
+| `Ark_HM_596_Hi` | 0.900 | 0.934 | 0.975 | 0.987 | 0.000 (12/26) | 65 min | L4 |
+| `Ark_HM_259_HI` | 0.879 | 0.908 | 0.958 | 0.985 | 0.627 (14/26) | 58 min | L4 |
+| `Ark_HM_611_HI` | 0.876 | 0.910 | 0.951 | 0.969 (45/47) | 0.000 (11/26) | 28 min | L4 |
+
+Per level across all 35 artifacts (`round6_summary.csv`):
+
+| Level | Images | Median total time (max) | Median peak RAM | Median cloud F (min) | Median mesh F | Cloud F < 0.5 |
+|---|---|---|---|---|---|---|
+| L1 | 362 | 54.5 min (150.1) | 4.4 GB | 0.883 (0.062) | 0.983 | 3 / 35 |
+| L2 | 182 | 22.5 min (55.4) | 2.3 GB | 0.920 (0.051) | 0.981 | 3 / 35 |
+| L3 | 92 | 9.7 min (18.1) | 2.0 GB | 0.964 (0.050) | 0.986 | 4 / 35 |
+| L4 | 47 | 3.8 min (8.1) | 2.0 GB | **0.984** (0.000) | 0.984 | 4 / 35 |
+| L5 | 26 | 1.0 min (4.2) | 2.0 GB | 0.578 (0.000) | 0.570 | 15 / 35 |
+
+**Measured:**
+- L5 yields no dense cloud on 6 / 7 artifacts this round (10–16 / 26 images in the model used; 259 is the exception at 0.627, still partial). Across 35, L5 failures rose from 9 / 28 to 15 / 35. No config or code change between rounds. These seven have texture scores of 16–29 (`artifact_order.json`), and low-texture artifacts also failed at L5 earlier; whether texture is the cause is **(hypothesis, not tested)**.
+- `Ark_HM_703_HI`: SfM splits into two models at every level L1–L4 (241 + 121 at L1, 121 + 61 at L2, 61 + 31 at L3), only the larger is densified → F 0.77–0.84. Same split seen in earlier rounds.
+- `Ark_HM_792_hi`: every image registers at L1–L3, but F is low and falls with fewer images (0.677 → 0.479 at L3). Cause not investigated.
+- 498, 596, 259 are clean L1–L4 and best at L4; 557 and 611 are best at L4 with a few images lost there (43/47, 45/47).
+
+## Museum models — round-6 exhibits — 2026-11-03
+
+`export_glb.py --artifacts <the 7>` → exit 0; not exhibited: `Ark_HM_792_hi` (L3 mesh F 0.459), `Ark_HM_703_HI` (0.842). Museum now **25 exhibits, 75 MB**.
+
+| Artifact | Full mesh | Full GLB | Museum GLB | Surface F@0.002 full → museum | Chamfer museum |
+|---|---|---|---|---|---|
+| `Ark_HM_557_HI` | 286,702 tri | 10.4 MB | 2.8 MB | 0.953 → 0.953 | 0.00143 R |
+| `Ark_HM_498_HI` | 507,176 tri | 18.4 MB | 2.9 MB | 0.997 → 0.997 | 0.00065 R |
+| `Ark_HM_596_Hi` | 458,351 tri | 16.3 MB | 2.9 MB | 0.986 → 0.986 | 0.00085 R |
+| `Ark_HM_259_HI` | 413,680 tri | 15.0 MB | 2.9 MB | 0.982 → 0.982 | 0.00081 R |
+| `Ark_HM_611_HI` | 238,631 tri | 8.8 MB | 2.8 MB | 0.959 → 0.959 | 0.00159 R |
+
+Checked all five in the 3D hall (browser pane): textured, upright, placards No. 21–25, no console errors. Layout with 25: South 1–5, Rotunda 6–13, East 14–17, North 18–21, West 22–25. `Ark_HM_611_HI` shows a catalogue sticker on its surface (it is in the source images).
+
 ## Museum models — round-4 exhibits — 2026-11-02
 
 `export_glb.py --artifacts Ark_HM_192_HI Ark_HM_711_HI Ark_HM_1286_HI Ark_HM_1299_Hi` → exit 0; all four pass the rule (L3 mesh-vertex F ≥ 0.95). Museum now **20 exhibits, 60 MB**.

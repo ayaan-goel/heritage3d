@@ -208,3 +208,14 @@ Newest first. Every session must add an entry (see `CLAUDE.md`).
 - Round 5: `batch.log` `2026-11-02 04:23:50 batch done: 5 ok, 0 failed []` (21 min). `compare_levels.py --artifact Ark_HM_1260C_HI` → 153 / 56 / 26 / 12 / 6 registered, F 0.070 / 0.082 / 0.050 / 0.632 / 0.000; `summarize_round.py --count 28 --name round5`; `export_glb.py --artifacts Ark_HM_1260C_HI` → not exhibited (L3 mesh F 0.045), manifest still 20. `pytest -q` → 54 passed.
 
 **Next action** — team: round 6 size/timing (12 artifacts left); the 30-exhibit question is now likely short ([[09-Open-Questions]]).
+
+## 2026-11-02 night — next round started, 7 artifacts (directed by Ayaan and Kshiti)
+
+- Team stopped after the 1-artifact round at 04:23, then asked for 7 more artifacts (they called it "round 5"; files use `round6` because `round5_*` already holds the `Ark_HM_1260C_HI` round).
+- `check_env.py` → exit 0; on AC; D: 277 GB free. `run_batch.py --count 35 --clean` started in-session 23:07 (35 level runs: `Ark_HM_557_HI`, `Ark_HM_792_hi`, `Ark_HM_703_HI`, `Ark_HM_498_HI`, `Ark_HM_596_Hi`, `Ark_HM_259_HI`, `Ark_HM_611_HI`). Estimate ≈ 15 h at ~2.1 h/artifact, less if some fail early.
+
+- Finished 2026-11-03 07:29: `batch done: 35 ok, 0 failed []`, 8.4 h, no charger removal or sleep. `preview_cloud.py` exit 1 on 6 L5 runs (no points).
+- `compare_levels.py` for the 7; `summarize_round.py --count 35 --name round6` → see [[07-Results]]. Checked `git status` on configs/src/scripts: no changes, so the L5 drop is not from settings.
+- `export_glb.py --artifacts <the 7>` → exit 0: 5 added (2.8–2.9 MB), 792 and 703 skipped; manifest 25. Browser pane: close-ups of all five, zones right, no console errors. `pytest -q` → 54 passed.
+
+**Next action** — team: last round (5 artifacts, `--count 40`); 30 exhibits needs all five to pass ([[09-Open-Questions]]).

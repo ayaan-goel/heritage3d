@@ -1,0 +1,594 @@
+05:11:47 [App     ] OpenMVS x64 v2.4.0
+05:11:47 [App     ] Build date: Jan 20 2026, 00:13:37
+05:11:47 [App     ] CPU: 12th Gen Intel(R) Core(TM) i7-1255U (12 cores)
+05:11:47 [App     ] RAM: 15.72GB Physical Memory 128.00TB Virtual Memory
+05:11:47 [App     ] OS: Windows 11+ x64
+05:11:47 [App     ] Disk: 273.43GB (488.28GB) space
+05:11:47 [App     ] SSE & AVX compatible CPU & OS detected
+05:11:47 [App     ] Command line: DensifyPointCloud -i D:\heritage3d-data\runs\Ark_HM_259_HI\L3\mvs\scene.mvs -o D:\heritage3d-data\runs\Ark_HM_259_HI\L3\mvs\scene_dense.mvs --resolution-level 1
+05:11:47 [Scene   ] Camera model loaded: platform 0; camera  0; f 1.249x1.249; poses 92
+05:11:47 [Scene   ] Scene loaded in interface format from 'scene.mvs' (8ms):
+	92 images (92 calibrated) with a total of 42.11 MPixels (0.46 MPixels/image)
+	11750 points, 0 vertices, 0 faces
+05:11:47 [Scene   ] ROI estimated with position (0.032677,0.030604,-0.101001) and extent (0.771604,1.070551,1.065045): scale 1.100000, up axis -1
+05:11:47 [PointCld] Point-cloud composed of 11750 points with:
+ - points info:
+	11731 points inside ROI (99.84%)
+	 inside ROI track length: 2 min / 7.75075 mean (4.70422 std) / 38 max
+	outside ROI track length: 2 min / 2 mean (0 std) / 2 max
+ - visibility info (90962 views - 7.74 views/point):
+	        0 points with 1- views (0.00%)
+	      218 points with 2  views (1.86%)
+	     2159 points with 3  views (18.37%)
+	     9373 points with 4+ views (79.77%)
+	2 min / 7.74145 mean (4.70609 std) / 38 max
+05:11:47 [ScnDense] Preparing images for dense reconstruction completed: 92 images (384ms)
+05:11:47 [ScnDense] Select neighbor views by weighting inside ROI points with 0.70
+05:11:47 [ScnDense] Selecting images for dense reconstruction completed: 92 images (32ms)
+05:11:47 [ScnDense] Reference image   0 paired with 5 views
+05:11:47 [ScnDense] Reference image  40 paired with 5 views
+05:11:50 [ScnDense] Depth-map for image   1 estimated using  5 images: 800x600 (2s369ms)
+05:11:50 [ScnDense] Reference image   8 paired with 0 views
+05:11:50 [ScnDense] Reference image  32 paired with 5 views
+05:11:52 [ScnDense] Depth-map for image  41 estimated using  5 images: 800x600 (2s214ms)
+05:11:52 [ScnDense] Reference image  48 paired with 5 views
+05:11:54 [ScnDense] Depth-map for image  33 estimated using  5 images: 800x600 (2s218ms)
+05:11:54 [ScnDense] Reference image  16 paired with 5 views
+05:11:57 [ScnDense] Depth-map for image  49 estimated using  5 images: 800x600 (2s796ms)
+05:11:57 [ScnDense] Reference image  64 paired with 4 views
+05:11:59 [ScnDense] Depth-map for image  17 estimated using  5 images: 800x600 (2s254ms)
+05:11:59 [ScnDense] Reference image  24 paired with 5 views
+05:12:01 [ScnDense] Depth-map for image  65 estimated using  4 images: 800x600 (1s916ms)
+05:12:01 [ScnDense] Reference image  56 paired with 5 views
+05:12:04 [ScnDense] Depth-map for image  25 estimated using  5 images: 800x600 (3s81ms)
+05:12:04 [ScnDense] Reference image  71 paired with 5 views
+05:12:07 [ScnDense] Depth-map for image  57 estimated using  5 images: 800x600 (2s973ms)
+05:12:07 [ScnDense] Reference image  78 paired with 5 views
+05:12:10 [ScnDense] Depth-map for image  72 estimated using  5 images: 800x600 (2s925ms)
+05:12:10 [ScnDense] Reference image  85 paired with 4 views
+05:12:13 [ScnDense] Depth-map for image  79 estimated using  5 images: 800x600 (2s967ms)
+05:12:13 [ScnDense] Reference image   1 paired with 5 views
+05:12:15 [ScnDense] Depth-map for image  86 estimated using  4 images: 800x600 (1s898ms)
+05:12:15 [ScnDense] Reference image   9 paired with 5 views
+05:12:17 [ScnDense] Depth-map for image   2 estimated using  5 images: 800x600 (2s309ms)
+05:12:17 [ScnDense] Reference image  57 paired with 5 views
+05:12:21 [ScnDense] Depth-map for image  10 estimated using  5 images: 800x600 (3s419ms)
+05:12:21 [ScnDense] Reference image  72 paired with 5 views
+05:12:24 [ScnDense] Depth-map for image  58 estimated using  5 images: 800x600 (2s820ms)
+05:12:24 [ScnDense] Reference image  25 paired with 5 views
+05:12:26 [ScnDense] Depth-map for image  73 estimated using  5 images: 800x600 (2s668ms)
+05:12:26 [ScnDense] Reference image  65 paired with 5 views
+05:12:29 [ScnDense] Depth-map for image  26 estimated using  5 images: 800x600 (2s678ms)
+05:12:29 [ScnDense] Reference image  41 paired with 5 views
+05:12:32 [ScnDense] Depth-map for image  66 estimated using  5 images: 800x600 (2s862ms)
+05:12:32 [ScnDense] Reference image  17 paired with 5 views
+05:12:34 [ScnDense] Depth-map for image  42 estimated using  5 images: 800x600 (2s134ms)
+05:12:34 [ScnDense] Reference image  79 paired with 5 views
+05:12:37 [ScnDense] Depth-map for image  18 estimated using  5 images: 800x600 (2s900ms)
+05:12:37 [ScnDense] Reference image  33 paired with 5 views
+05:12:40 [ScnDense] Depth-map for image  80 estimated using  5 images: 800x600 (2s680ms)
+05:12:40 [ScnDense] Reference image  86 paired with 5 views
+05:12:42 [ScnDense] Depth-map for image  34 estimated using  5 images: 800x600 (2s659ms)
+05:12:42 [ScnDense] Reference image  49 paired with 5 views
+05:12:45 [ScnDense] Depth-map for image  87 estimated using  5 images: 800x600 (2s683ms)
+05:12:45 [ScnDense] Reference image   2 paired with 5 views
+05:12:48 [ScnDense] Depth-map for image  50 estimated using  5 images: 800x600 (2s759ms)
+05:12:48 [ScnDense] Reference image  10 paired with 5 views
+05:12:51 [ScnDense] Depth-map for image   3 estimated using  5 images: 800x600 (2s654ms)
+05:12:51 [ScnDense] Reference image  58 paired with 4 views
+05:12:54 [ScnDense] Depth-map for image  11 estimated using  5 images: 800x600 (3s6ms)
+05:12:54 [ScnDense] Reference image  73 paired with 4 views
+05:12:56 [ScnDense] Depth-map for image  59 estimated using  4 images: 800x600 (2s77ms)
+05:12:56 [ScnDense] Reference image  42 paired with 5 views
+05:12:58 [ScnDense] Depth-map for image  74 estimated using  4 images: 800x600 (2s73ms)
+05:12:58 [ScnDense] Reference image  26 paired with 5 views
+05:13:01 [ScnDense] Depth-map for image  43 estimated using  5 images: 800x600 (2s765ms)
+05:13:01 [ScnDense] Reference image  66 paired with 5 views
+05:13:03 [ScnDense] Depth-map for image  27 estimated using  5 images: 800x600 (2s220ms)
+05:13:03 [ScnDense] Reference image  18 paired with 5 views
+05:13:05 [ScnDense] Depth-map for image  67 estimated using  5 images: 800x600 (2s667ms)
+05:13:06 [ScnDense] Reference image  80 paired with 4 views
+05:13:08 [ScnDense] Depth-map for image  19 estimated using  5 images: 800x600 (2s243ms)
+05:13:08 [ScnDense] Reference image  50 paired with 5 views
+05:13:10 [ScnDense] Depth-map for image  81 estimated using  4 images: 800x600 (1s911ms)
+05:13:10 [ScnDense] Reference image  87 paired with 5 views
+05:13:12 [ScnDense] Depth-map for image  51 estimated using  5 images: 800x600 (2s178ms)
+05:13:12 [ScnDense] Reference image   3 paired with 5 views
+05:13:15 [ScnDense] Depth-map for image  88 estimated using  5 images: 800x600 (2s705ms)
+05:13:15 [ScnDense] Reference image  59 paired with 5 views
+05:13:18 [ScnDense] Depth-map for image   4 estimated using  5 images: 800x600 (2s996ms)
+05:13:18 [ScnDense] Reference image  34 paired with 5 views
+05:13:20 [ScnDense] Depth-map for image  60 estimated using  5 images: 800x600 (2s646ms)
+05:13:20 [ScnDense] Reference image  74 paired with 4 views
+05:13:23 [ScnDense] Depth-map for image  35 estimated using  5 images: 800x600 (2s751ms)
+05:13:23 [ScnDense] Reference image  11 paired with 5 views
+05:13:25 [ScnDense] Depth-map for image  75 estimated using  4 images: 800x600 (1s869ms)
+05:13:25 [ScnDense] Reference image  43 paired with 5 views
+05:13:28 [ScnDense] Depth-map for image  12 estimated using  5 images: 800x600 (3s)
+05:13:28 [ScnDense] Reference image  67 paired with 4 views
+05:13:31 [ScnDense] Depth-map for image  44 estimated using  5 images: 800x600 (2s670ms)
+05:13:31 [ScnDense] Reference image  51 paired with 5 views
+05:13:32 [ScnDense] Depth-map for image  68 estimated using  4 images: 800x600 (1s855ms)
+05:13:32 [ScnDense] Reference image  81 paired with 5 views
+05:13:35 [ScnDense] Depth-map for image  52 estimated using  5 images: 800x600 (2s660ms)
+05:13:35 [ScnDense] Reference image  27 paired with 5 views
+05:13:38 [ScnDense] Depth-map for image  82 estimated using  5 images: 800x600 (2s945ms)
+05:13:38 [ScnDense] Reference image   4 paired with 5 views
+05:13:41 [ScnDense] Depth-map for image  28 estimated using  5 images: 800x600 (2s846ms)
+05:13:41 [ScnDense] Reference image  35 paired with 5 views
+05:13:44 [ScnDense] Depth-map for image   5 estimated using  5 images: 800x600 (2s709ms)
+05:13:44 [ScnDense] Reference image  88 paired with 5 views
+05:13:46 [ScnDense] Depth-map for image  36 estimated using  5 images: 800x600 (2s146ms)
+05:13:46 [ScnDense] Reference image  75 paired with 5 views
+05:13:49 [ScnDense] Depth-map for image  89 estimated using  5 images: 800x600 (3s)
+05:13:49 [ScnDense] Reference image  12 paired with 5 views
+05:13:52 [ScnDense] Depth-map for image  76 estimated using  5 images: 800x600 (2s634ms)
+05:13:52 [ScnDense] Reference image  19 paired with 5 views
+05:13:54 [ScnDense] Depth-map for image  13 estimated using  5 images: 800x600 (2s323ms)
+05:13:54 [ScnDense] Reference image  60 paired with 5 views
+05:13:57 [ScnDense] Depth-map for image  20 estimated using  5 images: 800x600 (2s711ms)
+05:13:57 [ScnDense] Reference image  44 paired with 5 views
+05:13:59 [ScnDense] Depth-map for image  61 estimated using  5 images: 800x600 (2s647ms)
+05:13:59 [ScnDense] Reference image  68 paired with 5 views
+05:14:02 [ScnDense] Depth-map for image  45 estimated using  5 images: 800x600 (2s763ms)
+05:14:02 [ScnDense] Reference image  52 paired with 5 views
+05:14:05 [ScnDense] Depth-map for image  69 estimated using  5 images: 800x600 (2s846ms)
+05:14:05 [ScnDense] Reference image  82 paired with 4 views
+05:14:08 [ScnDense] Depth-map for image  53 estimated using  5 images: 800x600 (2s750ms)
+05:14:08 [ScnDense] Reference image  28 paired with 5 views
+05:14:10 [ScnDense] Depth-map for image  83 estimated using  4 images: 800x600 (1s932ms)
+05:14:10 [ScnDense] Reference image   5 paired with 5 views
+05:14:12 [ScnDense] Depth-map for image  29 estimated using  5 images: 800x600 (2s217ms)
+05:14:12 [ScnDense] Reference image  36 paired with 5 views
+05:14:14 [ScnDense] Depth-map for image   6 estimated using  5 images: 800x600 (2s336ms)
+05:14:14 [ScnDense] Reference image  61 paired with 4 views
+05:14:17 [ScnDense] Depth-map for image  37 estimated using  5 images: 800x600 (2s637ms)
+05:14:17 [ScnDense] Reference image  76 paired with 5 views
+05:14:19 [ScnDense] Depth-map for image  62 estimated using  4 images: 800x600 (1s871ms)
+05:14:19 [ScnDense] Reference image  53 paired with 5 views
+05:14:22 [ScnDense] Depth-map for image  77 estimated using  5 images: 800x600 (2s923ms)
+05:14:22 [ScnDense] Reference image  45 paired with 5 views
+05:14:24 [ScnDense] Depth-map for image  54 estimated using  5 images: 800x600 (2s693ms)
+05:14:24 [ScnDense] Reference image  69 paired with 5 views
+05:14:27 [ScnDense] Depth-map for image  46 estimated using  5 images: 800x600 (2s207ms)
+05:14:27 [ScnDense] Reference image  13 paired with 5 views
+05:14:29 [ScnDense] Depth-map for image  70 estimated using  5 images: 800x600 (2s640ms)
+05:14:29 [ScnDense] Reference image  83 paired with 5 views
+05:14:32 [ScnDense] Depth-map for image  14 estimated using  5 images: 800x600 (2s713ms)
+05:14:32 [ScnDense] Reference image  89 paired with 4 views
+05:14:35 [ScnDense] Depth-map for image  84 estimated using  5 images: 800x600 (2s634ms)
+05:14:35 [ScnDense] Reference image  20 paired with 5 views
+05:14:37 [ScnDense] Depth-map for image  90 estimated using  4 images: 800x600 (1s943ms)
+05:14:37 [ScnDense] Reference image   6 paired with 5 views
+05:14:39 [ScnDense] Depth-map for image  21 estimated using  5 images: 800x600 (2s835ms)
+05:14:39 [ScnDense] Reference image  29 paired with 5 views
+05:14:42 [ScnDense] Depth-map for image   7 estimated using  5 images: 800x600 (2s749ms)
+05:14:42 [ScnDense] Reference image  37 paired with 5 views
+05:14:45 [ScnDense] Depth-map for image  30 estimated using  5 images: 800x600 (2s699ms)
+05:14:45 [ScnDense] Reference image  62 paired with 5 views
+05:14:48 [ScnDense] Depth-map for image  38 estimated using  5 images: 800x600 (2s678ms)
+05:14:48 [ScnDense] Reference image  54 paired with 5 views
+05:14:50 [ScnDense] Depth-map for image  63 estimated using  5 images: 800x600 (2s667ms)
+05:14:50 [ScnDense] Reference image  77 paired with 5 views
+05:14:53 [ScnDense] Depth-map for image  55 estimated using  5 images: 800x600 (2s254ms)
+05:14:53 [ScnDense] Reference image  70 paired with 4 views
+05:14:55 [ScnDense] Depth-map for image  78 estimated using  5 images: 800x600 (2s667ms)
+05:14:55 [ScnDense] Reference image  46 paired with 5 views
+05:14:57 [ScnDense] Depth-map for image  71 estimated using  4 images: 800x600 (1s962ms)
+05:14:57 [ScnDense] Reference image  14 paired with 5 views
+05:15:00 [ScnDense] Depth-map for image  47 estimated using  5 images: 800x600 (2s666ms)
+05:15:00 [ScnDense] Reference image  84 paired with 5 views
+05:15:02 [ScnDense] Depth-map for image  15 estimated using  5 images: 800x600 (2s312ms)
+05:15:02 [ScnDense] Reference image  30 paired with 5 views
+05:15:05 [ScnDense] Depth-map for image  85 estimated using  5 images: 800x600 (3s62ms)
+05:15:05 [ScnDense] Reference image  63 paired with 5 views
+05:15:08 [ScnDense] Depth-map for image  31 estimated using  5 images: 800x600 (2s851ms)
+05:15:08 [ScnDense] Reference image  90 paired with 5 views
+05:15:11 [ScnDense] Depth-map for image  64 estimated using  5 images: 800x600 (2s823ms)
+05:15:11 [ScnDense] Reference image  21 paired with 5 views
+05:15:14 [ScnDense] Depth-map for image  91 estimated using  5 images: 800x600 (3s11ms)
+05:15:14 [ScnDense] Reference image  38 paired with 5 views
+05:15:17 [ScnDense] Depth-map for image  22 estimated using  5 images: 800x600 (2s883ms)
+05:15:17 [ScnDense] Reference image   7 paired with 5 views
+05:15:20 [ScnDense] Depth-map for image  39 estimated using  5 images: 800x600 (2s758ms)
+05:15:20 [ScnDense] Reference image  47 paired with 5 views
+05:15:23 [ScnDense] Depth-map for image   8 estimated using  5 images: 800x600 (3s)
+05:15:23 [ScnDense] Reference image  55 paired with 5 views
+05:15:25 [ScnDense] Depth-map for image  48 estimated using  5 images: 800x600 (2s646ms)
+05:15:25 [ScnDense] Reference image  15 paired with 5 views
+05:15:28 [ScnDense] Depth-map for image  56 estimated using  5 images: 800x600 (2s242ms)
+05:15:28 [ScnDense] Reference image  31 paired with 5 views
+05:15:30 [ScnDense] Depth-map for image  16 estimated using  5 images: 800x600 (2s661ms)
+05:15:30 [ScnDense] Reference image  91 paired with 5 views
+05:15:33 [ScnDense] Depth-map for image  32 estimated using  5 images: 800x600 (2s796ms)
+05:15:33 [ScnDense] Reference image  39 paired with 5 views
+05:15:36 [ScnDense] Depth-map for image  92 estimated using  5 images: 800x600 (2s651ms)
+05:15:36 [ScnDense] Reference image  22 paired with 5 views
+05:15:38 [ScnDense] Depth-map for image  40 estimated using  5 images: 800x600 (2s141ms)
+05:15:38 [ScnDense] Reference image  23 paired with 5 views
+05:15:41 [ScnDense] Depth-map for image  23 estimated using  5 images: 800x600 (2s912ms)
+05:15:43 [ScnDense] Depth-map for image  24 estimated using  5 images: 800x600 (2s260ms)
+05:15:43 [ScnDense] Reference image   0 paired with 5 views
+05:15:43 [ScnDense] Reference image  40 paired with 5 views
+05:15:44 [ScnDense] Depth-map for image   1 estimated using  5 images: 800x600 (625ms)
+05:15:44 [ScnDense] Reference image   8 paired with 0 views
+05:15:44 [ScnDense] Reference image  32 paired with 5 views
+05:15:44 [ScnDense] Depth-map for image  41 estimated using  5 images: 800x600 (590ms)
+05:15:44 [ScnDense] Reference image  48 paired with 5 views
+05:15:45 [ScnDense] Depth-map for image  33 estimated using  5 images: 800x600 (600ms)
+05:15:45 [ScnDense] Reference image  16 paired with 5 views
+05:15:46 [ScnDense] Depth-map for image  49 estimated using  5 images: 800x600 (734ms)
+05:15:46 [ScnDense] Reference image  64 paired with 4 views
+05:15:46 [ScnDense] Depth-map for image  17 estimated using  5 images: 800x600 (618ms)
+05:15:46 [ScnDense] Reference image  24 paired with 5 views
+05:15:47 [ScnDense] Depth-map for image  65 estimated using  4 images: 800x600 (515ms)
+05:15:47 [ScnDense] Reference image  56 paired with 5 views
+05:15:48 [ScnDense] Depth-map for image  25 estimated using  5 images: 800x600 (829ms)
+05:15:48 [ScnDense] Reference image  71 paired with 5 views
+05:15:49 [ScnDense] Depth-map for image  57 estimated using  5 images: 800x600 (740ms)
+05:15:49 [ScnDense] Reference image  78 paired with 5 views
+05:15:49 [ScnDense] Depth-map for image  72 estimated using  5 images: 800x600 (772ms)
+05:15:49 [ScnDense] Reference image  85 paired with 4 views
+05:15:50 [ScnDense] Depth-map for image  79 estimated using  5 images: 800x600 (798ms)
+05:15:50 [ScnDense] Reference image   1 paired with 5 views
+05:15:51 [ScnDense] Depth-map for image  86 estimated using  4 images: 800x600 (524ms)
+05:15:51 [ScnDense] Reference image   9 paired with 5 views
+05:15:51 [ScnDense] Depth-map for image   2 estimated using  5 images: 800x600 (610ms)
+05:15:51 [ScnDense] Reference image  57 paired with 5 views
+05:15:52 [ScnDense] Depth-map for image  10 estimated using  5 images: 800x600 (975ms)
+05:15:52 [ScnDense] Reference image  72 paired with 5 views
+05:15:53 [ScnDense] Depth-map for image  58 estimated using  5 images: 800x600 (767ms)
+05:15:53 [ScnDense] Reference image  25 paired with 5 views
+05:15:54 [ScnDense] Depth-map for image  73 estimated using  5 images: 800x600 (732ms)
+05:15:54 [ScnDense] Reference image  65 paired with 5 views
+05:15:55 [ScnDense] Depth-map for image  26 estimated using  5 images: 800x600 (866ms)
+05:15:55 [ScnDense] Reference image  41 paired with 5 views
+05:15:56 [ScnDense] Depth-map for image  66 estimated using  5 images: 800x600 (1s31ms)
+05:15:56 [ScnDense] Reference image  17 paired with 5 views
+05:15:57 [ScnDense] Depth-map for image  42 estimated using  5 images: 800x600 (781ms)
+05:15:57 [ScnDense] Reference image  79 paired with 5 views
+05:15:59 [ScnDense] Depth-map for image  18 estimated using  5 images: 800x600 (2s409ms)
+05:15:59 [ScnDense] Reference image  33 paired with 5 views
+05:16:01 [ScnDense] Depth-map for image  80 estimated using  5 images: 800x600 (1s656ms)
+05:16:01 [ScnDense] Reference image  86 paired with 5 views
+05:16:02 [ScnDense] Depth-map for image  34 estimated using  5 images: 800x600 (824ms)
+05:16:02 [ScnDense] Reference image  49 paired with 5 views
+05:16:02 [ScnDense] Depth-map for image  87 estimated using  5 images: 800x600 (880ms)
+05:16:02 [ScnDense] Reference image   2 paired with 5 views
+05:16:03 [ScnDense] Depth-map for image  50 estimated using  5 images: 800x600 (848ms)
+05:16:03 [ScnDense] Reference image  10 paired with 5 views
+05:16:04 [ScnDense] Depth-map for image   3 estimated using  5 images: 800x600 (786ms)
+05:16:04 [ScnDense] Reference image  58 paired with 4 views
+05:16:05 [ScnDense] Depth-map for image  11 estimated using  5 images: 800x600 (928ms)
+05:16:05 [ScnDense] Reference image  73 paired with 4 views
+05:16:06 [ScnDense] Depth-map for image  59 estimated using  4 images: 800x600 (533ms)
+05:16:06 [ScnDense] Reference image  42 paired with 5 views
+05:16:06 [ScnDense] Depth-map for image  74 estimated using  4 images: 800x600 (599ms)
+05:16:06 [ScnDense] Reference image  26 paired with 5 views
+05:16:07 [ScnDense] Depth-map for image  43 estimated using  5 images: 800x600 (808ms)
+05:16:07 [ScnDense] Reference image  66 paired with 5 views
+05:16:08 [ScnDense] Depth-map for image  27 estimated using  5 images: 800x600 (679ms)
+05:16:08 [ScnDense] Reference image  18 paired with 5 views
+05:16:08 [ScnDense] Depth-map for image  67 estimated using  5 images: 800x600 (798ms)
+05:16:09 [ScnDense] Reference image  80 paired with 4 views
+05:16:09 [ScnDense] Depth-map for image  19 estimated using  5 images: 800x600 (662ms)
+05:16:09 [ScnDense] Reference image  50 paired with 5 views
+05:16:10 [ScnDense] Depth-map for image  81 estimated using  4 images: 800x600 (554ms)
+05:16:10 [ScnDense] Reference image  87 paired with 5 views
+05:16:10 [ScnDense] Depth-map for image  51 estimated using  5 images: 800x600 (701ms)
+05:16:10 [ScnDense] Reference image   3 paired with 5 views
+05:16:11 [ScnDense] Depth-map for image  88 estimated using  5 images: 800x600 (767ms)
+05:16:11 [ScnDense] Reference image  59 paired with 5 views
+05:16:12 [ScnDense] Depth-map for image   4 estimated using  5 images: 800x600 (853ms)
+05:16:12 [ScnDense] Reference image  34 paired with 5 views
+05:16:13 [ScnDense] Depth-map for image  60 estimated using  5 images: 800x600 (807ms)
+05:16:13 [ScnDense] Reference image  74 paired with 4 views
+05:16:14 [ScnDense] Depth-map for image  35 estimated using  5 images: 800x600 (799ms)
+05:16:14 [ScnDense] Reference image  11 paired with 5 views
+05:16:14 [ScnDense] Depth-map for image  75 estimated using  4 images: 800x600 (546ms)
+05:16:14 [ScnDense] Reference image  43 paired with 5 views
+05:16:15 [ScnDense] Depth-map for image  12 estimated using  5 images: 800x600 (826ms)
+05:16:15 [ScnDense] Reference image  67 paired with 4 views
+05:16:16 [ScnDense] Depth-map for image  44 estimated using  5 images: 800x600 (764ms)
+05:16:16 [ScnDense] Reference image  51 paired with 5 views
+05:16:17 [ScnDense] Depth-map for image  68 estimated using  4 images: 800x600 (565ms)
+05:16:17 [ScnDense] Reference image  81 paired with 5 views
+05:16:17 [ScnDense] Depth-map for image  52 estimated using  5 images: 800x600 (787ms)
+05:16:17 [ScnDense] Reference image  27 paired with 5 views
+05:16:18 [ScnDense] Depth-map for image  82 estimated using  5 images: 800x600 (854ms)
+05:16:18 [ScnDense] Reference image   4 paired with 5 views
+05:16:19 [ScnDense] Depth-map for image  28 estimated using  5 images: 800x600 (826ms)
+05:16:19 [ScnDense] Reference image  35 paired with 5 views
+05:16:20 [ScnDense] Depth-map for image   5 estimated using  5 images: 800x600 (758ms)
+05:16:20 [ScnDense] Reference image  88 paired with 5 views
+05:16:20 [ScnDense] Depth-map for image  36 estimated using  5 images: 800x600 (610ms)
+05:16:20 [ScnDense] Reference image  75 paired with 5 views
+05:16:21 [ScnDense] Depth-map for image  89 estimated using  5 images: 800x600 (814ms)
+05:16:21 [ScnDense] Reference image  12 paired with 5 views
+05:16:22 [ScnDense] Depth-map for image  76 estimated using  5 images: 800x600 (775ms)
+05:16:22 [ScnDense] Reference image  19 paired with 5 views
+05:16:23 [ScnDense] Depth-map for image  13 estimated using  5 images: 800x600 (668ms)
+05:16:23 [ScnDense] Reference image  60 paired with 5 views
+05:16:23 [ScnDense] Depth-map for image  20 estimated using  5 images: 800x600 (758ms)
+05:16:24 [ScnDense] Reference image  44 paired with 5 views
+05:16:24 [ScnDense] Depth-map for image  61 estimated using  5 images: 800x600 (784ms)
+05:16:24 [ScnDense] Reference image  68 paired with 5 views
+05:16:25 [ScnDense] Depth-map for image  45 estimated using  5 images: 800x600 (773ms)
+05:16:25 [ScnDense] Reference image  52 paired with 5 views
+05:16:26 [ScnDense] Depth-map for image  69 estimated using  5 images: 800x600 (830ms)
+05:16:26 [ScnDense] Reference image  82 paired with 4 views
+05:16:27 [ScnDense] Depth-map for image  53 estimated using  5 images: 800x600 (809ms)
+05:16:27 [ScnDense] Reference image  28 paired with 5 views
+05:16:27 [ScnDense] Depth-map for image  83 estimated using  4 images: 800x600 (533ms)
+05:16:27 [ScnDense] Reference image   5 paired with 5 views
+05:16:28 [ScnDense] Depth-map for image  29 estimated using  5 images: 800x600 (635ms)
+05:16:28 [ScnDense] Reference image  36 paired with 5 views
+05:16:29 [ScnDense] Depth-map for image   6 estimated using  5 images: 800x600 (663ms)
+05:16:29 [ScnDense] Reference image  61 paired with 4 views
+05:16:29 [ScnDense] Depth-map for image  37 estimated using  5 images: 800x600 (748ms)
+05:16:29 [ScnDense] Reference image  76 paired with 5 views
+05:16:30 [ScnDense] Depth-map for image  62 estimated using  4 images: 800x600 (520ms)
+05:16:30 [ScnDense] Reference image  53 paired with 5 views
+05:16:31 [ScnDense] Depth-map for image  77 estimated using  5 images: 800x600 (846ms)
+05:16:31 [ScnDense] Reference image  45 paired with 5 views
+05:16:32 [ScnDense] Depth-map for image  54 estimated using  5 images: 800x600 (758ms)
+05:16:32 [ScnDense] Reference image  69 paired with 5 views
+05:16:32 [ScnDense] Depth-map for image  46 estimated using  5 images: 800x600 (605ms)
+05:16:32 [ScnDense] Reference image  13 paired with 5 views
+05:16:33 [ScnDense] Depth-map for image  70 estimated using  5 images: 800x600 (776ms)
+05:16:33 [ScnDense] Reference image  83 paired with 5 views
+05:16:34 [ScnDense] Depth-map for image  14 estimated using  5 images: 800x600 (731ms)
+05:16:34 [ScnDense] Reference image  89 paired with 4 views
+05:16:35 [ScnDense] Depth-map for image  84 estimated using  5 images: 800x600 (778ms)
+05:16:35 [ScnDense] Reference image  20 paired with 5 views
+05:16:35 [ScnDense] Depth-map for image  90 estimated using  4 images: 800x600 (569ms)
+05:16:35 [ScnDense] Reference image   6 paired with 5 views
+05:16:36 [ScnDense] Depth-map for image  21 estimated using  5 images: 800x600 (745ms)
+05:16:36 [ScnDense] Reference image  29 paired with 5 views
+05:16:37 [ScnDense] Depth-map for image   7 estimated using  5 images: 800x600 (784ms)
+05:16:37 [ScnDense] Reference image  37 paired with 5 views
+05:16:37 [ScnDense] Depth-map for image  30 estimated using  5 images: 800x600 (749ms)
+05:16:37 [ScnDense] Reference image  62 paired with 5 views
+05:16:38 [ScnDense] Depth-map for image  38 estimated using  5 images: 800x600 (745ms)
+05:16:38 [ScnDense] Reference image  54 paired with 5 views
+05:16:39 [ScnDense] Depth-map for image  63 estimated using  5 images: 800x600 (776ms)
+05:16:39 [ScnDense] Reference image  77 paired with 5 views
+05:16:40 [ScnDense] Depth-map for image  55 estimated using  5 images: 800x600 (631ms)
+05:16:40 [ScnDense] Reference image  70 paired with 4 views
+05:16:40 [ScnDense] Depth-map for image  78 estimated using  5 images: 800x600 (751ms)
+05:16:40 [ScnDense] Reference image  46 paired with 5 views
+05:16:41 [ScnDense] Depth-map for image  71 estimated using  4 images: 800x600 (539ms)
+05:16:41 [ScnDense] Reference image  14 paired with 5 views
+05:16:42 [ScnDense] Depth-map for image  47 estimated using  5 images: 800x600 (737ms)
+05:16:42 [ScnDense] Reference image  84 paired with 5 views
+05:16:42 [ScnDense] Depth-map for image  15 estimated using  5 images: 800x600 (673ms)
+05:16:42 [ScnDense] Reference image  30 paired with 5 views
+05:16:43 [ScnDense] Depth-map for image  85 estimated using  5 images: 800x600 (888ms)
+05:16:43 [ScnDense] Reference image  63 paired with 5 views
+05:16:44 [ScnDense] Depth-map for image  31 estimated using  5 images: 800x600 (770ms)
+05:16:44 [ScnDense] Reference image  90 paired with 5 views
+05:16:45 [ScnDense] Depth-map for image  64 estimated using  5 images: 800x600 (761ms)
+05:16:45 [ScnDense] Reference image  21 paired with 5 views
+05:16:46 [ScnDense] Depth-map for image  91 estimated using  5 images: 800x600 (832ms)
+05:16:46 [ScnDense] Reference image  38 paired with 5 views
+05:16:47 [ScnDense] Depth-map for image  22 estimated using  5 images: 800x600 (863ms)
+05:16:47 [ScnDense] Reference image   7 paired with 5 views
+05:16:47 [ScnDense] Depth-map for image  39 estimated using  5 images: 800x600 (796ms)
+05:16:47 [ScnDense] Reference image  47 paired with 5 views
+05:16:48 [ScnDense] Depth-map for image   8 estimated using  5 images: 800x600 (848ms)
+05:16:48 [ScnDense] Reference image  55 paired with 5 views
+05:16:49 [ScnDense] Depth-map for image  48 estimated using  5 images: 800x600 (731ms)
+05:16:49 [ScnDense] Reference image  15 paired with 5 views
+05:16:50 [ScnDense] Depth-map for image  56 estimated using  5 images: 800x600 (639ms)
+05:16:50 [ScnDense] Reference image  31 paired with 5 views
+05:16:50 [ScnDense] Depth-map for image  16 estimated using  5 images: 800x600 (754ms)
+05:16:50 [ScnDense] Reference image  91 paired with 5 views
+05:16:51 [ScnDense] Depth-map for image  32 estimated using  5 images: 800x600 (765ms)
+05:16:51 [ScnDense] Reference image  39 paired with 5 views
+05:16:52 [ScnDense] Depth-map for image  92 estimated using  5 images: 800x600 (770ms)
+05:16:52 [ScnDense] Reference image  22 paired with 5 views
+05:16:53 [ScnDense] Depth-map for image  40 estimated using  5 images: 800x600 (636ms)
+05:16:53 [ScnDense] Reference image  23 paired with 5 views
+05:16:53 [ScnDense] Depth-map for image  23 estimated using  5 images: 800x600 (812ms)
+05:16:54 [ScnDense] Depth-map for image  24 estimated using  5 images: 800x600 (625ms)
+05:16:54 [ScnDense] Reference image   0 paired with 5 views
+05:16:54 [ScnDense] Reference image  40 paired with 5 views
+05:16:55 [ScnDense] Depth-map for image   1 estimated using  5 images: 800x600 (580ms)
+05:16:55 [ScnDense] Reference image   8 paired with 0 views
+05:16:55 [ScnDense] Reference image  32 paired with 5 views
+05:16:56 [ScnDense] Depth-map for image  41 estimated using  5 images: 800x600 (631ms)
+05:16:56 [ScnDense] Reference image  48 paired with 5 views
+05:16:56 [ScnDense] Depth-map for image  33 estimated using  5 images: 800x600 (657ms)
+05:16:56 [ScnDense] Reference image  16 paired with 5 views
+05:16:57 [ScnDense] Depth-map for image  49 estimated using  5 images: 800x600 (783ms)
+05:16:57 [ScnDense] Reference image  64 paired with 4 views
+05:16:58 [ScnDense] Depth-map for image  17 estimated using  5 images: 800x600 (629ms)
+05:16:58 [ScnDense] Reference image  24 paired with 5 views
+05:16:58 [ScnDense] Depth-map for image  65 estimated using  4 images: 800x600 (544ms)
+05:16:58 [ScnDense] Reference image  56 paired with 5 views
+05:16:59 [ScnDense] Depth-map for image  25 estimated using  5 images: 800x600 (853ms)
+05:16:59 [ScnDense] Reference image  71 paired with 5 views
+05:17:00 [ScnDense] Depth-map for image  57 estimated using  5 images: 800x600 (794ms)
+05:17:00 [ScnDense] Reference image  78 paired with 5 views
+05:17:01 [ScnDense] Depth-map for image  72 estimated using  5 images: 800x600 (822ms)
+05:17:01 [ScnDense] Reference image  85 paired with 4 views
+05:17:02 [ScnDense] Depth-map for image  79 estimated using  5 images: 800x600 (861ms)
+05:17:02 [ScnDense] Reference image   1 paired with 5 views
+05:17:02 [ScnDense] Depth-map for image  86 estimated using  4 images: 800x600 (534ms)
+05:17:02 [ScnDense] Reference image   9 paired with 5 views
+05:17:03 [ScnDense] Depth-map for image   2 estimated using  5 images: 800x600 (634ms)
+05:17:03 [ScnDense] Reference image  57 paired with 5 views
+05:17:04 [ScnDense] Depth-map for image  10 estimated using  5 images: 800x600 (927ms)
+05:17:04 [ScnDense] Reference image  72 paired with 5 views
+05:17:05 [ScnDense] Depth-map for image  58 estimated using  5 images: 800x600 (806ms)
+05:17:05 [ScnDense] Reference image  25 paired with 5 views
+05:17:05 [ScnDense] Depth-map for image  73 estimated using  5 images: 800x600 (742ms)
+05:17:05 [ScnDense] Reference image  65 paired with 5 views
+05:17:06 [ScnDense] Depth-map for image  26 estimated using  5 images: 800x600 (742ms)
+05:17:06 [ScnDense] Reference image  41 paired with 5 views
+05:17:07 [ScnDense] Depth-map for image  66 estimated using  5 images: 800x600 (798ms)
+05:17:07 [ScnDense] Reference image  17 paired with 5 views
+05:17:07 [ScnDense] Depth-map for image  42 estimated using  5 images: 800x600 (605ms)
+05:17:08 [ScnDense] Reference image  79 paired with 5 views
+05:17:08 [ScnDense] Depth-map for image  18 estimated using  5 images: 800x600 (861ms)
+05:17:08 [ScnDense] Reference image  33 paired with 5 views
+05:17:09 [ScnDense] Depth-map for image  80 estimated using  5 images: 800x600 (753ms)
+05:17:09 [ScnDense] Reference image  86 paired with 5 views
+05:17:10 [ScnDense] Depth-map for image  34 estimated using  5 images: 800x600 (780ms)
+05:17:10 [ScnDense] Reference image  49 paired with 5 views
+05:17:11 [ScnDense] Depth-map for image  87 estimated using  5 images: 800x600 (747ms)
+05:17:11 [ScnDense] Reference image   2 paired with 5 views
+05:17:12 [ScnDense] Depth-map for image  50 estimated using  5 images: 800x600 (810ms)
+05:17:12 [ScnDense] Reference image  10 paired with 5 views
+05:17:12 [ScnDense] Depth-map for image   3 estimated using  5 images: 800x600 (755ms)
+05:17:12 [ScnDense] Reference image  58 paired with 4 views
+05:17:13 [ScnDense] Depth-map for image  11 estimated using  5 images: 800x600 (877ms)
+05:17:13 [ScnDense] Reference image  73 paired with 4 views
+05:17:14 [ScnDense] Depth-map for image  59 estimated using  4 images: 800x600 (546ms)
+05:17:14 [ScnDense] Reference image  42 paired with 5 views
+05:17:14 [ScnDense] Depth-map for image  74 estimated using  4 images: 800x600 (552ms)
+05:17:14 [ScnDense] Reference image  26 paired with 5 views
+05:17:15 [ScnDense] Depth-map for image  43 estimated using  5 images: 800x600 (755ms)
+05:17:15 [ScnDense] Reference image  66 paired with 5 views
+05:17:16 [ScnDense] Depth-map for image  27 estimated using  5 images: 800x600 (600ms)
+05:17:16 [ScnDense] Reference image  18 paired with 5 views
+05:17:16 [ScnDense] Depth-map for image  67 estimated using  5 images: 800x600 (722ms)
+05:17:16 [ScnDense] Reference image  80 paired with 4 views
+05:17:17 [ScnDense] Depth-map for image  19 estimated using  5 images: 800x600 (658ms)
+05:17:17 [ScnDense] Reference image  50 paired with 5 views
+05:17:18 [ScnDense] Depth-map for image  81 estimated using  4 images: 800x600 (557ms)
+05:17:18 [ScnDense] Reference image  87 paired with 5 views
+05:17:18 [ScnDense] Depth-map for image  51 estimated using  5 images: 800x600 (611ms)
+05:17:18 [ScnDense] Reference image   3 paired with 5 views
+05:17:19 [ScnDense] Depth-map for image  88 estimated using  5 images: 800x600 (787ms)
+05:17:19 [ScnDense] Reference image  59 paired with 5 views
+05:17:20 [ScnDense] Depth-map for image   4 estimated using  5 images: 800x600 (842ms)
+05:17:20 [ScnDense] Reference image  34 paired with 5 views
+05:17:21 [ScnDense] Depth-map for image  60 estimated using  5 images: 800x600 (754ms)
+05:17:21 [ScnDense] Reference image  74 paired with 4 views
+05:17:22 [ScnDense] Depth-map for image  35 estimated using  5 images: 800x600 (801ms)
+05:17:22 [ScnDense] Reference image  11 paired with 5 views
+05:17:22 [ScnDense] Depth-map for image  75 estimated using  4 images: 800x600 (564ms)
+05:17:22 [ScnDense] Reference image  43 paired with 5 views
+05:17:23 [ScnDense] Depth-map for image  12 estimated using  5 images: 800x600 (873ms)
+05:17:23 [ScnDense] Reference image  67 paired with 4 views
+05:17:24 [ScnDense] Depth-map for image  44 estimated using  5 images: 800x600 (742ms)
+05:17:24 [ScnDense] Reference image  51 paired with 5 views
+05:17:24 [ScnDense] Depth-map for image  68 estimated using  4 images: 800x600 (514ms)
+05:17:24 [ScnDense] Reference image  81 paired with 5 views
+05:17:25 [ScnDense] Depth-map for image  52 estimated using  5 images: 800x600 (768ms)
+05:17:25 [ScnDense] Reference image  27 paired with 5 views
+05:17:26 [ScnDense] Depth-map for image  82 estimated using  5 images: 800x600 (851ms)
+05:17:26 [ScnDense] Reference image   4 paired with 5 views
+05:17:27 [ScnDense] Depth-map for image  28 estimated using  5 images: 800x600 (824ms)
+05:17:27 [ScnDense] Reference image  35 paired with 5 views
+05:17:28 [ScnDense] Depth-map for image   5 estimated using  5 images: 800x600 (731ms)
+05:17:28 [ScnDense] Reference image  88 paired with 5 views
+05:17:28 [ScnDense] Depth-map for image  36 estimated using  5 images: 800x600 (625ms)
+05:17:28 [ScnDense] Reference image  75 paired with 5 views
+05:17:29 [ScnDense] Depth-map for image  89 estimated using  5 images: 800x600 (844ms)
+05:17:29 [ScnDense] Reference image  12 paired with 5 views
+05:17:30 [ScnDense] Depth-map for image  76 estimated using  5 images: 800x600 (754ms)
+05:17:30 [ScnDense] Reference image  19 paired with 5 views
+05:17:30 [ScnDense] Depth-map for image  13 estimated using  5 images: 800x600 (652ms)
+05:17:31 [ScnDense] Reference image  60 paired with 5 views
+05:17:31 [ScnDense] Depth-map for image  20 estimated using  5 images: 800x600 (792ms)
+05:17:31 [ScnDense] Reference image  44 paired with 5 views
+05:17:32 [ScnDense] Depth-map for image  61 estimated using  5 images: 800x600 (759ms)
+05:17:32 [ScnDense] Reference image  68 paired with 5 views
+05:17:33 [ScnDense] Depth-map for image  45 estimated using  5 images: 800x600 (796ms)
+05:17:33 [ScnDense] Reference image  52 paired with 5 views
+05:17:34 [ScnDense] Depth-map for image  69 estimated using  5 images: 800x600 (773ms)
+05:17:34 [ScnDense] Reference image  82 paired with 4 views
+05:17:35 [ScnDense] Depth-map for image  53 estimated using  5 images: 800x600 (815ms)
+05:17:35 [ScnDense] Reference image  28 paired with 5 views
+05:17:35 [ScnDense] Depth-map for image  83 estimated using  4 images: 800x600 (550ms)
+05:17:35 [ScnDense] Reference image   5 paired with 5 views
+05:17:36 [ScnDense] Depth-map for image  29 estimated using  5 images: 800x600 (622ms)
+05:17:36 [ScnDense] Reference image  36 paired with 5 views
+05:17:36 [ScnDense] Depth-map for image   6 estimated using  5 images: 800x600 (625ms)
+05:17:36 [ScnDense] Reference image  61 paired with 4 views
+05:17:37 [ScnDense] Depth-map for image  37 estimated using  5 images: 800x600 (769ms)
+05:17:37 [ScnDense] Reference image  76 paired with 5 views
+05:17:38 [ScnDense] Depth-map for image  62 estimated using  4 images: 800x600 (528ms)
+05:17:38 [ScnDense] Reference image  53 paired with 5 views
+05:17:39 [ScnDense] Depth-map for image  77 estimated using  5 images: 800x600 (833ms)
+05:17:39 [ScnDense] Reference image  45 paired with 5 views
+05:17:39 [ScnDense] Depth-map for image  54 estimated using  5 images: 800x600 (778ms)
+05:17:39 [ScnDense] Reference image  69 paired with 5 views
+05:17:40 [ScnDense] Depth-map for image  46 estimated using  5 images: 800x600 (623ms)
+05:17:40 [ScnDense] Reference image  13 paired with 5 views
+05:17:41 [ScnDense] Depth-map for image  70 estimated using  5 images: 800x600 (783ms)
+05:17:41 [ScnDense] Reference image  83 paired with 5 views
+05:17:42 [ScnDense] Depth-map for image  14 estimated using  5 images: 800x600 (758ms)
+05:17:42 [ScnDense] Reference image  89 paired with 4 views
+05:17:42 [ScnDense] Depth-map for image  84 estimated using  5 images: 800x600 (747ms)
+05:17:42 [ScnDense] Reference image  20 paired with 5 views
+05:17:43 [ScnDense] Depth-map for image  90 estimated using  4 images: 800x600 (559ms)
+05:17:43 [ScnDense] Reference image   6 paired with 5 views
+05:17:44 [ScnDense] Depth-map for image  21 estimated using  5 images: 800x600 (765ms)
+05:17:44 [ScnDense] Reference image  29 paired with 5 views
+05:17:44 [ScnDense] Depth-map for image   7 estimated using  5 images: 800x600 (757ms)
+05:17:44 [ScnDense] Reference image  37 paired with 5 views
+05:17:45 [ScnDense] Depth-map for image  30 estimated using  5 images: 800x600 (766ms)
+05:17:45 [ScnDense] Reference image  62 paired with 5 views
+05:17:46 [ScnDense] Depth-map for image  38 estimated using  5 images: 800x600 (777ms)
+05:17:46 [ScnDense] Reference image  54 paired with 5 views
+05:17:47 [ScnDense] Depth-map for image  63 estimated using  5 images: 800x600 (791ms)
+05:17:47 [ScnDense] Reference image  77 paired with 5 views
+05:17:47 [ScnDense] Depth-map for image  55 estimated using  5 images: 800x600 (663ms)
+05:17:48 [ScnDense] Reference image  70 paired with 4 views
+05:17:48 [ScnDense] Depth-map for image  78 estimated using  5 images: 800x600 (790ms)
+05:17:48 [ScnDense] Reference image  46 paired with 5 views
+05:17:49 [ScnDense] Depth-map for image  71 estimated using  4 images: 800x600 (558ms)
+05:17:49 [ScnDense] Reference image  14 paired with 5 views
+05:17:50 [ScnDense] Depth-map for image  47 estimated using  5 images: 800x600 (776ms)
+05:17:50 [ScnDense] Reference image  84 paired with 5 views
+05:17:50 [ScnDense] Depth-map for image  15 estimated using  5 images: 800x600 (637ms)
+05:17:50 [ScnDense] Reference image  30 paired with 5 views
+05:17:51 [ScnDense] Depth-map for image  85 estimated using  5 images: 800x600 (825ms)
+05:17:51 [ScnDense] Reference image  63 paired with 5 views
+05:17:52 [ScnDense] Depth-map for image  31 estimated using  5 images: 800x600 (809ms)
+05:17:52 [ScnDense] Reference image  90 paired with 5 views
+05:17:53 [ScnDense] Depth-map for image  64 estimated using  5 images: 800x600 (797ms)
+05:17:53 [ScnDense] Reference image  21 paired with 5 views
+05:17:54 [ScnDense] Depth-map for image  91 estimated using  5 images: 800x600 (832ms)
+05:17:54 [ScnDense] Reference image  38 paired with 5 views
+05:17:54 [ScnDense] Depth-map for image  22 estimated using  5 images: 800x600 (795ms)
+05:17:54 [ScnDense] Reference image   7 paired with 5 views
+05:17:55 [ScnDense] Depth-map for image  39 estimated using  5 images: 800x600 (792ms)
+05:17:55 [ScnDense] Reference image  47 paired with 5 views
+05:17:56 [ScnDense] Depth-map for image   8 estimated using  5 images: 800x600 (850ms)
+05:17:56 [ScnDense] Reference image  55 paired with 5 views
+05:17:57 [ScnDense] Depth-map for image  48 estimated using  5 images: 800x600 (756ms)
+05:17:57 [ScnDense] Reference image  15 paired with 5 views
+05:17:58 [ScnDense] Depth-map for image  56 estimated using  5 images: 800x600 (630ms)
+05:17:58 [ScnDense] Reference image  31 paired with 5 views
+05:17:58 [ScnDense] Depth-map for image  16 estimated using  5 images: 800x600 (760ms)
+05:17:58 [ScnDense] Reference image  91 paired with 5 views
+05:17:59 [ScnDense] Depth-map for image  32 estimated using  5 images: 800x600 (826ms)
+05:17:59 [ScnDense] Reference image  39 paired with 5 views
+05:18:00 [ScnDense] Depth-map for image  92 estimated using  5 images: 800x600 (745ms)
+05:18:00 [ScnDense] Reference image  22 paired with 5 views
+05:18:01 [ScnDense] Depth-map for image  40 estimated using  5 images: 800x600 (609ms)
+05:18:01 [ScnDense] Reference image  23 paired with 5 views
+05:18:01 [ScnDense] Depth-map for image  23 estimated using  5 images: 800x600 (812ms)
+05:18:02 [ScnDense] Depth-map for image  24 estimated using  5 images: 800x600 (653ms)
+05:18:14 [ScnDense] Depth-maps dense fused and filtered: 91 depth-maps, 8196720 depths, 950345 points (12%%), 11.04 hits in 59.44 cached (11s648ms)
+05:18:14 [ScnDense] Point-cloud trimmed to ROI: 0 points removed (76ms)
+05:18:14 [App     ] Densifying point-cloud completed: 950345 points (6m27s)
+05:18:14 [PointCld] Point-cloud 'scene_dense.ply' saved: 950345 points (347ms)
+05:18:14 [Scene   ] Scene saved in interface format to 'scene_dense.mvs' (9ms):
+	92 images (92 calibrated)
+	11750 points, 0 vertices, 0 faces
+05:18:14 [App     ] MEMORYINFO: {
+05:18:14 [App     ] 	PageFaultCount 9900997
+05:18:14 [App     ] 	PeakWorkingSetSize 1.13GB
+05:18:14 [App     ] 	WorkingSetSize 14.12MB
+05:18:14 [App     ] 	QuotaPeakPagedPoolUsage 106.27KB
+05:18:14 [App     ] 	QuotaPagedPoolUsage 103.56KB
+05:18:14 [App     ] 	QuotaPeakNonPagedPoolUsage 68.54KB
+05:18:14 [App     ] 	QuotaNonPagedPoolUsage 19.27KB
+05:18:14 [App     ] 	PagefileUsage 6.13MB
+05:18:14 [App     ] 	PeakPagefileUsage 1.14GB
+05:18:14 [App     ] } ENDINFO
