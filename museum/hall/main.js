@@ -58,7 +58,7 @@ const sun = new THREE.DirectionalLight(0xfff0d6, 1.2);
 sun.position.set(3, 20, 5);
 scene.add(sun);
 
-const camera = new THREE.PerspectiveCamera(FOV, innerWidth / innerHeight, 0.05, 250);
+const camera = new THREE.PerspectiveCamera(FOV, innerWidth / innerHeight, 0.05, 400);
 camera.rotation.order = "YXZ";
 
 let artifacts;
