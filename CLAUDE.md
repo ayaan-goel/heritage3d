@@ -14,6 +14,7 @@ Team: Ayaan Goel, Kshiti Bhavsar. Mentor: Ms. Komal Singh.
   - Record any decision in `vault/08-Decisions.md` (decision, reason, date).
   - Record new unknowns in `vault/09-Open-Questions.md`; close answered ones.
   - Update dataset facts in `vault/03-Dataset-CHSD.md`, results in `vault/07-Results.md`.
+  - After every round or museum export, rebuild the team's Excel summary: `python scripts/build_status_workbook.py` (`experiments/results/artifact_status.xlsx`).
 - Never write an unverified claim as fact. Tag it **(to verify)** or **(hypothesis)**.
 
 ## 2. Honesty rules
