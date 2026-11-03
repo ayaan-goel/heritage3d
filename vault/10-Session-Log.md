@@ -239,4 +239,8 @@ Newest first. Every session must add an entry (see `CLAUDE.md`).
 
 - Team: go back to the gate by a circle inside the museum, not a key. `museum/hall/portal.js` (new, shared arrow and circle), lobby 5 → 7.5 m, circle beside the entrance doors, `G` removed, pause-menu button kept. A first placement on the centre line blocked the third-person view on arrival, so it moved 2.4 m to the side. Browser pane: gate → hall → circle → gate round trip, both views, map marker, hint text; no console errors. `pytest -q` → 59 passed.
 
-**Next action** — when the last round finishes: `batch.log` check, compare, `summarize_round.py --count 40 --name round7`, export, `build_status_workbook.py`, vault, commit. Team chose stylized characters, no photos, for now.
+- Team asked to stop the batch when 393 finished (watcher armed), then at 12:38 to stop now and restart L1 later. Watcher stopped; `taskkill` on the batch's process tree at 12:38:24 → no pipeline tools left. 393 L1 had no evaluation file, so `pending()` still lists it; about 1 h of its work is lost (sparse 2077 s + 28 min of dense). `experiments/results/runs/Ark_HM_393_HI_L1.json` is a partial run file, overwritten on the redo; not to be committed before then. Team chose stylized characters, no photos, for now.
+
+- Team asked to process 658 now. `compare_levels.py --artifact Ark_HM_658_HI`; `summarize_round.py --count 36 --name round7`; `export_glb.py --artifacts Ark_HM_658_HI` → exit 0, manifest 26; close-up checked in the browser pane; `pytest -q` → 59 passed. See [[07-Results]].
+
+**Next action** — team: when to resume (`--count 37` for 393 L1 only, `--count 40` for all). Then compare, summarize with the matching count, export, `build_status_workbook.py`, vault, commit.

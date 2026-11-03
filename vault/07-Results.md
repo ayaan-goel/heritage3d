@@ -370,9 +370,25 @@ Checked all five in the 3D hall (browser pane): textured, upright, placards No. 
 - `Ark_HM_1299_Hi` passes the exhibit rule (which uses the evaluation's mesh-vertex F) but its surface-sample F (0.924) is the lowest of any exhibit so far. It is a joined double pot; the narrow gap between the two bodies is a likely cause **(hypothesis)**.
 - Checked all four in the 3D hall (browser pane): textured, upright, placards No. 17–20.
 
+## Round 7, part 1 — rank 35 (`Ark_HM_658_HI`) — 2026-11-03
+
+Same frozen config, `run_batch.py --count 40 --clean` from 08:43; stopped by the team at 12:38, so the round is incomplete. `Ark_HM_393_HI` is held back until its L1 is redone. All 36 so far: `experiments/results/round7_all.csv`, `round7_summary.csv`, `experiments/plots/round7_summary.png` (to be rewritten when the round ends).
+
+| Level | Images | Registered | Total time | Peak RAM | Cloud F@0.002 R | Chamfer |
+|---|---|---|---|---|---|---|
+| L1 | 362 | 362 | 70.8 min | 3.0 GB | 0.937 | 0.00073 R |
+| L2 | 182 | 182 | 22.4 min | 2.3 GB | 0.963 | 0.00067 R |
+| L3 | 92 | 92 | 9.7 min | 2.0 GB | 0.987 | 0.00059 R |
+| L4 | 47 | 47 | 4.7 min | 2.0 GB | **0.997** | 0.00060 R |
+| L5 | 26 | 26 | 1.9 min | 2.0 GB | 0.952 | 0.00094 R |
+
+**Measured:** clean at every level and best at L4. One of the few artifacts that stays above 0.95 at L5. Medians across 36: L1 0.883, L2 0.924, L3 0.965, **L4 0.984**, L5 0.583; cloud F < 0.5 on 3 / 3 / 4 / 4 / 15 of 36.
+
+Museum model (L3): 418,355 → 99,999 triangles, 15.7 → 2.9 MB, surface F 0.994 → 0.994, chamfer 0.00064 R. Checked in the 3D hall as No. 26: textured, upright, no console errors. Museum now **26 exhibits, 77 MB**.
+
 ## Museum gate scene — rendering cost — 2026-11-03
 
-Browser pane, 800×675, pixel ratio 1.25, batch running at the same time: first gate-only version 60 fps, 67,368 triangles. **With the street: 60 fps, 43 draw calls, 246,406 triangles at the start point**; page ready 3.3 s, 25 exhibits loaded in 6.9 s (cached). Full-screen not measured. Page-ready time varies with the batch: 3.0–3.3 s in most loads, once 17 s while a dense step was using the CPU.
+Browser pane, 800×675, pixel ratio 1.25, batch running at the same time: first gate-only version 60 fps, 67,368 triangles. **With the street: 60 fps, 43 draw calls, 246,406 triangles at the start point**; page ready 3.3 s, 25 exhibits loaded in 6.9 s (cached). Full-screen not measured. Page-ready time varies with the batch: 3.0–3.3 s in most loads, once 17 s while a dense step was using the CPU, 1.4 s with no batch running.
 
 ## Museum hall — rendering cost on the team laptop — 2026-11-01
 
