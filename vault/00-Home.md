@@ -7,7 +7,7 @@
 
 ## Current status (updated 2026-11-03)
 
-- **Last round paused** 2026-11-03 12:38 at the team's request: `Ark_HM_658_HI` done; `Ark_HM_393_HI` L5–L2 done, L1 stopped during its dense step and to be redone from the start; 1292, 1288, 209 not started. 658 is processed, committed and exhibited (**26 exhibits**); 393's levels are held back until L1 is redone.
+- **Last round resumed** 2026-11-04 with `run_batch.py --count 40 --clean` (393 L1, then 1292, 1288, 209; 16 runs, estimate 5–8 h). It was paused 2026-11-03 12:38 at the team's request: `Ark_HM_658_HI` done; `Ark_HM_393_HI` L5–L2 done, L1 stopped during its dense step and to be redone from the start; 1292, 1288, 209 not started. 658 is processed, committed and exhibited (**26 exhibits**); 393's finished L2–L5 run files are committed, but it is not compared or exported until L1 is redone.
 - **Museum visit now starts at a 3D model of the PDEU main gate** and its street (`museum/hall/gate.js`: cobbled plaza, road with tricolour columns, ATM booth, bikes, fence, metro viaduct): walk into the rotating yellow arrow, fade, museum lobby. Links to an exhibit skip it. a matching arrow and circle by the museum's entrance doors (or the pause menu) returns to the gate; `V` switches first and third person; `C` switches character (stand-in figures for now, [[09-Open-Questions]]). Team should check the feel in a normal browser.
 - **Excel summary** of all 81 artifacts: `experiments/results/artifact_status.xlsx`, rebuilt by `scripts/build_status_workbook.py` after every round or export.
 - **Round 6 complete: 35 of 40 artifacts × 5 levels** (2026-11-03 07:29, 35 / 35 runs, 8.4 h, no unplugs). 498, 596, 259, 557, 611 best at L4 and exhibited; 792 and 703 not exhibited. L5 yields no cloud on 6 / 7. Medians across 35: L3 0.964, **L4 0.984**, L5 0.578; L5 F < 0.5 on 15 / 35. **Museum: 25 exhibits, 75 MB.** See [[07-Results]].
@@ -32,7 +32,7 @@
 
 ## Next action
 
-1. Resume when the team says: `run_batch.py --count 37 --clean` finishes only 393 L1, `--count 40` also runs the last three. Then compare, `summarize_round.py --name round7` with the matching count, `export_glb.py`, `build_status_workbook.py`, vault, commit.
+1. When the last round finishes: compare, `summarize_round.py --count 40 --name round7`, `export_glb.py`, `build_status_workbook.py`, vault, commit.
 2. Team: the **30-exhibit minimum** now needs all 5 remaining artifacts to pass ([[09-Open-Questions]]).
 3. Team: walk the new hall in a normal browser (`python -m http.server 8000 --directory museum`), check the feel (speed, mouse sensitivity, placards) and decide where to host it ([[09-Open-Questions]]); later: load-time measurement for RQ3.
 4. Team: confirm the evaluation method (Option A, decoded CHSD depth — [[04-Methodology]]).

@@ -1,0 +1,187 @@
+10:35:31 [App     ] OpenMVS x64 v2.4.0
+10:35:31 [App     ] Build date: Jan 20 2026, 00:13:37
+10:35:31 [App     ] CPU: 12th Gen Intel(R) Core(TM) i7-1255U (12 cores)
+10:35:31 [App     ] RAM: 15.72GB Physical Memory 128.00TB Virtual Memory
+10:35:31 [App     ] OS: Windows 11+ x64
+10:35:31 [App     ] Disk: 271.36GB (488.28GB) space
+10:35:31 [App     ] SSE & AVX compatible CPU & OS detected
+10:35:31 [App     ] Command line: DensifyPointCloud -i D:\heritage3d-data\runs\Ark_HM_393_HI\L5\mvs\scene.mvs -o D:\heritage3d-data\runs\Ark_HM_393_HI\L5\mvs\scene_dense.mvs --resolution-level 1
+10:35:31 [Scene   ] Camera model loaded: platform 0; camera  0; f 1.248x1.248; poses 26
+10:35:31 [Scene   ] Scene loaded in interface format from 'scene.mvs' (5ms):
+	26 images (26 calibrated) with a total of 11.90 MPixels (0.46 MPixels/image)
+	3627 points, 0 vertices, 0 faces
+10:35:31 [Scene   ] ROI estimated with position (-0.066577,0.119475,-0.126835) and extent (0.622451,0.949932,0.970256): scale 1.100000, up axis -1
+10:35:31 [PointCld] Point-cloud composed of 3627 points with:
+ - points info:
+	3595 points inside ROI (99.12%)
+	 inside ROI track length: 2 min / 3.43922 mean (0.703947 std) / 9 max
+	outside ROI track length: 2 min / 3.53125 mean (0.789952 std) / 5 max
+ - visibility info (12477 views - 3.44 views/point):
+	        0 points with 1- views (0.00%)
+	       35 points with 2  views (0.96%)
+	     2306 points with 3  views (63.58%)
+	     1286 points with 4+ views (35.46%)
+	2 min / 3.44003 mean (0.704804 std) / 9 max
+10:35:32 [ScnDense] Preparing images for dense reconstruction completed: 26 images (158ms)
+10:35:32 [ScnDense] Select neighbor views by weighting inside ROI points with 0.70
+10:35:32 [ScnDense] Selecting images for dense reconstruction completed: 26 images (1ms)
+10:35:32 [ScnDense] Reference image   0 paired with 0 views
+10:35:32 [ScnDense] Reference image   6 paired with 3 views
+10:35:32 [ScnDense] Reference image   8 paired with 2 views
+10:35:34 [ScnDense] Depth-map for image   7 estimated using  3 images: 800x600 (2s330ms)
+10:35:34 [ScnDense] Reference image   3 paired with 2 views
+10:35:36 [ScnDense] Depth-map for image   9 estimated using  2 images: 800x600 (1s743ms)
+10:35:36 [ScnDense] Reference image  12 paired with 3 views
+10:35:37 [ScnDense] Depth-map for image   4 estimated using  2 images: 800x600 (1s618ms)
+10:35:37 [ScnDense] Reference image  14 paired with 0 views
+10:35:37 [ScnDense] Reference image  10 paired with 2 views
+10:35:40 [ScnDense] Depth-map for image  13 estimated using  3 images: 800x600 (2s265ms)
+10:35:40 [ScnDense] Reference image  16 paired with 2 views
+10:35:41 [ScnDense] Depth-map for image  11 estimated using  2 images: 800x600 (1s613ms)
+10:35:41 [ScnDense] Reference image  18 paired with 2 views
+10:35:43 [ScnDense] Depth-map for image  17 estimated using  2 images: 800x600 (1s593ms)
+10:35:43 [ScnDense] Reference image  20 paired with 2 views
+10:35:45 [ScnDense] Depth-map for image  19 estimated using  2 images: 800x600 (1s691ms)
+10:35:45 [ScnDense] Reference image  22 paired with 0 views
+10:35:45 [ScnDense] Reference image  24 paired with 0 views
+10:35:45 [ScnDense] Reference image  15 paired with 0 views
+10:35:45 [ScnDense] Reference image   1 paired with 2 views
+10:35:46 [ScnDense] Depth-map for image  21 estimated using  2 images: 800x600 (1s700ms)
+10:35:46 [ScnDense] Reference image   7 paired with 0 views
+10:35:46 [ScnDense] Reference image  23 paired with 3 views
+10:35:48 [ScnDense] Depth-map for image   2 estimated using  2 images: 800x600 (1s758ms)
+10:35:48 [ScnDense] Reference image  11 paired with 0 views
+10:35:48 [ScnDense] Reference image  21 paired with 2 views
+10:35:51 [ScnDense] Depth-map for image  24 estimated using  3 images: 800x600 (2s454ms)
+10:35:51 [ScnDense] Reference image  19 paired with 2 views
+10:35:52 [ScnDense] Depth-map for image  22 estimated using  2 images: 800x600 (1s749ms)
+10:35:52 [ScnDense] Reference image  17 paired with 2 views
+10:35:54 [ScnDense] Depth-map for image  20 estimated using  2 images: 800x600 (1s538ms)
+10:35:54 [ScnDense] Reference image   9 paired with 0 views
+10:35:54 [ScnDense] Reference image  13 paired with 2 views
+10:35:56 [ScnDense] Depth-map for image  18 estimated using  2 images: 800x600 (1s591ms)
+10:35:56 [ScnDense] Reference image   4 paired with 0 views
+10:35:56 [ScnDense] Reference image  25 paired with 3 views
+10:35:57 [ScnDense] Depth-map for image  14 estimated using  2 images: 800x600 (1s662ms)
+10:35:57 [ScnDense] Reference image   2 paired with 0 views
+10:35:57 [ScnDense] Reference image   5 paired with 2 views
+10:36:00 [ScnDense] Depth-map for image  26 estimated using  3 images: 800x600 (2s300ms)
+10:36:01 [ScnDense] Depth-map for image   6 estimated using  2 images: 800x600 (1s836ms)
+10:36:01 [ScnDense] Reference image   0 paired with 0 views
+10:36:01 [ScnDense] Reference image   6 paired with 3 views
+10:36:01 [DepthMap] error: opening file 'depth0010.dmap' for reading depth-data
+10:36:01 [ScnDense] warning: skipping neighbor view 10 (0001_90_.png): cannot load depth-map 'depth0010.dmap'
+10:36:01 [ScnDense] Reference image   8 paired with 2 views
+10:36:02 [ScnDense] Depth-map for image   7 estimated using  2 images: 800x600 (507ms)
+10:36:02 [ScnDense] Reference image   3 paired with 2 views
+10:36:02 [ScnDense] Depth-map for image   9 estimated using  2 images: 800x600 (511ms)
+10:36:03 [ScnDense] Reference image  12 paired with 3 views
+10:36:03 [DepthMap] error: opening file 'depth0010.dmap' for reading depth-data
+10:36:03 [ScnDense] warning: skipping neighbor view 10 (0001_90_.png): cannot load depth-map 'depth0010.dmap'
+10:36:03 [ScnDense] Depth-map for image   4 estimated using  2 images: 800x600 (467ms)
+10:36:03 [ScnDense] Reference image  14 paired with 0 views
+10:36:03 [ScnDense] Reference image  10 paired with 2 views
+10:36:03 [ScnDense] Depth-map for image  13 estimated using  2 images: 800x600 (450ms)
+10:36:03 [ScnDense] Reference image  16 paired with 2 views
+10:36:04 [ScnDense] Depth-map for image  11 estimated using  2 images: 800x600 (478ms)
+10:36:04 [ScnDense] Reference image  18 paired with 2 views
+10:36:04 [ScnDense] Depth-map for image  17 estimated using  2 images: 800x600 (496ms)
+10:36:04 [ScnDense] Reference image  20 paired with 2 views
+10:36:05 [ScnDense] Depth-map for image  19 estimated using  2 images: 800x600 (500ms)
+10:36:05 [ScnDense] Reference image  22 paired with 0 views
+10:36:05 [ScnDense] Reference image  24 paired with 0 views
+10:36:05 [ScnDense] Reference image  15 paired with 0 views
+10:36:05 [ScnDense] Reference image   1 paired with 2 views
+10:36:05 [ScnDense] Depth-map for image  21 estimated using  2 images: 800x600 (520ms)
+10:36:06 [ScnDense] Reference image   7 paired with 0 views
+10:36:06 [ScnDense] Reference image  23 paired with 3 views
+10:36:06 [DepthMap] error: opening file 'depth0010.dmap' for reading depth-data
+10:36:06 [ScnDense] warning: skipping neighbor view 10 (0001_90_.png): cannot load depth-map 'depth0010.dmap'
+10:36:06 [ScnDense] Depth-map for image   2 estimated using  2 images: 800x600 (540ms)
+10:36:06 [ScnDense] Reference image  11 paired with 0 views
+10:36:06 [ScnDense] Reference image  21 paired with 2 views
+10:36:07 [ScnDense] Depth-map for image  24 estimated using  2 images: 800x600 (507ms)
+10:36:07 [ScnDense] Reference image  19 paired with 2 views
+10:36:07 [ScnDense] Depth-map for image  22 estimated using  2 images: 800x600 (484ms)
+10:36:07 [ScnDense] Reference image  17 paired with 2 views
+10:36:08 [ScnDense] Depth-map for image  20 estimated using  2 images: 800x600 (483ms)
+10:36:08 [ScnDense] Reference image   9 paired with 0 views
+10:36:08 [ScnDense] Reference image  13 paired with 2 views
+10:36:08 [ScnDense] Depth-map for image  18 estimated using  2 images: 800x600 (528ms)
+10:36:08 [ScnDense] Reference image   4 paired with 0 views
+10:36:08 [ScnDense] Reference image  25 paired with 3 views
+10:36:08 [DepthMap] error: opening file 'depth0010.dmap' for reading depth-data
+10:36:08 [ScnDense] warning: skipping neighbor view 10 (0001_90_.png): cannot load depth-map 'depth0010.dmap'
+10:36:09 [ScnDense] Depth-map for image  14 estimated using  2 images: 800x600 (613ms)
+10:36:09 [ScnDense] Reference image   2 paired with 0 views
+10:36:09 [ScnDense] Reference image   5 paired with 2 views
+10:36:09 [ScnDense] Depth-map for image  26 estimated using  2 images: 800x600 (549ms)
+10:36:10 [ScnDense] Depth-map for image   6 estimated using  2 images: 800x600 (506ms)
+10:36:10 [ScnDense] Reference image   0 paired with 0 views
+10:36:10 [ScnDense] Reference image   6 paired with 3 views
+10:36:10 [DepthMap] error: opening file 'depth0010.dmap' for reading depth-data
+10:36:10 [ScnDense] warning: skipping neighbor view 10 (0001_90_.png): cannot load depth-map 'depth0010.dmap'
+10:36:10 [ScnDense] Reference image   8 paired with 2 views
+10:36:10 [ScnDense] Depth-map for image   7 estimated using  2 images: 800x600 (461ms)
+10:36:10 [ScnDense] Reference image   3 paired with 2 views
+10:36:11 [ScnDense] Depth-map for image   9 estimated using  2 images: 800x600 (493ms)
+10:36:11 [ScnDense] Reference image  12 paired with 3 views
+10:36:11 [DepthMap] error: opening file 'depth0010.dmap' for reading depth-data
+10:36:11 [ScnDense] warning: skipping neighbor view 10 (0001_90_.png): cannot load depth-map 'depth0010.dmap'
+10:36:11 [ScnDense] Depth-map for image   4 estimated using  2 images: 800x600 (500ms)
+10:36:11 [ScnDense] Reference image  14 paired with 0 views
+10:36:11 [ScnDense] Reference image  10 paired with 2 views
+10:36:12 [ScnDense] Depth-map for image  13 estimated using  2 images: 800x600 (450ms)
+10:36:12 [ScnDense] Reference image  16 paired with 2 views
+10:36:12 [ScnDense] Depth-map for image  11 estimated using  2 images: 800x600 (481ms)
+10:36:12 [ScnDense] Reference image  18 paired with 2 views
+10:36:13 [ScnDense] Depth-map for image  17 estimated using  2 images: 800x600 (497ms)
+10:36:13 [ScnDense] Reference image  20 paired with 2 views
+10:36:13 [ScnDense] Depth-map for image  19 estimated using  2 images: 800x600 (524ms)
+10:36:13 [ScnDense] Reference image  22 paired with 0 views
+10:36:13 [ScnDense] Reference image  24 paired with 0 views
+10:36:13 [ScnDense] Reference image  15 paired with 0 views
+10:36:13 [ScnDense] Reference image   1 paired with 2 views
+10:36:14 [ScnDense] Depth-map for image  21 estimated using  2 images: 800x600 (475ms)
+10:36:14 [ScnDense] Reference image   7 paired with 0 views
+10:36:14 [ScnDense] Reference image  23 paired with 3 views
+10:36:14 [DepthMap] error: opening file 'depth0010.dmap' for reading depth-data
+10:36:14 [ScnDense] warning: skipping neighbor view 10 (0001_90_.png): cannot load depth-map 'depth0010.dmap'
+10:36:14 [ScnDense] Depth-map for image   2 estimated using  2 images: 800x600 (508ms)
+10:36:14 [ScnDense] Reference image  11 paired with 0 views
+10:36:14 [ScnDense] Reference image  21 paired with 2 views
+10:36:15 [ScnDense] Depth-map for image  24 estimated using  2 images: 800x600 (578ms)
+10:36:15 [ScnDense] Reference image  19 paired with 2 views
+10:36:16 [ScnDense] Depth-map for image  22 estimated using  2 images: 800x600 (507ms)
+10:36:16 [ScnDense] Reference image  17 paired with 2 views
+10:36:16 [ScnDense] Depth-map for image  20 estimated using  2 images: 800x600 (460ms)
+10:36:16 [ScnDense] Reference image   9 paired with 0 views
+10:36:16 [ScnDense] Reference image  13 paired with 2 views
+10:36:17 [ScnDense] Depth-map for image  18 estimated using  2 images: 800x600 (463ms)
+10:36:17 [ScnDense] Reference image   4 paired with 0 views
+10:36:17 [ScnDense] Reference image  25 paired with 3 views
+10:36:17 [DepthMap] error: opening file 'depth0010.dmap' for reading depth-data
+10:36:17 [ScnDense] warning: skipping neighbor view 10 (0001_90_.png): cannot load depth-map 'depth0010.dmap'
+10:36:17 [ScnDense] Depth-map for image  14 estimated using  2 images: 800x600 (492ms)
+10:36:17 [ScnDense] Reference image   2 paired with 0 views
+10:36:17 [ScnDense] Reference image   5 paired with 2 views
+10:36:18 [ScnDense] Depth-map for image  26 estimated using  2 images: 800x600 (510ms)
+10:36:18 [ScnDense] Depth-map for image   6 estimated using  2 images: 800x600 (579ms)
+10:36:20 [ScnDense] Depth-maps dense fused and filtered: 16 depth-maps, 2293103 depths, 159471 points (7%%), 4.25 hits in 10.38 cached (1s517ms)
+10:36:20 [ScnDense] Point-cloud trimmed to ROI: 2549 points removed (18ms)
+10:36:20 [App     ] Densifying point-cloud completed: 156922 points (48s299ms)
+10:36:20 [PointCld] Point-cloud 'scene_dense.ply' saved: 156922 points (82ms)
+10:36:20 [Scene   ] Scene saved in interface format to 'scene_dense.mvs' (3ms):
+	26 images (26 calibrated)
+	3627 points, 0 vertices, 0 faces
+10:36:20 [App     ] MEMORYINFO: {
+10:36:20 [App     ] 	PageFaultCount 1632345
+10:36:20 [App     ] 	PeakWorkingSetSize 220.37MB
+10:36:20 [App     ] 	WorkingSetSize 13.20MB
+10:36:20 [App     ] 	QuotaPeakPagedPoolUsage 106.27KB
+10:36:20 [App     ] 	QuotaPagedPoolUsage 103.56KB
+10:36:20 [App     ] 	QuotaPeakNonPagedPoolUsage 28.70KB
+10:36:20 [App     ] 	QuotaNonPagedPoolUsage 18.20KB
+10:36:20 [App     ] 	PagefileUsage 5.10MB
+10:36:20 [App     ] 	PeakPagefileUsage 217.28MB
+10:36:20 [App     ] } ENDINFO

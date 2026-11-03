@@ -372,7 +372,7 @@ Checked all five in the 3D hall (browser pane): textured, upright, placards No. 
 
 ## Round 7, part 1 — rank 35 (`Ark_HM_658_HI`) — 2026-11-03
 
-Same frozen config, `run_batch.py --count 40 --clean` from 08:43; stopped by the team at 12:38, so the round is incomplete. `Ark_HM_393_HI` is held back until its L1 is redone. All 36 so far: `experiments/results/round7_all.csv`, `round7_summary.csv`, `experiments/plots/round7_summary.png` (to be rewritten when the round ends).
+Same frozen config, `run_batch.py --count 40 --clean` from 08:43; stopped by the team at 12:38, so the round is incomplete. `Ark_HM_393_HI` is not analysed until its L1 is redone (its finished L2–L5 run files are committed). All 36 so far: `experiments/results/round7_all.csv`, `round7_summary.csv`, `experiments/plots/round7_summary.png` (to be rewritten when the round ends).
 
 | Level | Images | Registered | Total time | Peak RAM | Cloud F@0.002 R | Chamfer |
 |---|---|---|---|---|---|---|

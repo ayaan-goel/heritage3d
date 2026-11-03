@@ -1,0 +1,179 @@
+{
+ "artifact": "Ark_HM_393_HI",
+ "level": "L5",
+ "started": "2026-11-03T10:35:12",
+ "config": {
+  "paths": {
+   "chsd_rgb": "D:\\heritage3d-data\\chsd\\rgb\\CHSDD_RGB",
+   "chsd_depth": "D:\\heritage3d-data\\chsd\\depth\\CHSDD_depth",
+   "runs": "D:\\heritage3d-data\\runs"
+  },
+  "dataset": {
+   "rings": [
+    -90,
+    -45,
+    0,
+    45,
+    90
+   ],
+   "azimuth_step": 1,
+   "pole_rings": [
+    -90,
+    90
+   ],
+   "rgb_pattern": "{artifact}/RGB/{frame:04d}_{elevation}_.png",
+   "depth_pattern": "{artifact}/Z/{frame:04d}_{elevation}_.png"
+  },
+  "pipeline": {
+   "camera_model": "SIMPLE_PINHOLE",
+   "single_camera": true,
+   "matcher": "exhaustive_matcher",
+   "densify_resolution_level": 1
+  },
+  "evaluation": {
+   "reference_stride": 2,
+   "voxel": 0.002,
+   "thresholds": [
+    0.002,
+    0.005,
+    0.01
+   ]
+  },
+  "levels": {
+   "L1": 3,
+   "L2": 6,
+   "L3": 12,
+   "L4": 24,
+   "L5": 45
+  },
+  "museum": {
+   "level": "L3",
+   "faces": 100000,
+   "texture": 2048,
+   "jpeg_quality": 85,
+   "min_mesh_f": 0.95
+  }
+ },
+ "environment": {
+  "python": "3.13.15",
+  "platform": "Windows-11-10.0.26300-SP0",
+  "colmap": {
+   "version": "4.2.1",
+   "commit": "bd1fcf6",
+   "gpu": false,
+   "path": "C:\\tools\\colmap\\colmap.BAT"
+  },
+  "openmvs": {
+   "version": "2.4.0"
+  },
+  "openmvs_tools": {
+   "InterfaceCOLMAP": "C:\\tools\\openmvs\\vc17\\x64\\Release\\InterfaceCOLMAP.EXE",
+   "DensifyPointCloud": "C:\\tools\\openmvs\\vc17\\x64\\Release\\DensifyPointCloud.EXE",
+   "ReconstructMesh": "C:\\tools\\openmvs\\vc17\\x64\\Release\\ReconstructMesh.EXE",
+   "RefineMesh": "C:\\tools\\openmvs\\vc17\\x64\\Release\\RefineMesh.EXE",
+   "TextureMesh": "C:\\tools\\openmvs\\vc17\\x64\\Release\\TextureMesh.EXE"
+  },
+  "hardware": {
+   "cpu": "12th Gen Intel(R) Core(TM) i7-1255U",
+   "logical_cpus": 12,
+   "ram_gb": 15.72
+  }
+ },
+ "input_images": 26,
+ "input_bytes": 8439974,
+ "stages": {
+  "feature_extractor": {
+   "stage": "feature_extractor",
+   "seconds": 4.0,
+   "peak_memory_mb": 2016.7,
+   "returncode": 0,
+   "log": "D:\\heritage3d-data\\runs\\Ark_HM_393_HI\\L5\\logs\\feature_extractor.log"
+  },
+  "exhaustive_matcher": {
+   "stage": "exhaustive_matcher",
+   "seconds": 10.0,
+   "peak_memory_mb": 1819.6,
+   "returncode": 0,
+   "log": "D:\\heritage3d-data\\runs\\Ark_HM_393_HI\\L5\\logs\\exhaustive_matcher.log"
+  },
+  "mapper": {
+   "stage": "mapper",
+   "seconds": 3.3,
+   "peak_memory_mb": 69.4,
+   "returncode": 0,
+   "log": "D:\\heritage3d-data\\runs\\Ark_HM_393_HI\\L5\\logs\\mapper.log"
+  },
+  "image_undistorter": {
+   "stage": "image_undistorter",
+   "seconds": 0.2,
+   "peak_memory_mb": 50.7,
+   "returncode": 0,
+   "log": "D:\\heritage3d-data\\runs\\Ark_HM_393_HI\\L5\\logs\\image_undistorter.log"
+  },
+  "InterfaceCOLMAP": {
+   "stage": "InterfaceCOLMAP",
+   "seconds": 0.1,
+   "peak_memory_mb": 3.8,
+   "returncode": 0,
+   "log": "D:\\heritage3d-data\\runs\\Ark_HM_393_HI\\L5\\logs\\InterfaceCOLMAP.log"
+  },
+  "DensifyPointCloud": {
+   "stage": "DensifyPointCloud",
+   "seconds": 48.5,
+   "peak_memory_mb": 218.6,
+   "returncode": 0,
+   "log": "D:\\heritage3d-data\\runs\\Ark_HM_393_HI\\L5\\logs\\DensifyPointCloud.log"
+  },
+  "ReconstructMesh": {
+   "stage": "ReconstructMesh",
+   "seconds": 15.9,
+   "peak_memory_mb": 240.6,
+   "returncode": 0,
+   "log": "D:\\heritage3d-data\\runs\\Ark_HM_393_HI\\L5\\logs\\ReconstructMesh.log"
+  },
+  "TextureMesh": {
+   "stage": "TextureMesh",
+   "seconds": 18.2,
+   "peak_memory_mb": 581.0,
+   "returncode": 0,
+   "log": "D:\\heritage3d-data\\runs\\Ark_HM_393_HI\\L5\\logs\\TextureMesh.log"
+  }
+ },
+ "sparse_models": {
+  "0": {
+   "cameras": 1,
+   "images": 17,
+   "registered_images": 17,
+   "points": 2393,
+   "observations": 8078,
+   "mean_track_length": 3.375679,
+   "mean_observations_per_image": 475.176471,
+   "mean_reprojection_error_px": 0.196989
+  },
+  "1": {
+   "cameras": 1,
+   "images": 26,
+   "registered_images": 26,
+   "points": 3627,
+   "observations": 12477,
+   "mean_track_length": 3.440033,
+   "mean_observations_per_image": 479.884615,
+   "mean_reprojection_error_px": 0.20604
+  }
+ },
+ "finished": "2026-11-03T10:36:54",
+ "dense_from_model": "1",
+ "outputs_bytes": {
+  "sparse": 2899264,
+  "scene_dense.mvs": 195926,
+  "scene_dense.ply": 9614233,
+  "scene_dense_mesh.ply": 4011448,
+  "scene_dense_texture.ply": 9289630,
+  "scene_dense_texture0.png": 1714915
+ },
+ "conditions": {
+  "slept_s": 0,
+  "battery_s": 0,
+  "longest_unplugged_s": 0
+ }
+}
