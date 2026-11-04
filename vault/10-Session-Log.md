@@ -248,4 +248,6 @@ Newest first. Every session must add an entry (see `CLAUDE.md`).
 - Team asked how to shoot photos of themselves for a scanned character: guidance given (about 120 photos each); no photos received, nothing built, the no-photos decision stands.
 - Team asked to push everything so far, then run the last 4 artifacts. `git rev-list` → no unpushed commits. Committed 393's finished L2–L5 run files, logs and plots and the Excel. Left out 393's partial L1 run file and L1 logs, which the redo overwrites. `build_status_workbook.py` → 36 done, 1 in progress, 3 queued, 41 not run; museum 26 yes, 4 pending. `pytest -q` → 59 passed. `check_env.py` → OK.
 
-**Next action** — when the last round finishes: `batch.log` check, compare, `summarize_round.py --count 40 --name round7`, export, `build_status_workbook.py`, vault, commit.
+- Batch finished 06:14: 16 ok, 0 failed. `compare_levels.py` on the four artifacts; `summarize_round.py --count 40 --name round7`; `export_glb.py --artifacts Ark_HM_393_HI Ark_HM_1292_HI Ark_HM_1288_HI Ark_HM_209_HI` → exit 0, manifest 30. Browser pane: 30 / 30 loaded, no console errors, close-ups of Nos. 27–30 checked. An odd top-down view of No. 27 came from my test teleporting onto the plinth, not from the model. `build_status_workbook.py` → 40 done, 41 not run; museum 30. `pytest -q` → 59 passed. See [[07-Results]].
+
+**Next action** — analyse the full 40-artifact results for the report.

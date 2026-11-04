@@ -372,7 +372,7 @@ Checked all five in the 3D hall (browser pane): textured, upright, placards No. 
 
 ## Round 7, part 1 — rank 35 (`Ark_HM_658_HI`) — 2026-11-03
 
-Same frozen config, `run_batch.py --count 40 --clean` from 08:43; stopped by the team at 12:38, so the round is incomplete. `Ark_HM_393_HI` is not analysed until its L1 is redone (its finished L2–L5 run files are committed). All 36 so far: `experiments/results/round7_all.csv`, `round7_summary.csv`, `experiments/plots/round7_summary.png` (to be rewritten when the round ends).
+Same frozen config, `run_batch.py --count 40 --clean` from 08:43; stopped by the team at 12:38, so the round is incomplete. Finished in part 2 below. The medians in this section are for the first 36 only.
 
 | Level | Images | Registered | Total time | Peak RAM | Cloud F@0.002 R | Chamfer |
 |---|---|---|---|---|---|---|
@@ -385,6 +385,56 @@ Same frozen config, `run_batch.py --count 40 --clean` from 08:43; stopped by the
 **Measured:** clean at every level and best at L4. One of the few artifacts that stays above 0.95 at L5. Medians across 36: L1 0.883, L2 0.924, L3 0.965, **L4 0.984**, L5 0.583; cloud F < 0.5 on 3 / 3 / 4 / 4 / 15 of 36.
 
 Museum model (L3): 418,355 → 99,999 triangles, 15.7 → 2.9 MB, surface F 0.994 → 0.994, chamfer 0.00064 R. Checked in the 3D hall as No. 26: textured, upright, no console errors. Museum now **26 exhibits, 77 MB**.
+
+## Round 7, part 2 — ranks 36–39, main set complete — 2026-11-04
+
+Same frozen config, `run_batch.py --count 40 --clean`, 00:51–06:14 (5 h 23 min), 16 / 16 runs ok. `Ark_HM_393_HI` L2–L5 ran on 2026-11-03, its L1 was redone here. All 40: `experiments/results/round7_all.csv`, `round7_summary.csv`, `experiments/plots/round7_summary.png`.
+
+| Artifact | Level | Images | Registered | Total time | Peak RAM | Cloud F@0.002 R | Chamfer |
+|---|---|---|---|---|---|---|---|
+| `Ark_HM_393_HI` | L1 | 362 | 362 | 71.0 min | 4.6 GB | 0.881 | 0.00103 R |
+| | L2 | 182 | 182 | 34.0 min | 2.3 GB | 0.924 | 0.00091 R |
+| | L3 | 92 | 92 | 13.8 min | 2.0 GB | 0.967 | 0.00078 R |
+| | L4 | 47 | 47 | 8.1 min | 2.0 GB | **0.985** | 0.00076 R |
+| | L5 | 26 | 26 | 1.7 min | 2.0 GB | 0.876 | 0.00138 R |
+| `Ark_HM_1292_HI` | L1 | 362 | 362 | 35.2 min | 4.4 GB | 0.853 | 0.00135 R |
+| | L2 | 182 | 182 | 14.9 min | 2.2 GB | 0.907 | 0.00108 R |
+| | L3 | 92 | 92 | 6.6 min | 2.0 GB | 0.952 | 0.00092 R |
+| | L4 | 47 | 47 | 2.2 min | 2.0 GB | **0.979** | 0.00084 R |
+| | L5 | 26 | 13 | 0.1 min | 2.0 GB | 0.000 (no dense cloud) | – |
+| `Ark_HM_1288_HI` | L1 | 362 | 362 | 57.6 min | 4.6 GB | 0.944 | 0.00065 R |
+| | L2 | 182 | 182 | 23.6 min | 2.4 GB | 0.972 | 0.00057 R |
+| | L3 | 92 | 92 | 11.0 min | 2.0 GB | 0.990 | 0.00055 R |
+| | L4 | 47 | 47 | 6.4 min | 2.0 GB | **0.997** | 0.00056 R |
+| | L5 | 26 | 26 | 2.7 min | 2.0 GB | 0.993 | 0.00069 R |
+| `Ark_HM_209_HI` | L1 | 362 | 362 | 48.4 min | 4.6 GB | 0.903 | 0.00096 R |
+| | L2 | 182 | 182 | 20.7 min | 2.3 GB | 0.937 | 0.00086 R |
+| | L3 | 92 | 92 | 9.6 min | 2.0 GB | 0.968 | 0.00081 R |
+| | L4 | 47 | 47 | 4.2 min | 2.0 GB | **0.991** | 0.00071 R |
+| | L5 | 26 | 26 | 1.0 min | 2.0 GB | 0.558 | 0.01853 R |
+
+All four are best at L4. In `Ark_HM_1292_HI` L5, SfM split the images into models of 9 and 13 and no dense cloud was produced (`preview_cloud.py` raised FileNotFoundError; the batch carried on as designed).
+
+**Measured, all 40 artifacts:**
+
+| Level | Images | Median total time | Median peak RAM | Median cloud F@0.002 R | Median mesh F@0.002 R | Cloud F < 0.5 |
+|---|---|---|---|---|---|---|
+| L1 | 362 | 55.4 min | 4.4 GB | 0.883 | 0.984 | 3 / 40 |
+| L2 | 182 | 22.4 min | 2.3 GB | 0.925 | 0.982 | 3 / 40 |
+| L3 | 92 | 9.7 min | 2.0 GB | 0.965 | 0.989 | 4 / 40 |
+| L4 | 47 | 3.9 min | 2.0 GB | **0.984** | 0.988 | 4 / 40 |
+| L5 | 26 | 1.0 min | 2.0 GB | 0.583 | 0.580 | 16 / 40 |
+
+Museum models (L3), full → about 100,000 triangles:
+
+| No. | Artifact | Full triangles | Size | Surface F (full → museum) | Chamfer |
+|---|---|---|---|---|---|
+| 27 | `Ark_HM_393_HI` | 421,764 | 15.5 → 2.9 MB | 0.985 → 0.984 | 0.00078 R |
+| 28 | `Ark_HM_1292_HI` | 271,806 | 10.0 → 2.9 MB | 0.979 → 0.979 | 0.00084 R |
+| 29 | `Ark_HM_1288_HI` | 519,552 | 19.0 → 2.9 MB | 0.991 → 0.991 | 0.00073 R |
+| 30 | `Ark_HM_209_HI` | 463,004 | 17.8 → 2.9 MB | 0.965 → 0.965 | 0.00176 R |
+
+Museum now **30 of the 40 main-set artifacts, 88.5 MB**. Not exhibited (L3 mesh F < 0.95): 1260B, 795, 341, 31, 797, 38, BEY_1415, 1260C, 792, 703. Checked in the browser pane: 30 / 30 loaded in 2.7 s, page ready 1.2 s, no console errors, Nos. 27–30 textured and upright. Seen from straight above, No. 27 shows a small gap inside the bottom of the pot beside its white label, where the plinth colour shows through (to verify in a normal browser).
 
 ## Museum gate scene — rendering cost — 2026-11-03
 

@@ -13,7 +13,7 @@
 
 - [x] Avatars → no photos for now: stylized figures stay (team, 2026-11-03). A scan needs each person's agreement and a rigging tool if revisited.
 - [ ] Team: check with Prof. Singh that showing the PDEU gate and logo is fine, especially if the museum goes public.
-- [ ] Museum needs **≥ 30 exhibits** (team minimum, 2026-11-01). Now 26 exhibits from 36 artifacts (L3, mesh F ≥ 0.95). 30 needs all 4 remaining artifacts to pass; at the current rate the 40 give ≈ 29 (estimate) — likely short of 30. Options: exhibit a fallback level when L3 fails the rule; reconstruct some of the 41 cut-off artifacts for the museum only (outside the experiment); lower the bar. Team decision after round 3.
+- [x] Museum needs **≥ 30 exhibits** (team minimum, 2026-11-01). Closed 2026-11-04: all four last artifacts passed the unchanged rule (L3, mesh F ≥ 0.95), giving exactly 30 of the 40. No fallback level, extra artifacts or lower bar needed.
 - [ ] Where to host the museum (GitHub Pages from this repo, university server, or local demo only)? Team decision; GLBs are ~4 MB each.
 - [ ] Why does OpenMVS seam leveling blacken faces on CHSD renders? (hypothesis: pure-black background pixels at silhouettes pull the colour correction to black). Not needed for the experiment; museum export avoids it.
 - [ ] Low-texture objects (`Ark_HM_1260B_HI`, `Ark_HM_38_HI`) fail at every level: report as a limitation only, or also measure texture per artifact and relate it to F? (hypothesis: too few SIFT matches)
