@@ -97,7 +97,8 @@ def summary_sheet(sheet, rows, museum):
         ("Artifacts", None),
         ("In CHSD", f"=COUNTA({col('artifact')})"),
         ("Main set (never cut off in the sample views)", f'=COUNTIF({col("set")},"Main")'),
-        ("Cut off by the frame (not run)", f'=COUNTIF({col("set")},"Cut off")'),
+        ("Cut off by the frame", f'=COUNTIF({col("set")},"Cut off")'),
+        ("Cut off, run at some levels (separate from the main set)", f'=COUNTIF({col("status")},"Partly run")'),
         ("Done at all five levels", f'=COUNTIF({col("status")},"Done")'),
         ("In progress", f'=COUNTIF({col("status")},"In progress")'),
         ("Queued", f'=COUNTIF({col("status")},"Queued")'),
@@ -114,13 +115,14 @@ def summary_sheet(sheet, rows, museum):
         sheet[f"B{r}"].font = plain
 
     sheet.append([])
-    sheet.append(["Per level, all results so far", "Runs", "Median F", "Lowest F", "F below 0.5"])
+    sheet.append(["Per level, main set", "Runs", "Median F", "Lowest F", "F below 0.5"])
     head = sheet.max_row
     for c in "ABCDE":
         sheet[f"{c}{head}"].font = Font(name=FONT, bold=True, color="FFFFFF")
         sheet[f"{c}{head}"].fill = HEADER_FILL
+    main_end = sum(r["set"] == "Main" for r in rows) + 1  # rows are sorted with the main set first
     for level in LEVELS:
-        c = col(level)
+        c = f"'All artifacts'!${LETTER[level]}$2:${LETTER[level]}${main_end}"
         sheet.append([level, f"=COUNT({c})", f"=MEDIAN({c})", f"=MIN({c})", f'=COUNTIF({c},"<0.5")'])
         r = sheet.max_row
         for letter in "ABCDE":
@@ -134,7 +136,7 @@ def summary_sheet(sheet, rows, museum):
         f"Exhibit rule: {museum['level']} mesh F (vertices, from the evaluation) at least {museum['min_mesh_f']}. Every exhibit shows {museum['level']}.",
         "Museum model F is measured on the final museum model's surface, so it differs a little from the other columns.",
         "L3 photos used counts the photos in the sparse model that was densified.",
-        "Cut off: the object touches or leaves the image edge in some of the 20 sample views (dataset_inspection.json); not reconstructed.",
+        "Cut off: the object touches or leaves the image edge in some of the 20 sample views (dataset_inspection.json). Those cut off in at most 30% were run at L3 as a separate set; the others were not reconstructed.",
         "Every value comes from the run files in experiments/results. Do not edit by hand: the file is rewritten by the script.",
     ]
     sheet.append([])

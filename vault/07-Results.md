@@ -436,6 +436,44 @@ Museum models (L3), full → about 100,000 triangles:
 
 Museum now **30 of the 40 main-set artifacts, 88.5 MB**. Not exhibited (L3 mesh F < 0.95): 1260B, 795, 341, 31, 797, 38, BEY_1415, 1260C, 792, 703. Checked in the browser pane: 30 / 30 loaded in 2.7 s, page ready 1.2 s, no console errors, Nos. 27–30 textured and upright. Seen from straight above, No. 27 shows a small gap inside the bottom of the pot beside its white label, where the plinth colour shows through (to verify in a normal browser).
 
+## Cut-off trial — `Ark_HM_640_HI` at L3 — 2026-11-04
+
+Outside the 40-artifact main set, same frozen config. Cut off by the frame in 30% of the 20 sample views, the most of the 19 artifacts cut off in at most 30%.
+
+| Images | Registered | Total time | Peak RAM | Cloud F@0.002 R | Mesh-vertex F@0.002 R | Cloud chamfer |
+|---|---|---|---|---|---|---|
+| 92 | 92 | 8.5 min | 2.0 GB | 0.952 | 0.970 | 0.00091 R |
+
+**Measured:** one model, all images registered, above the museum rule (mesh F ≥ 0.95). The preview looks complete by eye. One artifact at one level only. The reference comes from depth maps with the same framing, so F may not fully penalise parts outside the frame (hypothesis). Not exported to the museum.
+
+## Cut-off set at L3 — 19 artifacts — 2026-11-05
+
+Outside the 40-artifact main set, same frozen config, L3 (92 images), order in `configs/artifact_order_cutoff.json`. Batch 2026-11-04 22:52 to 2026-11-05 01:52 (18 runs, 0 failed), plus the trial above. Files: `experiments/results/cutoff_l3_all.csv`, `cutoff_l3_summary.csv`, `experiments/plots/cutoff_l3_summary.png`.
+
+| Artifact | Cut-off views | Images in dense model | Total time | Cloud F@0.002 R | Mesh F@0.002 R | Exhibit rule (≥ 0.95) |
+|---|---|---|---|---|---|---|
+| `Ark_HM_388_HI` | 5% | 92 | 11.8 min | 0.957 | 0.972 | Pass |
+| `Ark_HM_724_HI` | 5% | 92 | 10.9 min | 0.960 | 0.982 | Pass |
+| `Ark_HM_758_HI` | 5% | 92 | 12.1 min | 0.950 | 0.974 | Pass |
+| `Ark_HM_1247_HI` | 10% | 42 of 92 (models 42 + 38) | 2.2 min | 0.657 | 0.652 | **Fail** |
+| `Ark_HM_1282_HI` | 10% | 92 | 9.8 min | 0.968 | 0.992 | Pass |
+| `Ark_HM_173_HI` | 10% | 92 | 9.2 min | 0.953 | 0.990 | Pass |
+| `Ark_HM_217_HI` | 10% | 92 | 9.0 min | 0.928 | 0.945 | **Fail** |
+| `Ark_HM_501_HI` | 10% | 55 of 92 (models 55 + 31) | 2.7 min | 0.571 | 0.552 | **Fail** |
+| `Ark_HM_539_HI` | 10% | 92 | 9.3 min | 0.945 | 0.990 | Pass |
+| `Ark_HM_706_HI` | 10% | 92 | 9.0 min | 0.953 | 0.989 | Pass |
+| `SV_4337_HI` | 10% | 92 | 6.8 min | 0.969 | 0.994 | Pass |
+| `Ark_HM_110_HI` | 15% | 92 | 4.6 min | 0.955 | 0.992 | Pass |
+| `Ark_HM_688_HI` | 15% | 92 | 12.8 min | 0.977 | 0.993 | Pass |
+| `Ark_HM_358_HI` | 20% | 92 | 12.2 min | 0.958 | 0.986 | Pass |
+| `pipe1_HI` | 20% | 59 of 92 (models 59 + 31) | 2.9 min | 0.921 | 0.929 | **Fail** |
+| `shell_bead_HI` | 20% | 90 of 92 | 3.6 min | 0.878 | 0.899 | **Fail** |
+| `Ark_HM_791_HI` | 25% | 92 | 11.9 min | 0.979 | 0.993 | Pass |
+| `Ark_HM_XXb_HI` | 25% | 92 | 8.8 min | 0.983 | 0.997 | Pass |
+| `Ark_HM_640_HI` | 30% | 92 | 8.5 min | 0.952 | 0.970 | Pass |
+
+**Measured:** 14 of 19 pass the rule. The five failures do not track the cut-off share: three split into two SfM models, and the failures sit at 10–20% while everything at 25–30% passes. Previews checked by eye. The hole in `Ark_HM_388_HI` and the broken rim of `Ark_HM_758_HI` are in the source photos, not reconstruction damage. The same caveat as the trial applies: the reference shares the framing, so F may not fully penalise parts outside the frame (hypothesis). L3 only, so no quality-vs-level comparison for this set. Not in the museum yet.
+
 ## Museum gate scene — rendering cost — 2026-11-03
 
 Browser pane, 800×675, pixel ratio 1.25, batch running at the same time: first gate-only version 60 fps, 67,368 triangles. **With the street: 60 fps, 43 draw calls, 246,406 triangles at the start point**; page ready 3.3 s, 25 exhibits loaded in 6.9 s (cached). Full-screen not measured. Page-ready time varies with the batch: 3.0–3.3 s in most loads, once 17 s while a dense step was using the CPU, 1.4 s with no batch running.

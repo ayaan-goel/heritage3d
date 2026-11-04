@@ -17,19 +17,21 @@ def artifact_status(name, rank, rows, cut_off_fraction, exhibit, min_mesh_f, mus
     if done:
         status = "Done"
     elif rows:
-        status = "In progress"
+        status = "In progress" if rank is not None else "Partly run"
     else:
         status = "Not run" if rank is None else "Queued"
 
     if exhibit:
         museum, reason = "Yes", ""
-    elif rank is None:
+    elif rank is None and not shown:
         museum = "No"
         reason = f"Outside the main set: object cut off by the frame in {cut_off_fraction:.0%} of the sample views"
-    elif not done:
+    elif rank is not None and not done:
         museum, reason = "Pending", "Reconstruction not finished"
     elif mesh_f >= min_mesh_f:
         museum, reason = "Pending", "Passes the exhibit rule; export not run yet"
+        if rank is None:
+            reason = f"Passes the exhibit rule; cut off in {cut_off_fraction:.0%} of the sample views, team to decide"
     else:
         museum = "No"
         reason = (f"{museum_level} mesh F {mesh_f:.3f} is below {min_mesh_f}; "

@@ -30,3 +30,11 @@ def test_cut_off_artifact_is_not_run():
     row = artifact_status("a", None, [], 0.15, None, 0.95)
     assert (row["set"], row["status"], row["museum"]) == ("Cut off", "Not run", "No")
     assert "15%" in row["reason"]
+
+
+def test_cut_off_artifact_run_at_the_museum_level():
+    passed = artifact_status("a", None, rows(levels=("L3",)), 0.15, None, 0.95)
+    assert (passed["set"], passed["status"], passed["museum"]) == ("Cut off", "Partly run", "Pending")
+    assert "15%" in passed["reason"]
+    failed = artifact_status("a", None, rows(mesh_f=0.5, levels=("L3",)), 0.15, None, 0.95)
+    assert failed["museum"] == "No" and "0.500 is below 0.95" in failed["reason"]
