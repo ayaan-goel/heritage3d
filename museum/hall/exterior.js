@@ -6,7 +6,12 @@ import { GALLERY_H, GALLERY_W, ROTUNDA_R } from "./layout.js";
 
 export const FRONT = -48;      // z of the entrance front
 const PORCH = 3.6;             // how far the portico stands forward of it
-const PORCH_W = 13;            // its half width
+export const PORCH_W = 13;     // its half width
+export const PORCH_Y = 0.9;    // height of its floor above the ground
+export const STEPS_TOP = PORCH + 0.5;     // from the front wall to the top step's edge
+export const STEPS_FOOT = STEPS_TOP + 1.2;  // and to the bottom step's edge
+export const COLUMN_Z = FRONT + PORCH - 0.5;
+export const COLUMN_X = [-10, -6, -2, 2, 6, 10];
 const WALL = 0.4;              // walls and roofs stand this far outside the rooms
 const DRUM_R = ROTUNDA_R + 0.6, DRUM_H = 13;
 
@@ -72,14 +77,13 @@ function rotunda(add, z) {
 }
 
 function portico(add, box, post) {
-  const zf = FRONT + PORCH, plinth = 0.9, shaft = 5.6, beamTop = plinth + shaft + 1.1;
+  const zf = FRONT + PORCH, plinth = PORCH_Y, shaft = 5.6, beamTop = plinth + shaft + 1.1;
   for (let i = 0; i < 3; i++) {  // steps up to the columns
-    const y = plinth - (i * plinth) / 3, out = PORCH + 0.5 + i * 0.6;
+    const y = plinth - (i * plinth) / 3, out = STEPS_TOP + i * 0.6;
     add("outStone", box(-PORCH_W - 0.4 - i * 0.6, PORCH_W + 0.4 + i * 0.6, 0, y, FRONT, FRONT + out));
   }
-  for (let i = 0; i < 6; i++) {
-    const x = -10 + i * 4;
-    add("outStone", post(x, zf - 0.5, 0.48, 0.38, shaft, plinth));
+  for (const x of COLUMN_X) {
+    add("outStone", post(x, COLUMN_Z, 0.48, 0.38, shaft, plinth));
     add("outStone", box(x - 0.6, x + 0.6, plinth, plinth + 0.3, zf - 1.1, zf + 0.1));
   }
   add("outStone", box(-PORCH_W, PORCH_W, plinth + shaft, beamTop, FRONT, zf));

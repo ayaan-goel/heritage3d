@@ -1,13 +1,13 @@
 // The university's main gate and the street in front of it, where a visit starts: an outdoor scene of its own,
 // modelled by hand from reference photos (sizes estimated from them, not surveyed; no photo is used as a
-// texture). Walking into the yellow arrow enters the museum.
+// texture). The gates stand open: visitors walk up the drive, and the yellow arrow at the museum's doors enters.
 // Visitors stand south of the gate (+z) and look north (-z). Metres, y up, the gate line is z = 0. From the gate
 // southwards: granite forecourt, cobbled plaza where the road passes, service road, median, main road, footpath
 // and fence, open scrub, and the elevated metro viaduct. North of the gate a drive leads to the museum building
 // (exterior.js), which is invented for this view.
 import * as THREE from "three";
 import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
-import { EXTERIOR_MATERIALS, FRONT, buildExterior } from "./exterior.js";
+import { COLUMN_X, COLUMN_Z, EXTERIOR_MATERIALS, FRONT, PORCH_W, PORCH_Y, STEPS_FOOT, STEPS_TOP, buildExterior } from "./exterior.js";
 import { BODY } from "./layout.js";
 import { buildPortal } from "./portal.js";
 import * as T from "./textures.js";
@@ -18,8 +18,8 @@ const HALF_W = 8;         // canopy half width
 const CANOPY = { y0: 4.7, y1: 5.8, depth: 2.2 };
 const BLOCK = { w: 1.2, h: 2.1 };   // half width and height of the centre block with the university's name
 const PIER_X = 5.5;       // inner face of the piers carrying the canopy
-const PORTAL = { x: 0, z: 3.2, r: 1.1 };  // the arrow; stepping inside this circle enters the museum
-const ARROW_Y = 3;        // height of the arrow's centre: above the block, against the open sky
+const PORTAL = { x: 0, z: FRONT + 1.6, r: 1.1 };  // the arrow; stepping inside this circle enters the museum
+const ARROW_Y = 3;        // height of the arrow's centre above the portico's floor
 const FAR = 150;          // how far the street runs either way
 
 const PLAZA_X = 26;       // half width of the forecourt and the cobbled plaza
@@ -31,6 +31,9 @@ const VIADUCT = { z0: 56, z1: 66, y0: 9.5, y1: 11 };
 const WALK = { x: 58, zGate: 1.85, zBikes: 3.1, zMax: FENCE - 0.4 };
 const DRIVE_END = -38;    // the drive opens onto the paved court in front of the museum
 const VIEW_Z = 19;        // where a visit starts; trees stay out of the view from there through the gate
+const LEAF = 0.12;        // thickness of an open gate leaf against its pier; the drive is narrower by this
+const COURT = 20;         // half width of the walkable court in front of the museum
+const CAMPUS = { x: -13, z: -40 };  // the campus block's corner on the court's side
 
 function random(seed) {
   let s = seed;
@@ -398,14 +401,14 @@ export function buildGate({ logo, aniso, environment, plan }) {
     for (const x of [2.2, 4.2]) {
       add("white", new THREE.CircleGeometry(0.1, 16).rotateX(Math.PI / 2).translate(side * x, CANOPY.y0 - 0.025, 0.9));
     }
-    // closed sliding gates either side of the block: maroon frame with vertical bars
-    const a = side < 0 ? -PIER_X : BLOCK.w, b = side < 0 ? -BLOCK.w : PIER_X;
-    add("maroon", box(a, b, 0.08, 0.2, -0.05, 0.05));
-    add("maroon", box(a, b, 1.95, 2.07, -0.05, 0.05));
-    add("maroon", box(a, b, 1.02, 1.08, -0.04, 0.04));
-    add("maroon", box(a, a + 0.1, 0.08, 2.07, -0.05, 0.05));
-    add("maroon", box(b - 0.1, b, 0.08, 2.07, -0.05, 0.05));
-    for (let x = a + 0.2; x < b - 0.1; x += 0.13) add("maroon", box(x - 0.012, x + 0.012, 0.2, 1.95, -0.012, 0.012));
+    // the gates, swung open against the drive: maroon frame with vertical bars
+    const x = side * (PIER_X - LEAF / 2), z0 = -(PIER_X - BLOCK.w) - 1.5, z1 = -1.5;
+    add("maroon", box(x - 0.05, x + 0.05, 0.08, 0.2, z0, z1));
+    add("maroon", box(x - 0.05, x + 0.05, 1.95, 2.07, z0, z1));
+    add("maroon", box(x - 0.04, x + 0.04, 1.02, 1.08, z0, z1));
+    add("maroon", box(x - 0.05, x + 0.05, 0.08, 2.07, z0, z0 + 0.1));
+    add("maroon", box(x - 0.05, x + 0.05, 0.08, 2.07, z1 - 0.1, z1));
+    for (let z = z0 + 0.2; z < z1 - 0.1; z += 0.13) add("maroon", box(x - 0.012, x + 0.012, 0.2, 1.95, z - 0.012, z + 0.012));
   }
   add("block", box(-BLOCK.w, BLOCK.w, 0, BLOCK.h, -0.3, 0.3));
 
@@ -520,6 +523,8 @@ export function buildGate({ logo, aniso, environment, plan }) {
 
   // ---- the museum at the end of the drive, and the sign pointing to it ------------------------------------
   const museum = buildExterior(add, plan, box, post);
+  for (const x of COLUMN_X) solid(x, COLUMN_Z, 0.6);
+  solid(0.02, 0, BLOCK.w);  // slightly off centre, so walking straight at the centre block slides around it
   add("slate", box(-11.6, -11.45, 0, 3.4, -22.1, -21.95));
   add("slate", box(-7.55, -7.4, 0, 3.4, -22.1, -21.95));
   add("slate", box(-11.75, -7.25, 1.3, 3.45, -22.06, -22));
@@ -617,28 +622,51 @@ export function buildGate({ logo, aniso, environment, plan }) {
   ));
 
   const arrow = buildPortal({ ...PORTAL, arrowY: ARROW_Y, arrowScale: 1.45, aniso });
+  arrow.group.position.y = PORCH_Y;
   scene.add(arrow.group);
 
-  // the street is open ground bounded by the gate line, the parked bikes, the fence and the ends of the view;
+  // walkable: the street (bounded by the gate line, the parked bikes, the fence and the ends of the view), the
+  // gateway either side of the centre block, the drive, the court and the portico
+  const drive = PIER_X - LEAF - BODY;
+  const onStreet = (x, z) => Math.abs(x) <= WALK.x && z <= WALK.zMax && z >= (x > 11.6 ? WALK.zBikes : WALK.zGate);
+  const onDrive = (x, z) => Math.abs(x) <= drive && z <= WALK.zGate + 0.1 && z >= DRIVE_END - 0.5;
+  const onPortico = (x, z) => Math.abs(x) <= PORCH_W - BODY && z >= FRONT + BODY && z <= FRONT + STEPS_FOOT + 0.1;
+  const onCourt = (x, z) => Math.abs(x) <= COURT && z <= DRIVE_END && z >= FRONT + STEPS_FOOT
+    && !(x < CAMPUS.x + BODY && z > CAMPUS.z - BODY);
+  const free = (x, z) => onStreet(x, z) || onDrive(x, z) || onPortico(x, z) || onCourt(x, z);
+
   // posts and bollards push the visitor out sideways, as the pedestals do in the hall
-  function move(x, z, dx, dz) {
-    let nx = Math.max(-WALK.x, Math.min(WALK.x, x + dx)), nz = z + dz;
+  function pushOut(x, z) {
     for (const o of obstacles) {
-      const ox = nx - o.x, oz = nz - o.z, d = Math.hypot(ox, oz);
+      const ox = x - o.x, oz = z - o.z, d = Math.hypot(ox, oz);
       if (d < o.r && d > 1e-6) {
-        nx = o.x + (ox / d) * o.r;
-        nz = o.z + (oz / d) * o.r;
+        x = o.x + (ox / d) * o.r;
+        z = o.z + (oz / d) * o.r;
       }
     }
-    const zMin = nx > 11.6 ? WALK.zBikes : WALK.zGate;
-    return [Math.max(-WALK.x, Math.min(WALK.x, nx)), Math.max(zMin, Math.min(WALK.zMax, nz))];
+    return [x, z];
+  }
+
+  function move(x, z, dx, dz) {
+    for (const [ax, az] of [[dx, dz], [dx, 0], [0, dz]]) {
+      const p = pushOut(x + ax, z + az);
+      if (free(...p)) return p;
+    }
+    return [x, z];
+  }
+
+  // ground height: flat everywhere but the portico's steps, which are a slope to walk on
+  function height(x, z) {
+    if (Math.abs(x) > PORCH_W + 1.6 || z > FRONT + STEPS_FOOT) return 0;
+    if (z < FRONT) return 0;
+    return PORCH_Y * Math.min(1, (FRONT + STEPS_FOOT - z) / (STEPS_FOOT - STEPS_TOP));
   }
 
   return {
     scene,
     portal: PORTAL,
     spawn: { x: 0, z: VIEW_Z, yaw: 0, pitch: 0.06 },
-    move,
+    move, height,
     atPortal: (x, z) => Math.hypot(x - PORTAL.x, z - PORTAL.z) < PORTAL.r - BODY * 0.4,
     distance: (x, z) => Math.hypot(x - PORTAL.x, z - PORTAL.z),
     animate: arrow.animate,

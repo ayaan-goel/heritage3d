@@ -496,6 +496,8 @@ Checked: a simulated walk over `planHall(30, 14)` from the entrance up the stair
 
 The gate scene now shows the museum's exterior at the end of the drive (`museum/hall/exterior.js`). Measured in the app's browser pane, visible, 746 × 630 px: 60 fps from the start spot (0.31 M triangles, 51 draw calls), close to the gate and from along the street. A full-screen window has not been measured.
 
+Later the same day the gates were opened and the drive made walkable, with the arrow moved to the museum's doors. Triangles drawn are unchanged (0.31 M), but the frame rate was **not** re-measured, because the browser pane was hidden for that test (it dropped to about 5 fps). Start spot to doors is about 63 m: about 29 s walking and 14 s with Shift, calculated from the walking speeds, not timed.
+
 ## Museum gate scene — rendering cost — 2026-11-03
 
 Browser pane, 800×675, pixel ratio 1.25, batch running at the same time: first gate-only version 60 fps, 67,368 triangles. **With the street: 60 fps, 43 draw calls, 246,406 triangles at the start point**; page ready 3.3 s, 25 exhibits loaded in 6.9 s (cached). Full-screen not measured. Page-ready time varies with the batch: 3.0–3.3 s in most loads, once 17 s while a dense step was using the CPU, 1.4 s with no batch running.

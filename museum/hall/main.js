@@ -248,7 +248,7 @@ function travel(place) {
   }, FADE_MS);
 }
 
-const floorAt = (x, z) => (outside ? 0 : plan.height(x, z));
+const floorAt = (x, z) => (outside ? gate : plan).height(x, z);
 
 const fwd = new THREE.Vector3(), toward = new THREE.Vector3();
 function findTarget() {  // the exhibit in reach that the visitor is looking at
@@ -652,7 +652,8 @@ renderer.setAnimationLoop(() => {
   if (outside) {
     gate.animate(clock.elapsedTime);
     if (mode === "walk" && gate.atPortal(me.x, me.z)) travel(placeInHall);
-    else if (mode === "walk" && gate.distance(me.x, me.z) < 9) hint = "Walk into the yellow arrow to enter the museum";
+    else if (mode === "walk" && gate.distance(me.x, me.z) < 14) hint = "Walk into the yellow arrow to enter the museum";
+    else if (mode === "walk" && me.z > 0) hint = "Walk through the gate and up the drive to the museum · Shift to go faster";
   } else {
     backToGate.animate(clock.elapsedTime);
     const away = Math.hypot(me.x - plan.exit.x, me.z - plan.exit.z);
@@ -684,6 +685,7 @@ window.hall = {
   }),
   gate,
   where: () => (outside ? "gate" : "hall"),
+  position: () => ({ x: +me.x.toFixed(2), z: +me.z.toFixed(2), floor: +floorAt(me.x, me.z).toFixed(2) }),
   view: () => ({ third, behind: +behind.toFixed(2), wearing: CHARACTERS[wearing].name, figure: figure.group.visible }),
   teleport(x, z, yaw = me.yaw, pitch = me.pitch) {
     placeInHall();
