@@ -98,7 +98,7 @@ scene.add(buildHall(plan, {
   upperBoard: upperZone && upperBoardCanvas(upstairs, numbers(upperZone)),
 }));
 
-const gate = buildGate({ logo: logoReady, aniso, environment: scene.environment });
+const gate = buildGate({ logo: logoReady, aniso, environment: scene.environment, plan });
 const backToGate = buildPortal({ ...plan.exit, arrowY: 2.3, arrowScale: 1.1, aniso });
 scene.add(backToGate.group);
 

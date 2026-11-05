@@ -492,6 +492,10 @@ Hall ready in 1.54 s and all 44 models loaded in 4.82 s, from localhost with fil
 
 Checked: a simulated walk over `planHall(30, 14)` from the entrance up the stairs to both ends of the upper gallery (never stuck, height changes smoothly) and five wall tests (all blocked); live in the pane, the W key climbs the stairs, third person follows on the steps, the close-up on No. 31 opens at the right height with its panel, list view shows 44. Not checked: walking with real pointer lock in a normal browser.
 
+## Museum building seen through the gate — rendering cost — 2026-11-05
+
+The gate scene now shows the museum's exterior at the end of the drive (`museum/hall/exterior.js`). Measured in the app's browser pane, visible, 746 × 630 px: 60 fps from the start spot (0.31 M triangles, 51 draw calls), close to the gate and from along the street. A full-screen window has not been measured.
+
 ## Museum gate scene — rendering cost — 2026-11-03
 
 Browser pane, 800×675, pixel ratio 1.25, batch running at the same time: first gate-only version 60 fps, 67,368 triangles. **With the street: 60 fps, 43 draw calls, 246,406 triangles at the start point**; page ready 3.3 s, 25 exhibits loaded in 6.9 s (cached). Full-screen not measured. Page-ready time varies with the batch: 3.0–3.3 s in most loads, once 17 s while a dense step was using the CPU, 1.4 s with no batch running.

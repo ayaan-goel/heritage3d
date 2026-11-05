@@ -7,6 +7,7 @@
 
 ## Current status (updated 2026-11-05)
 
+- **The museum building is visible through the main gate** (2026-11-05): dome, columned entrance and name at the end of the drive, plus a drive sign. Its wings follow the hall's real floor plan; its outward style is invented, not a real campus building. Visitors cannot walk the drive; they still enter through the yellow arrow.
 - **Museum has an upper floor: 44 exhibits, 129.6 MB** (2026-11-05). Stairs past the north gallery lead to an upper gallery with the 14 passing cut-off artifacts (Nos. 31–44), labelled as a separate set. 60 fps in the app's pane; not yet walked in a normal browser. See [[07-Results]].
 - **Cut-off set run at L3** (2026-11-05, separate from the 40): 19 artifacts cut off in at most 30% of sample views, 14 pass the exhibit rule. See [[07-Results]].
 - **Main experiment complete: all 40 artifacts × 5 levels** (2026-11-04). Median cloud F@0.002 R across 40: L1 0.883, L2 0.925, L3 0.965, **L4 0.984**, L5 0.583; cloud F < 0.5 on 3 / 3 / 4 / 4 / 16 of 40. **Museum reached 30 exhibits** (the team minimum), 88.5 MB, all L3. See [[07-Results]].

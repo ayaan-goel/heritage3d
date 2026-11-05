@@ -3,9 +3,11 @@
 // texture). Walking into the yellow arrow enters the museum.
 // Visitors stand south of the gate (+z) and look north (-z). Metres, y up, the gate line is z = 0. From the gate
 // southwards: granite forecourt, cobbled plaza where the road passes, service road, median, main road, footpath
-// and fence, open scrub, and the elevated metro viaduct.
+// and fence, open scrub, and the elevated metro viaduct. North of the gate a drive leads to the museum building
+// (exterior.js), which is invented for this view.
 import * as THREE from "three";
 import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
+import { EXTERIOR_MATERIALS, FRONT, buildExterior } from "./exterior.js";
 import { BODY } from "./layout.js";
 import { buildPortal } from "./portal.js";
 import * as T from "./textures.js";
@@ -27,6 +29,8 @@ const FOOTPATH = 24;      // main road ends, footpath starts
 const FENCE = 28;
 const VIADUCT = { z0: 56, z1: 66, y0: 9.5, y1: 11 };
 const WALK = { x: 58, zGate: 1.85, zBikes: 3.1, zMax: FENCE - 0.4 };
+const DRIVE_END = -38;    // the drive opens onto the paved court in front of the museum
+const VIEW_Z = 19;        // where a visit starts; trees stay out of the view from there through the gate
 
 function random(seed) {
   let s = seed;
@@ -205,6 +209,35 @@ function bankSign() {
   return c;
 }
 
+function museumName() {
+  const c = T.canvas(2048, 110), g = c.getContext("2d");
+  g.textAlign = "center";
+  g.textBaseline = "middle";
+  g.letterSpacing = "26px";
+  fitFont(g, "HERITAGE3D VIRTUAL MUSEUM", 1960, 86, "bold");
+  g.fillStyle = "#5d4a2f";
+  g.fillText("HERITAGE3D VIRTUAL MUSEUM", 1024, 58);
+  return c;
+}
+
+function driveSign() {
+  const c = T.canvas(880, 380), g = c.getContext("2d");
+  g.fillStyle = "#f3ead8";
+  g.fillRect(0, 0, 880, 380);
+  g.strokeStyle = "#8a6838";
+  g.lineWidth = 8;
+  g.strokeRect(18, 18, 844, 344);
+  g.textAlign = "center";
+  g.fillStyle = "#3f352a";
+  g.font = `600 120px ${SERIF}`;
+  g.fillText("VIRTUAL", 440, 150);
+  g.fillText("MUSEUM", 440, 270);
+  g.fillStyle = "#8a6838";
+  g.font = `52px ${SANS}`;
+  g.fillText("straight ahead", 440, 338);
+  return c;
+}
+
 function awningTexture() {
   const c = T.canvas(256, 64), g = c.getContext("2d");
   for (let i = 0; i < 16; i++) {
@@ -214,7 +247,7 @@ function awningTexture() {
   return c;
 }
 
-export function buildGate({ logo, aniso, environment }) {
+export function buildGate({ logo, aniso, environment, plan }) {
   const scene = new THREE.Scene();
   scene.environment = environment;
   scene.environmentIntensity = 0.35;
@@ -274,6 +307,7 @@ export function buildGate({ logo, aniso, environment }) {
     trunk: plain(0x5b4a39, 1),
     tower: plain(0xbdb7aa, 0.9),
     leaves: new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 1, flatShading: true }),
+    ...EXTERIOR_MATERIALS(std, plain, (color, seed) => tile(T.plaster(512, color, seed))),
   };
   M.sail.side = THREE.DoubleSide;
   const FLAT = new Set(["grass", "lawn", "granite", "cobbles", "road", "pink", "footpath", "soil", "marking"]);
@@ -299,7 +333,8 @@ export function buildGate({ logo, aniso, environment }) {
   add("grass", slab(-260, 260, FENCE, 260, -0.03, 8));
   add("lawn", slab(-260, 260, -260, 1, -0.03, 6));
   add("granite", slab(-PLAZA_X, PLAZA_X, -1, FORECOURT, 0, 3));
-  add("road", slab(-PIER_X, PIER_X, -90, -1, 0, 6));
+  add("road", slab(-PIER_X, PIER_X, DRIVE_END, -1, 0, 6));
+  add("granite", slab(-24, 24, FRONT, DRIVE_END, 0.01, 3));
   add("cobbles", new THREE.PlaneGeometry(PLAZA_X * 2, FOOTPATH - FORECOURT).rotateX(-Math.PI / 2).translate(0, 0, (FORECOURT + FOOTPATH) / 2));
   add("footpath", slab(-260, 260, FOOTPATH, FENCE, 0.03, 2));
   add("white", box(-260, 260, 0, 0.16, FOOTPATH - 0.14, FOOTPATH + 0.04));  // kerb
@@ -343,10 +378,10 @@ export function buildGate({ logo, aniso, environment }) {
       solid(x, z, 0.14);
     }
     // the kerbed hedges along the drive behind the gate
-    add("white", box(side * PIER_X - 0.15, side * PIER_X + 0.15, 0, 0.14, -90, -1));
-    add("hedge", box(side * 7.2 - 0.5, side * 7.2 + 0.5, 0, 1.1, -70, -3, 2));
+    add("white", box(side * PIER_X - 0.15, side * PIER_X + 0.15, 0, 0.14, DRIVE_END, -1));
+    add("hedge", box(side * 7.2 - 0.5, side * 7.2 + 0.5, 0, 1.1, DRIVE_END, -3, 2));
     // lamp posts along the drive
-    for (let z = -8; z > -80; z -= 13) {
+    for (let z = -8; z > DRIVE_END; z -= 13) {
       const x = side * (PIER_X + 0.55);
       add("white", post(x, z, 0.08, 0.05, 5.5));
       add("steel", box(x - 0.35, x + 0.35, 5.45, 5.55, z - 0.08, z + 0.08));
@@ -483,6 +518,12 @@ export function buildGate({ logo, aniso, environment }) {
   add("pale", box(-36.2, -24.8, 17, 17.25, -38.2, -27.8));
   add("pole", post(-24, -28, 0.05, 0.05, 3, 17));
 
+  // ---- the museum at the end of the drive, and the sign pointing to it ------------------------------------
+  const museum = buildExterior(add, plan, box, post);
+  add("slate", box(-11.6, -11.45, 0, 3.4, -22.1, -21.95));
+  add("slate", box(-7.55, -7.4, 0, 3.4, -22.1, -21.95));
+  add("slate", box(-11.75, -7.25, 1.3, 3.45, -22.06, -22));
+
   // ---- trees ---------------------------------------------------------------------------------------------
   const clump = (radius, x, y, z, r, g, b, crownY, crownH) => {
     const leaf = new THREE.IcosahedronGeometry(radius, 1), pos = leaf.attributes.position;
@@ -512,14 +553,20 @@ export function buildGate({ logo, aniso, environment }) {
         r * tone, g * tone, b * tone, height, crownH);
     }
   };
+  const inView = (x, z, size) => Math.abs(x) - 2.5 * size < (PIER_X * (VIEW_Z - z)) / VIEW_Z;
   // the big dark trees that stand behind the walls and over the campus
   for (let i = 0; i < 130; i++) {
     const side = i % 2 ? 1 : -1, x = side * (8.6 + rand() * 140), z = -3.5 - rand() * 34;
     if (x > -46 && x < -11 && z > -42 && z < -24) continue;  // not inside the campus block
-    tree(x, z, 1.5 + rand() * 1.1, Math.abs(x) < 60 ? 22 : 11, 0.2, 0.38, 0.14);
+    const size = 1.5 + rand() * 1.1;
+    if (!inView(x, z, size)) tree(x, z, size, Math.abs(x) < 60 ? 22 : 11, 0.2, 0.38, 0.14);
   }
-  for (let i = 0; i < 26; i++) {  // along the drive, further in
-    tree((i % 2 ? 1 : -1) * (9 + rand() * 7), -40 - rand() * 45, 1.2 + rand() * 0.8, 10, 0.22, 0.4, 0.15);
+  for (let i = 0; i < 44; i++) {  // either side of the museum and behind it
+    const side = i % 2 ? 1 : -1, x = side * (38 + rand() * 70), z = FRONT - rand() * 90, size = 1.5 + rand() * 1;
+    if (!inView(x, z, size)) tree(x, z, size, 10, 0.21, 0.39, 0.15);
+  }
+  for (let i = 0; i < 60; i++) {
+    tree((rand() - 0.5) * 170, museum.centreZ - 55 - rand() * 50, 2.2 + rand() * 1.2, 9, 0.2, 0.37, 0.14);
   }
   for (let i = 0; i < 46; i++) {  // thin, young trees in the scrub south of the fence
     tree(-125 + rand() * 250, FENCE + 1.5 + rand() * 16, 0.55 + rand() * 0.5, 9, 0.33, 0.47, 0.17);
@@ -528,8 +575,9 @@ export function buildGate({ logo, aniso, environment }) {
   const building = new THREE.Group();
   for (const [name, geometries] of parts) {
     const mesh = new THREE.Mesh(mergeGeometries(geometries), M[name]);
-    mesh.castShadow = !FLAT.has(name);
-    mesh.receiveShadow = true;
+    const far = name.startsWith("out");  // beyond the sun's shadow map
+    mesh.castShadow = !far && !FLAT.has(name);
+    mesh.receiveShadow = !far;
     building.add(mesh);
   }
   scene.add(building);
@@ -557,6 +605,8 @@ export function buildGate({ logo, aniso, environment }) {
   decal(blockPlate(logo), BLOCK.w * 2, (BLOCK.w * 2 * 560) / 640, 0, BLOCK.h / 2 + 0.05, 0.305);
   decal(instituteSign(), 5.4, 1.5, -28, 0.86, 0.805);
   decal(bankSign(), 3.8, 0.95, 9.5, 3.5, 1.22, { transparent: false });
+  decal(museumName(), museum.nameW, museum.nameH, 0, museum.nameY, museum.nameZ);
+  decal(driveSign(), 4.4, 1.9, -9.5, 2.38, -21.99, { transparent: false });
   const awning = decal(awningTexture(), 3.4, 1.05, -9.8, 2.75, 1.45, { transparent: false, side: THREE.DoubleSide });
   awning.rotation.x = 0.5;
   awning.castShadow = true;
@@ -587,7 +637,7 @@ export function buildGate({ logo, aniso, environment }) {
   return {
     scene,
     portal: PORTAL,
-    spawn: { x: 0, z: 19, yaw: 0, pitch: 0.06 },
+    spawn: { x: 0, z: VIEW_Z, yaw: 0, pitch: 0.06 },
     move,
     atPortal: (x, z) => Math.hypot(x - PORTAL.x, z - PORTAL.z) < PORTAL.r - BODY * 0.4,
     distance: (x, z) => Math.hypot(x - PORTAL.x, z - PORTAL.z),
