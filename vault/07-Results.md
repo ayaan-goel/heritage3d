@@ -488,6 +488,24 @@ Across L1–L4 time grows as about images^1.34 (median per artifact), so doublin
 
 **Limits:** synthetic CHSD renders, one pipeline, a laptop CPU, one set of 40 artifacts chosen as never cut off in the sample views, and an evaluation method (Option A) the team has yet to confirm. Time and memory are single runs per level, not repeated. Visual and texture quality have no measurement here, so RQ1 is answered for geometry only. Final GLB size exists only for the L3 exhibits. Point density is not computed, because the evaluation's point counts are after downsampling; dense cloud size stands in for it.
 
+## Visual fidelity — method pilot only — 2026-11-05
+
+`scripts/evaluate_visual.py`, `src/heritage3d/visual.py`. Each model is rendered from 12 held-out views (azimuths 7, 97, 187, 277° × elevations −45, 0, 45°, used by no level) with the ideal CHSD cameras and compared with the CHSD photo, over the union of the two silhouettes, so missing parts count against the model. Files: `experiments/results/visual/`, comparison images in `experiments/plots/visual/`.
+
+| Artifact | Model | Faces | PSNR (dB) | SSIM | Silhouette IoU | PSNR where both have the object (dB) | Time |
+|---|---|---|---|---|---|---|---|
+| `Ark_HM_658_HI` | L1 | 448,476 | 29.51 | 0.943 | 0.997 | 32.94 | 814 s |
+| `Ark_HM_658_HI` | L4 | 400,085 | 29.01 | 0.949 | 0.997 | 32.64 | 82 s |
+| `Ark_HM_658_HI` | L5 | 289,288 | 27.74 | 0.926 | 0.996 | 31.24 | 62 s |
+| `Ark_HM_658_HI` | Museum GLB (from L3) | 99,999 | 29.72 | 0.943 | 0.998 | 32.68 | 41 s |
+| `Ark_HM_1260B_HI` | L5, run that failed | 452 | 8.03 | 0.188 | 0.352 | 16.69 | 12 s |
+
+**Checked:** in the comparison images for `Ark_HM_658_HI` L4 and the museum GLB, the renders line up with the photos, and differences sit mainly at the outlines. The failed run scores far lower, as it should. **This only shows the method works.** Two artifacts say nothing about RQ1 or RQ3: L2, L3 and the other 38 are not measured. L3 itself has not been re-textured and measured, so full-against-museum at L3 is not available yet.
+
+**Found while building it:** the batch runs textured with OpenMVS's default seam leveling, which damages these renders (`export_glb.py`), so this measurement re-textures with it off. The stored `scene_dense_texture*` files and the `textured_mesh_mb` cost column come from the leveled versions. Geometry and F-scores do not use the texture.
+
+**Full run, not started:** L1 re-texturing took 770 s here, much more than expected, so about 25 min per artifact over five levels, about 16 h for the 40, plus about 1 h for the museum models and the cut-off set (rough estimate from this one artifact). The script is resumable.
+
 ## Cut-off trial — `Ark_HM_640_HI` at L3 — 2026-11-04
 
 Outside the 40-artifact main set, same frozen config. Cut off by the frame in 30% of the 20 sample views, the most of the 19 artifacts cut off in at most 30%.
