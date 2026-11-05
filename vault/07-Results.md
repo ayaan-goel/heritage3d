@@ -436,6 +436,58 @@ Museum models (L3), full → about 100,000 triangles:
 
 Museum now **30 of the 40 main-set artifacts, 88.5 MB**. Not exhibited (L3 mesh F < 0.95): 1260B, 795, 341, 31, 797, 38, BEY_1415, 1260C, 792, 703. Checked in the browser pane: 30 / 30 loaded in 2.7 s, page ready 1.2 s, no console errors, Nos. 27–30 textured and upright. Seen from straight above, No. 27 shows a small gap inside the bottom of the pot beside its white label, where the plinth colour shows through (to verify in a normal browser).
 
+## Quality against cost — all 40 main-set artifacts — 2026-11-05
+
+`python scripts/analyze_tradeoff.py`, from the stored runs, nothing reconstructed. Files: `experiments/results/tradeoff_levels.csv`, `tradeoff_sufficient.csv`, `tradeoff_policies.csv`, `tradeoff_paired.csv`; plots `experiments/plots/tradeoff_quality_vs_time.png`, `tradeoff_cost_by_level.png`, `tradeoff_sufficient.png`. Rules in [[08-Decisions]]. Mesh F is measured on mesh vertices.
+
+Median cost, with the median share of the same artifact's L1 cost in brackets:
+
+| Level | Images | Time | Peak RAM | Input | Dense cloud | Textured mesh |
+|---|---|---|---|---|---|---|
+| L1 | 362 | 55.4 min | 4,437 MB | 103.7 MB | 260.2 MB | 23.9 MB |
+| L2 | 182 | 22.4 min (40%) | 2,316 MB (51%) | 52.2 MB (50%) | 147.2 MB (56%) | 22.9 MB (95%) |
+| L3 | 92 | 9.7 min (17%) | 2,024 MB (46%) | 26.4 MB (26%) | 73.5 MB (28%) | 21.4 MB (88%) |
+| L4 | 47 | 3.9 min (6.3%) | 2,021 MB (46%) | 13.6 MB (13%) | 28.2 MB (12%) | 18.1 MB (76%) |
+| L5 | 26 | 1.0 min (1.7%) | 2,015 MB (45%) | 7.5 MB (7.2%) | 5.8 MB (2.5%) | 5.4 MB (27%) |
+
+L5's costs are low partly because 14 of its 40 runs made no dense cloud and skipped those stages.
+
+Quality and reliability:
+
+| Level | Median mesh F | Median cloud F | Cloud precision | Cloud recall | Cloud F at 0.005 R / 0.01 R | Mesh F >= 0.95 | Cloud F >= 0.95 | Mesh F < 0.5 | No dense cloud | Hours for all 40 |
+|---|---|---|---|---|---|---|---|---|---|---|
+| L1 | 0.984 | 0.883 | 0.795 | 0.996 | 0.968 / 0.998 | 31 | 0 | 3 | 0 | 40.1 |
+| L2 | 0.982 | 0.925 | 0.868 | 0.994 | 0.981 / 0.999 | 31 | 7 | 3 | 0 | 15.5 |
+| L3 | 0.989 | 0.965 | 0.938 | 0.994 | 0.994 / 1.000 | 30 | 29 | 4 | 0 | 6.3 |
+| L4 | 0.988 | 0.984 | 0.981 | 0.988 | 0.998 / 1.000 | 28 | 28 | 4 | 1 | 2.7 |
+| L5 | 0.580 | 0.583 | 0.996 | 0.413 | 0.662 / 0.687 | 5 | 5 | 16 | 14 | 0.8 |
+
+Precision and the distances cover only runs that made a dense cloud.
+
+Cheapest level reaching mesh F >= 0.95, per artifact: L5 5, L4 23, L3 2, L2 1, L1 0, never 9. In hindsight that would take 2.6 h for the 31 that can reach it, but choosing it needs reference geometry, which a real capture does not have. The 30 artifacts sufficient at L3 or below are the 30 exhibits, as they should be, since the exhibit rule is the same test. The threshold changes little: at mesh F 0.90 L4 is cheapest for 22, at 0.98 for 20.
+
+Paired differences on the same 40 artifacts (median, bootstrap 95% interval, Wilcoxon p with Holm's correction):
+
+| Compare | Mesh F | p | Cloud F | p |
+|---|---|---|---|---|
+| L2 − L1 | 0.0000 (−0.0020, 0.0011) | 0.75 | +0.0342 (0.0297, 0.0371) | < 0.001 |
+| L3 − L1 | +0.0028 (0.0007, 0.0042) | 0.039 | +0.0693 (0.0604, 0.0752) | < 0.001 |
+| L4 − L1 | +0.0011 (−0.0061, 0.0043) | 0.75 | +0.0806 (0.0645, 0.0887) | 0.028 |
+| L5 − L1 | −0.3245 (−0.4396, −0.1969) | < 0.001 | −0.2331 (−0.3572, −0.1248) | < 0.001 |
+| L4 − L3 | −0.0002 (−0.0045, 0.0006) | 0.50 | +0.0131 (0.0074, 0.0185) | 0.087 |
+
+Across L1–L4 time grows as about images^1.34 (median per artifact), so doubling the images takes about 2.5 times as long.
+
+**Measured, for this set under this setup:**
+
+- **H1 supported at the cost end, with a limit:** time, input and cloud size fall steadily with fewer images, but peak RAM stops falling below L3 (about 2 GB) and mesh size falls little until L5. Quality collapses only at L5: recall falls to 0.41 and 14 runs make no cloud.
+- **More images did not improve quality:** from L4 to L1 cloud precision falls from 0.981 to 0.795 at the tight 0.002 R tolerance, with recall about level. Why is not established (hypothesis: extra views add slightly misplaced points). This is an effect at fine tolerance: at 0.01 R L1 to L4 all score 0.998 or more. The mesh is not affected, and no level from L1 to L4 is meaningfully better on mesh F.
+- **H2 supported:** L3 uses 25% of L1's images and 17% of its time, and L4 13% and 6.3%, with median mesh F within 0.003 of L1 and interval limits within 0.0061. No equivalence margin was set in advance, so this is stated as measured differences, not as a formal equivalence test.
+- **The real trade-off is reliability against time:** L4 costs 2.7 h for all 40 and 28 reach mesh F 0.95; L3 costs 6.3 h for 30; L2 15.5 h for 31; L1 40.1 h for 31. L4 has the better median, but L3 is not significantly worse and loses fewer artifacts. L4 is the most economical choice, L3 the safer one, and nothing past L2 gained anything here.
+- **More photos do not rescue the hardest objects:** 9 of 40 never reach mesh F 0.95 at any level, including L1.
+
+**Limits:** synthetic CHSD renders, one pipeline, a laptop CPU, one set of 40 artifacts chosen as never cut off in the sample views, and an evaluation method (Option A) the team has yet to confirm. Time and memory are single runs per level, not repeated. Visual and texture quality have no measurement here, so RQ1 is answered for geometry only. Final GLB size exists only for the L3 exhibits. Point density is not computed, because the evaluation's point counts are after downsampling; dense cloud size stands in for it.
+
 ## Cut-off trial — `Ark_HM_640_HI` at L3 — 2026-11-04
 
 Outside the 40-artifact main set, same frozen config. Cut off by the frame in 30% of the 20 sample views, the most of the 19 artifacts cut off in at most 30%.

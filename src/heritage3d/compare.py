@@ -36,11 +36,14 @@ def level_row(metrics, evaluation, tau="0.002"):
         "cloud_accuracy": cloud.get("accuracy_mean"),
         "cloud_completeness": cloud.get("completeness_mean"),
         "cloud_hausdorff95": cloud.get("hausdorff_95"),
+        "cloud_rmse": cloud.get("rmse"),
         f"cloud_f@{tau}": cloud["fscore"][tau]["f"],
         f"cloud_precision@{tau}": cloud["fscore"][tau]["precision"],
         f"cloud_recall@{tau}": cloud["fscore"][tau]["recall"],
         "mesh_chamfer": mesh.get("chamfer"),
         f"mesh_f@{tau}": mesh["fscore"][tau]["f"],
+        **{f"{name}_f@{t}": part["fscore"].get(t, {}).get("f")
+           for name, part in (("cloud", cloud), ("mesh", mesh)) for t in ("0.005", "0.01")},
     }
 
 

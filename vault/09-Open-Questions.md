@@ -15,6 +15,9 @@
 - [ ] Team: check with Prof. Singh that showing the PDEU gate and logo is fine, especially if the museum goes public.
 - [x] Do the 14 artifacts from the cut-off set that pass the exhibit rule go in the museum? **Yes, on an upper floor (team, 2026-11-05)**; 44 exhibits measured at 60 fps in the app's pane. See [[07-Results]].
 - [ ] How much of an object each cut-off view loses is not measured, so the upper-floor models may lack parts the F-score does not penalise (hypothesis). See [[07-Results]].
+- [ ] How to measure visual and texture fidelity (RQ1, RQ3)? The project definition names it and nothing measures it yet; proposal: compare rendered views of each model with held-out CHSD photos.
+- [ ] RQ3 rendering cost: full against optimized models in the browser is not compared yet.
+- [ ] Should the mentor be asked to accept the joint trade-off reporting, with no single cost-effectiveness score? See [[08-Decisions]].
 - [ ] Does the 44-exhibit hall hold its frame rate full screen, and how long does the 129.6 MB collection take to download once hosted? Only measured in the app's pane from localhost.
 - [x] Museum needs **≥ 30 exhibits** (team minimum, 2026-11-01). Closed 2026-11-04: all four last artifacts passed the unchanged rule (L3, mesh F ≥ 0.95), giving exactly 30 of the 40. No fallback level, extra artifacts or lower bar needed.
 - [ ] Where to host the museum (GitHub Pages from this repo, university server, or local demo only)? Team decision; GLBs are ~4 MB each.

@@ -88,6 +88,14 @@ python scripts/summarize_round.py --count 12      # per-level summary across art
 
 Runs every level of the first N artifacts in the fixed order (the 40 artifacts not cut off by the frame, ordered to cover object size and texture), skipping levels already evaluated. A level where SfM or MVS fails is still evaluated and recorded (F = 0 for missing output). `--clean` deletes regenerable intermediates after evaluation (~80 % of the space).
 
+## Quality against cost
+
+```powershell
+python scripts/analyze_tradeoff.py    # tables in experiments/results/tradeoff_*.csv, plots in experiments/plots/tradeoff_*.png
+```
+
+Compares the five levels on the 40 main-set artifacts from the stored runs: every cost separately, shares of L1, how many artifacts reach F >= 0.95 at each level, each artifact's cheapest sufficient level, and paired tests between levels. No weighted score is made from the costs.
+
 ## Virtual museum
 
 ```

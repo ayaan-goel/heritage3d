@@ -7,6 +7,7 @@
 
 ## Current status (updated 2026-11-05)
 
+- **Quality-against-cost analysis done on all 40** (2026-11-05): L4 takes 6.3% of L1's time and L3 17%, with median mesh F within 0.003 of L1. Reaching mesh F 0.95: L1 31, L2 31, L3 30, L4 28, L5 5; 9 never do. H1 and H2 supported for geometry. **Not yet answered:** visual fidelity (RQ1, RQ3), rendering and real download cost (RQ3). See [[07-Results]].
 - **The museum building is visible through the main gate** (2026-11-05): dome, columned entrance and name at the end of the drive, plus a drive sign. Its wings follow the hall's real floor plan; its outward style is invented, not a real campus building. The gates now stand open and visitors walk up the drive; the yellow arrow is at the museum's doors. Not yet walked at normal speed in a visible browser.
 - **Museum has an upper floor: 44 exhibits, 129.6 MB** (2026-11-05). Stairs past the north gallery lead to an upper gallery with the 14 passing cut-off artifacts (Nos. 31–44), labelled as a separate set. 60 fps in the app's pane; not yet walked in a normal browser. See [[07-Results]].
 - **Cut-off set run at L3** (2026-11-05, separate from the 40): 19 artifacts cut off in at most 30% of sample views, 14 pass the exhibit rule. See [[07-Results]].
@@ -36,7 +37,7 @@
 ## Next action
 
 1. Team: walk the stairs and upper floor in a normal browser, full screen (hard refresh with Ctrl+Shift+R if the page shows an old version).
-2. Analyse the full 40-artifact results for the report and research questions.
+2. Measure visual fidelity and the remaining RQ3 costs (rendering, real download), then write up RQ1–RQ3 for the report ([[09-Open-Questions]]).
 3. Team: walk the new hall in a normal browser (`python -m http.server 8000 --directory museum`), check the feel (speed, mouse sensitivity, placards) and decide where to host it ([[09-Open-Questions]]); later: load-time measurement for RQ3.
 4. Team: confirm the evaluation method (Option A, decoded CHSD depth — [[04-Methodology]]).
 5. The zips in `Downloads` can be kept as backup or deleted (team's choice).

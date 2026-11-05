@@ -265,4 +265,6 @@ Newest first. Every session must add an entry (see `CLAUDE.md`).
 
 - Team asked to leave by the doors: the lobby circle now places the visitor on the portico facing the gate (`gate.doorstep`, `placeOnDoorstep()` in `main.js`); the pause menu's button still goes to the main gate. Team also confirmed the lawns stay out of bounds.
 
-**Next action** — team: walk from the gate up the drive into the museum and to the upper floor in a normal browser. Then analyse the results for the report.
+- Team asked whether the RQs were answered and whether the combined cost-effectiveness inputs were stored. All six sheets of the literature workbook read: it lists the cost metrics with no combining formula. Built the trade-off analysis it calls for: `src/heritage3d/tradeoff.py`, `tests/test_tradeoff.py`, `scripts/analyze_tradeoff.py`; `compare.py` also passes on RMSE and F at 0.005 and 0.01 R. Ran `python scripts/analyze_tradeoff.py`: results in [[07-Results]], and the 30 artifacts sufficient at L3 or below match the 30 exhibits. `pytest -q` → 68 passed. Plots checked by eye; one set of colliding labels fixed.
+
+**Next action** — team: walk from the gate up the drive into the museum and to the upper floor in a normal browser. Then measure visual fidelity and RQ3's remaining costs, and write up RQ1–RQ3.
