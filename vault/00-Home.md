@@ -7,7 +7,8 @@
 
 ## Current status (updated 2026-11-05)
 
-- **Cut-off set run at L3** (2026-11-05, separate from the 40): 19 artifacts cut off in at most 30% of sample views, 14 pass the exhibit rule, none exported yet. See [[07-Results]].
+- **Museum has an upper floor: 44 exhibits, 129.6 MB** (2026-11-05). Stairs past the north gallery lead to an upper gallery with the 14 passing cut-off artifacts (Nos. 31–44), labelled as a separate set. 60 fps in the app's pane; not yet walked in a normal browser. See [[07-Results]].
+- **Cut-off set run at L3** (2026-11-05, separate from the 40): 19 artifacts cut off in at most 30% of sample views, 14 pass the exhibit rule. See [[07-Results]].
 - **Main experiment complete: all 40 artifacts × 5 levels** (2026-11-04). Median cloud F@0.002 R across 40: L1 0.883, L2 0.925, L3 0.965, **L4 0.984**, L5 0.583; cloud F < 0.5 on 3 / 3 / 4 / 4 / 16 of 40. **Museum reached 30 exhibits** (the team minimum), 88.5 MB, all L3. See [[07-Results]].
 - **Museum visit now starts at a 3D model of the PDEU main gate** and its street (`museum/hall/gate.js`: cobbled plaza, road with tricolour columns, ATM booth, bikes, fence, metro viaduct): walk into the rotating yellow arrow, fade, museum lobby. Links to an exhibit skip it. a matching arrow and circle by the museum's entrance doors (or the pause menu) returns to the gate; `V` switches first and third person; `C` switches character (stand-in figures for now, [[09-Open-Questions]]). Team should check the feel in a normal browser.
 - **Excel summary** of all 81 artifacts: `experiments/results/artifact_status.xlsx`, rebuilt by `scripts/build_status_workbook.py` after every round or export.
@@ -33,7 +34,7 @@
 
 ## Next action
 
-1. Team: decide whether the 14 passing cut-off artifacts go in the museum ([[09-Open-Questions]]).
+1. Team: walk the stairs and upper floor in a normal browser, full screen (hard refresh with Ctrl+Shift+R if the page shows an old version).
 2. Analyse the full 40-artifact results for the report and research questions.
 3. Team: walk the new hall in a normal browser (`python -m http.server 8000 --directory museum`), check the feel (speed, mouse sensitivity, placards) and decide where to host it ([[09-Open-Questions]]); later: load-time measurement for RQ3.
 4. Team: confirm the evaluation method (Option A, decoded CHSD depth — [[04-Methodology]]).

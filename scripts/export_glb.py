@@ -169,6 +169,11 @@ def main(argv=None):
         if entry:
             entries[artifact] = entry
     rank = {a: i for i, a in enumerate(order)}
+    inspection = json.loads((RESULTS / "dataset_inspection.json").read_text(encoding="utf-8"))["artifacts"]
+    for entry in entries.values():  # the hall shows artifacts outside the main set on its upper floor
+        entry["set"] = "main" if entry["id"] in rank else "cut_off"
+        if entry["set"] == "cut_off":
+            entry["cut_off_fraction"] = inspection[entry["id"]]["cut_off_fraction"]
     manifest["artifacts"] = sorted(entries.values(), key=lambda e: rank.get(e["id"], len(rank)))
     manifest_path.write_text(json.dumps(manifest, indent=1) + "\n", encoding="utf-8")
     print(f"-> {manifest_path} ({len(manifest['artifacts'])} artifacts)")

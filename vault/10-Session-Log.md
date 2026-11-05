@@ -256,4 +256,7 @@ Newest first. Every session must add an entry (see `CLAUDE.md`).
 
 - Batch finished 01:52: 18 ok, 0 failed. 14 of 19 pass the exhibit rule. Previews checked by eye, and doubtful ones compared with source photos. `summarize_round.py --count 19 --name cutoff_l3 --order configs/artifact_order_cutoff.json`. `status.py` and `build_status_workbook.py`: cut-off artifacts that were run now show as "Partly run", and the per-level Summary table covers the main set only. Rebuild → 40 done, 19 partly run, 22 not run; museum 30 yes, 14 pending. `pytest -q` → 60 passed.
 
-**Next action** — team: which of the 14 go in the museum ([[09-Open-Questions]]). Then analyse the results for the report.
+- Team asked for a second floor with stairs, holding the 14 passing artifacts. `export_glb.py` for the 19 → 14 exported, 5 skipped by the rule, 44 in `museum/artifacts.json`, which now records each exhibit's `set` and, for the cut-off set, `cut_off_fraction`. `museum/hall/`: `layout.js` (stairs, upper gallery, floor height), `building.js` (stair hall, two flights, rails, signs, generalized `gallery()`), `main.js` (heights for camera, target and figure), `labels.js` (wall board, placard line), `character.js`; `list.js` shows the frame share too.
+- First load failed: `mergeGeometries` needs indexed geometry and `ExtrudeGeometry` is not; fixed with `mergeVertices`. The pane kept serving the old `building.js` until a hard reload. Pane hidden read about 20 fps everywhere (a limit, not a measurement); visible: 60 fps in all five views. Rebuild → 40 done, 19 partly run, 22 not run; museum 44 yes, 0 pending. `pytest -q` → 60 passed.
+
+**Next action** — team: walk the upper floor in a normal browser. Then analyse the results for the report.

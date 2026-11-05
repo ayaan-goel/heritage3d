@@ -10,7 +10,7 @@ import { buildHall } from "./building.js";
 import { CHARACTERS, buildCharacter } from "./character.js";
 import { buildGate } from "./gate.js";
 import { buildPortal } from "./portal.js";
-import { infoCanvas, placardCanvas, signCanvas, teamBoardCanvas, titleBoardCanvas } from "./labels.js";
+import { infoCanvas, placardCanvas, signCanvas, teamBoardCanvas, titleBoardCanvas, upperBoardCanvas } from "./labels.js";
 import { EYE, GALLERIES, GALLERY_W, PEDESTAL_TOP, ROTUNDA_R, planHall, toWorld } from "./layout.js";
 
 const DISPLAY = 0.46;        // largest side of an exhibit on its pedestal, m (CHSD gives no real sizes)
@@ -75,13 +75,16 @@ try {
 // ---- the building and its pedestals --------------------------------------------------------------
 
 const repeat = Math.min(5, Math.max(1, Math.round(Number(params.get("repeat"))) || 1));
-const entries = Array.from({ length: repeat }, () => artifacts).flat();
-const plan = planHall(entries.length);
+const repeated = Array.from({ length: repeat }, () => artifacts).flat();
+const upstairs = repeated.filter((e) => e.set === "cut_off");  // the set outside the main experiment
+const entries = [...repeated.filter((e) => e.set !== "cut_off"), ...upstairs];
+const plan = planHall(entries.length - upstairs.length, upstairs.length);
 const numbers = (z) => (z.from === z.to ? `No. ${z.from}` : `Nos. ${z.from}–${z.to}`);
 const signs = GALLERIES.map((g) => {
   const zone = plan.zones.find((z) => z.name === `${g.name} gallery`);
   return signCanvas(`${g.name} Gallery`, [g.heading === 0 && "Entrance", zone && numbers(zone)].filter(Boolean).join(" · "));
 });
+const upperZone = plan.zones.find((z) => z.name === "Upper floor");
 const logo = new Image();
 logo.src = "hall/pdeu-logo.png";
 const logoReady = await logo.decode().then(() => logo, () => null);  // the board still shows without it
@@ -91,6 +94,8 @@ scene.add(buildHall(plan, {
   signs,
   info: infoCanvas(artifacts, plan.zones.map((z) => `${z.name}: ${numbers(z)}`)),
   boards: plan.boards.map((b) => (b.side < 0 ? titleBoardCanvas(logoReady, artifacts.length) : teamBoardCanvas())),
+  stairSign: upperZone && signCanvas("Upper Floor", `Stairs · ${numbers(upperZone)}`),
+  upperBoard: upperZone && upperBoardCanvas(upstairs, numbers(upperZone)),
 }));
 
 const gate = buildGate({ logo: logoReady, aniso, environment: scene.environment });
@@ -100,12 +105,12 @@ scene.add(backToGate.group);
 const exhibits = entries.map((entry, i) => {
   const spot = plan.spots[i];
   const holder = new THREE.Group();
-  holder.position.set(spot.x, PEDESTAL_TOP, spot.z);
+  holder.position.set(spot.x, spot.y + PEDESTAL_TOP, spot.z);
   holder.rotation.y = spot.yaw;
   scene.add(holder);
   return {
     entry, spot, holder, number: i + 1, state: "waiting",
-    center: new THREE.Vector3(spot.x, PEDESTAL_TOP + DISPLAY / 2, spot.z), size: new THREE.Vector3(),
+    center: new THREE.Vector3(spot.x, spot.y + PEDESTAL_TOP + DISPLAY / 2, spot.z), size: new THREE.Vector3(),
   };
 });
 
@@ -157,7 +162,7 @@ function place(ex, model) {
   model.position.set(-centre.x * scale, -box.min.y * scale, -centre.z * scale);
   ex.holder.add(model);
   ex.size.copy(size).multiplyScalar(scale);
-  ex.center.y = PEDESTAL_TOP + ex.size.y / 2;
+  ex.center.y = ex.spot.y + PEDESTAL_TOP + ex.size.y / 2;
   ex.state = "ready";
   if (pendingId === ex.entry.id) {
     pendingId = null;
@@ -243,6 +248,8 @@ function travel(place) {
   }, FADE_MS);
 }
 
+const floorAt = (x, z) => (outside ? 0 : plan.height(x, z));
+
 const fwd = new THREE.Vector3(), toward = new THREE.Vector3();
 function findTarget() {  // the exhibit in reach that the visitor is looking at
   camera.getWorldDirection(fwd);
@@ -250,7 +257,7 @@ function findTarget() {  // the exhibit in reach that the visitor is looking at
   for (const ex of exhibits) {
     const d = Math.hypot(ex.center.x - me.x, ex.center.z - me.z);
     if (d > REACH) continue;
-    toward.set(ex.center.x - me.x, ex.center.y - EYE, ex.center.z - me.z).normalize();
+    toward.set(ex.center.x - me.x, ex.center.y - floorAt(me.x, me.z) - EYE, ex.center.z - me.z).normalize();
     const angle = Math.acos(Math.min(1, fwd.dot(toward)));
     if (angle > (d < 1.3 ? 0.8 : 0.45)) continue;
     if (angle + d * 0.2 < bestScore) {
@@ -406,10 +413,11 @@ function roomBehind(x, z, yaw, pitch) {
 }
 
 function viewFrom(x, z, yaw, pitch, distance) {
+  const cx = x + Math.sin(yaw) * Math.cos(pitch) * distance, cz = z + Math.cos(yaw) * Math.cos(pitch) * distance;
   return new THREE.Vector3(
-    x + Math.sin(yaw) * Math.cos(pitch) * distance,
-    Math.max(0.35, EYE + (distance > 0 ? 0.2 : 0) - Math.sin(pitch) * distance),
-    z + Math.cos(yaw) * Math.cos(pitch) * distance,
+    cx,
+    Math.max(floorAt(cx, cz) + 0.35, floorAt(x, z) + EYE + (distance > 0 ? 0.2 : 0) - Math.sin(pitch) * distance),
+    cz,
   );
 }
 
@@ -482,6 +490,7 @@ function openCloseup(ex) {
       <dt>Full model</dt><dd>${int(e.full_faces)} tri, ${fmt(e.full_glb_mb)} MB</dd>
       <dt>Accuracy F@0.002 R</dt><dd>${fmt(e["f@0.002"], 3)}</dd>
       <dt>Full model F@0.002 R</dt><dd>${fmt(e["full_f@0.002"], 3)}</dd>
+      ${e.set === "cut_off" ? `<dt>Touches the frame</dt><dd>${Math.round(e.cut_off_fraction * 100)}% of sample views</dd>` : ""}
     </dl>`;
   panel.hidden = false;
   document.body.classList.add("closeup");
@@ -528,7 +537,7 @@ function goTo(ex) {
   const fx = Math.sin(ex.spot.yaw), fz = Math.cos(ex.spot.yaw);
   placeInHall();
   Object.assign(me, { x: ex.spot.x + fx * 1.5, z: ex.spot.z + fz * 1.5, yaw: Math.atan2(fx, fz), pitch: -0.25 });
-  camera.position.set(me.x, EYE, me.z);
+  camera.position.set(me.x, floorAt(me.x, me.z) + EYE, me.z);
   camera.rotation.set(me.pitch, me.yaw, 0);
   hideMenu();
   openCloseup(ex);
@@ -558,9 +567,11 @@ const mapBase = (() => {
   g.scale(dpr, dpr);
   g.fillStyle = "rgba(243, 233, 214, 0.18)";
   g.strokeStyle = "rgba(243, 233, 214, 0.6)";
-  for (const gal of plan.galleries) {
-    const corners = [[gal.start, -1], [gal.end, -1], [gal.end, 1], [gal.start, 1]]
-      .map(([s, v]) => toMap(...toWorld(gal.heading, s, (v * GALLERY_W) / 2)));
+  for (const gal of plan.rooms) {
+    const corners = [[gal.start, -1], [gal.end, -1], [gal.end, 1], [gal.start, 1]].map(([s, v]) => {
+      const [x, z] = toWorld(gal.heading, s, (v * GALLERY_W) / 2);
+      return toMap(x + (gal.x ?? 0), z + (gal.z ?? 0));
+    });
     g.beginPath();
     corners.forEach(([x, y]) => g.lineTo(x, y));
     g.closePath();
@@ -631,7 +642,7 @@ renderer.setAnimationLoop(() => {
   const world = outside ? gate.scene : scene;
   if (figure.group.parent !== world) world.add(figure.group);
   figure.group.visible = third && behind > 1 && (mode === "walk" || mode === "menu");
-  figure.pose(me.x, me.z, me.yaw, Math.hypot(me.vx, me.vz), dt);
+  figure.pose(me.x, me.z, me.yaw, Math.hypot(me.vx, me.vz), dt, floorAt(me.x, me.z));
   if (flight) stepFlight(dt);
   if (mode === "closeup") {
     orbit.update(dt);
@@ -686,5 +697,5 @@ window.hall = {
 
 followHash();
 for (let i = 0; i < 3; i++) loadNext();
-status.textContent = `${exhibits.length} exhibits in a domed rotunda and four galleries, past the main gate.`;
+status.textContent = `${exhibits.length} exhibits in a domed rotunda, four galleries${upstairs.length ? " and an upper floor" : ""}, past the main gate.`;
 enter.disabled = false;

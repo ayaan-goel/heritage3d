@@ -52,8 +52,8 @@ export function placardCanvas(entry, number) {
   g.fillStyle = INK;
   fit(g, entry.id, 62, 158, w - 124, 58, SERIF);
   g.fillStyle = MUTED;
-  g.font = `28px ${SANS}`;
-  g.fillText(`Digitized from ${entry.input_images} photographs (${entry.level})`, 62, 204);
+  const line = `Digitized from ${entry.input_images} photographs (${entry.level})`;
+  fit(g, entry.set === "cut_off" ? `${line} · touches the frame in ${Math.round(entry.cut_off_fraction * 100)}% of sample views` : line, 62, 204, w - 124, 28, SANS);
   g.fillStyle = BRONZE;
   g.fillRect(62, 232, w - 124, 2);
 
@@ -131,6 +131,33 @@ export function infoCanvas(artifacts, zones) {
   g.fillText("Walk up to an exhibit and press E for a 360° view.", w / 2, Math.min(y + 24, h - 120));
   g.font = `22px ${SANS}`;
   wrap(g, "Source images: CHSD (Arampatzakis, Arnaoutoglou, Koutsoudis & Pavlidis, 2024), rendered from models of the Virtual Hampson Museum · CC BY-NC-SA 4.0", w / 2, h - 72, w - 200, 30);
+  return c;
+}
+
+// Wall board at the top of the stairs: what the upper floor shows and how it differs from the ground floor.
+export function upperBoardCanvas(artifacts, numbers) {
+  const w = 1200, h = 800, c = canvas(w, h), g = c.getContext("2d");
+  const shares = artifacts.map((a) => Math.round(a.cut_off_fraction * 100));
+  g.fillStyle = "#f3ece0";
+  g.fillRect(0, 0, w, h);
+  g.strokeStyle = BRONZE;
+  g.lineWidth = 10;
+  g.strokeRect(16, 16, w - 32, h - 32);
+  g.textAlign = "center";
+  g.fillStyle = INK;
+  g.font = `76px ${SERIF}`;
+  g.fillText("Upper Floor", w / 2, 130);
+  g.fillStyle = BRONZE;
+  g.font = `600 30px ${SANS}`;
+  g.fillText(numbers, w / 2, 185);
+  g.fillRect(w / 2 - 200, 215, 400, 2);
+  g.fillStyle = INK;
+  g.font = `36px ${SERIF}`;
+  let y = wrap(g, `These ${artifacts.length} artifacts are a separate set from the ground floor. In the dataset's photographs each object touches the edge of the frame in some views: ${Math.min(...shares)}–${Math.max(...shares)}% of the 20 views sampled.`, w / 2, 285, w - 200, 50);
+  y = wrap(g, `Each was reconstructed from ${artifacts[0].input_images} photographs (${artifacts[0].level}) and passed the same exhibit rule as the ground floor. They are not part of the study's comparison of photo counts.`, w / 2, y + 26, w - 200, 50);
+  g.fillStyle = MUTED;
+  g.font = `italic 30px ${SERIF}`;
+  g.fillText("Walk up to an exhibit and press E for a 360° view.", w / 2, Math.min(y + 40, h - 50));
   return c;
 }
 

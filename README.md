@@ -4,7 +4,7 @@ A cost-effective image-based 3D digitization framework for cultural heritage art
 
 This project studies how input-image density affects 3D reconstruction quality, computation and storage, and turns an optimized reconstruction into an interactive artifact in a web-based virtual museum.
 
-**Status:** main experiment. All 7 rounds done: the 40 main-set artifacts reconstructed and evaluated at all five subset levels (26–362 images); 30 exhibited in the virtual museum, a walkable 3D hall. See [`vault/00-Home.md`](vault/00-Home.md).
+**Status:** main experiment. All 7 rounds done: the 40 main-set artifacts reconstructed and evaluated at all five subset levels (26–362 images); 30 exhibited in the virtual museum, a walkable 3D hall. A separate set of 19 artifacts cut off by the frame in at most 30% of sample views was run at L3; the 14 that pass the exhibit rule stand on the hall's upper floor (44 exhibits in all). See [`vault/00-Home.md`](vault/00-Home.md).
 
 ## Pipeline
 
@@ -95,7 +95,7 @@ python scripts/export_glb.py --count 13          # museum models for every eligi
 python -m http.server 8000 --directory museum    # then open http://localhost:8000 (3D hall; list.html = list view)
 ```
 
-`export_glb.py` re-textures each artifact's mesh at the museum level (`[museum]` in `configs/experiment.toml`: L3, ~100k triangles, 2048 px JPEG texture), turns it upright, packs one self-contained GLB into `museum/models/` and adds it to `museum/artifacts.json`. It also measures the optimized model against the reference (`experiments/results/museum/`). The site in `museum/` is static: open it through any web server. `index.html` is a walkable 3D hall (three.js; WASD + mouse, E for a 360° close-up) whose rotunda and galleries are laid out from `artifacts.json`, so new exhibits appear without page changes; `list.html` shows the same collection as a simple list (also for phones).
+`export_glb.py` re-textures each artifact's mesh at the museum level (`[museum]` in `configs/experiment.toml`: L3, ~100k triangles, 2048 px JPEG texture), turns it upright, packs one self-contained GLB into `museum/models/` and adds it to `museum/artifacts.json`. It also measures the optimized model against the reference (`experiments/results/museum/`). The site in `museum/` is static: open it through any web server. `index.html` is a walkable 3D hall (three.js; WASD + mouse, E for a 360° close-up) whose rotunda and galleries are laid out from `artifacts.json`, so new exhibits appear without page changes; artifacts outside the main set go on the upper floor, up the stairs past the north gallery; `list.html` shows the same collection as a simple list (also for phones).
 
 ## Dataset
 

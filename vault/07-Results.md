@@ -472,7 +472,25 @@ Outside the 40-artifact main set, same frozen config, L3 (92 images), order in `
 | `Ark_HM_XXb_HI` | 25% | 92 | 8.8 min | 0.983 | 0.997 | Pass |
 | `Ark_HM_640_HI` | 30% | 92 | 8.5 min | 0.952 | 0.970 | Pass |
 
-**Measured:** 14 of 19 pass the rule. The five failures do not track the cut-off share: three split into two SfM models, and the failures sit at 10–20% while everything at 25–30% passes. Previews checked by eye. The hole in `Ark_HM_388_HI` and the broken rim of `Ark_HM_758_HI` are in the source photos, not reconstruction damage. The same caveat as the trial applies: the reference shares the framing, so F may not fully penalise parts outside the frame (hypothesis). L3 only, so no quality-vs-level comparison for this set. Not in the museum yet.
+**Measured:** 14 of 19 pass the rule. The five failures do not track the cut-off share: three split into two SfM models, and the failures sit at 10–20% while everything at 25–30% passes. Previews checked by eye. The hole in `Ark_HM_388_HI` and the broken rim of `Ark_HM_758_HI` are in the source photos, not reconstruction damage. The same caveat as the trial applies: the reference shares the framing, so F may not fully penalise parts outside the frame (hypothesis). L3 only, so no quality-vs-level comparison for this set. The 14 are now in the museum, on the upper floor (next section).
+
+## Museum upper floor — 44 exhibits — 2026-11-05
+
+The 14 passing cut-off artifacts exported at L3 (`export_glb.py`, run 2026-11-05), numbered 31–44. Museum models: 2.81–3.09 MB, about 100k triangles, surface F@0.002 R 0.958–0.998. The five failures were skipped by the exporter's own rule. Museum total: 44 exhibits, 129.6 MB.
+
+Measured in the app's browser pane on this laptop, pane visible, 746 × 630 px, pixel ratio 1.25:
+
+| View | Frame rate | Triangles drawn | Draw calls |
+|---|---|---|---|
+| Upper floor, looking along a wing | 60 fps | 0.74 M | 23 |
+| Top of the stairs, looking down | 60 fps | 3.05 M | 89 |
+| Foot of the stairs, looking up | 60 fps | 1.44 M | 38 |
+| Rotunda | 60 fps | 2.35 M | 64 |
+| South lobby, looking in | 60 fps | 4.25 M | 108 |
+
+Hall ready in 1.54 s and all 44 models loaded in 4.82 s, from localhost with files already in the browser cache; **not** a real download time. With the pane hidden the page read about 20 fps in every view whatever it drew, so that number is the hidden pane's limit, not a measurement. A full-screen window has not been measured.
+
+Checked: a simulated walk over `planHall(30, 14)` from the entrance up the stairs to both ends of the upper gallery (never stuck, height changes smoothly) and five wall tests (all blocked); live in the pane, the W key climbs the stairs, third person follows on the steps, the close-up on No. 31 opens at the right height with its panel, list view shows 44. Not checked: walking with real pointer lock in a normal browser.
 
 ## Museum gate scene — rendering cost — 2026-11-03
 

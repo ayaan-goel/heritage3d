@@ -13,7 +13,9 @@
 
 - [x] Avatars → no photos for now: stylized figures stay (team, 2026-11-03). A scan needs each person's agreement and a rigging tool if revisited.
 - [ ] Team: check with Prof. Singh that showing the PDEU gate and logo is fine, especially if the museum goes public.
-- [ ] Do the 14 artifacts from the cut-off set (L3, outside the 40) that pass the exhibit rule go in the museum? The hall is untested above 30 exhibits. See [[07-Results]]. How much of an object each cut-off view loses is not measured.
+- [x] Do the 14 artifacts from the cut-off set that pass the exhibit rule go in the museum? **Yes, on an upper floor (team, 2026-11-05)**; 44 exhibits measured at 60 fps in the app's pane. See [[07-Results]].
+- [ ] How much of an object each cut-off view loses is not measured, so the upper-floor models may lack parts the F-score does not penalise (hypothesis). See [[07-Results]].
+- [ ] Does the 44-exhibit hall hold its frame rate full screen, and how long does the 129.6 MB collection take to download once hosted? Only measured in the app's pane from localhost.
 - [x] Museum needs **≥ 30 exhibits** (team minimum, 2026-11-01). Closed 2026-11-04: all four last artifacts passed the unchanged rule (L3, mesh F ≥ 0.95), giving exactly 30 of the 40. No fallback level, extra artifacts or lower bar needed.
 - [ ] Where to host the museum (GitHub Pages from this repo, university server, or local demo only)? Team decision; GLBs are ~4 MB each.
 - [ ] Why does OpenMVS seam leveling blacken faces on CHSD renders? (hypothesis: pure-black background pixels at silhouettes pull the colour correction to black). Not needed for the experiment; museum export avoids it.

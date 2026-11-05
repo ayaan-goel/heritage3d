@@ -75,8 +75,8 @@ export function buildCharacter() {
       M.skin.color.setHex(skin);
       M.hair.color.setHex(hairColor);
     },
-    pose(x, z, yaw, speed, dt) {
-      group.position.set(x, 0, z);
+    pose(x, z, yaw, speed, dt, y = 0) {
+      group.position.set(x, y, z);
       group.rotation.y = yaw;
       phase += speed * dt * 3.4;
       swing += (Math.min(1, speed / 2.2) * 0.62 - swing) * Math.min(1, dt * 10);
