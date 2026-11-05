@@ -1,4 +1,4 @@
-// The way between the main gate and the museum: a rotating yellow arrow over a glowing circle on the ground,
+// The way into and out of the museum: a rotating yellow arrow over a glowing circle on the ground,
 // with a faint column of light above the circle. Walking into the circle takes the visitor across.
 import * as THREE from "three";
 import * as T from "./textures.js";

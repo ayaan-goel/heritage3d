@@ -666,6 +666,7 @@ export function buildGate({ logo, aniso, environment, plan }) {
     scene,
     portal: PORTAL,
     spawn: { x: 0, z: VIEW_Z, yaw: 0, pitch: 0.06 },
+    doorstep: { x: 0, z: FRONT + 3.4, yaw: Math.PI, pitch: 0 },  // leaving the museum, past the arrow, facing the gate
     move, height,
     atPortal: (x, z) => Math.hypot(x - PORTAL.x, z - PORTAL.z) < PORTAL.r - BODY * 0.4,
     distance: (x, z) => Math.hypot(x - PORTAL.x, z - PORTAL.z),

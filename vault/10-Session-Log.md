@@ -263,4 +263,6 @@ Newest first. Every session must add an entry (see `CLAUDE.md`).
 
 - Team asked to make the drive walkable. `gate.js`: gates swung open, new walkable areas (gateway, drive, court, portico) with `free()`-based `move()`, ground `height()` for the steps, arrow moved to the doors; `exterior.js` exports the portico's measures; `main.js` uses the gate's height, shows a hint to walk up the drive and adds `hall.position()` as a test aid; `index.html` text updated. Checked: `hall.gate.move` route from the street round the centre block to the doors (never stuck; floor rises to 0.9 m), six wall tests blocked, W key enters the museum from the portico. Not checked: a full walk at normal speed or the frame rate, because the pane stayed hidden (about 5 fps, and it left the canvas at 0 × 0 until a resize event was sent). `pytest -q` → 60 passed.
 
+- Team asked to leave by the doors: the lobby circle now places the visitor on the portico facing the gate (`gate.doorstep`, `placeOnDoorstep()` in `main.js`); the pause menu's button still goes to the main gate. Team also confirmed the lawns stay out of bounds.
+
 **Next action** — team: walk from the gate up the drive into the museum and to the upper floor in a normal browser. Then analyse the results for the report.

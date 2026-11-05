@@ -236,6 +236,11 @@ function placeAtGate() {
   Object.assign(me, { ...gate.spawn, vx: 0, vz: 0 });
 }
 
+function placeOnDoorstep() {
+  placeAtGate();
+  Object.assign(me, gate.doorstep);
+}
+
 function travel(place) {
   mode = "fade";
   fade.classList.add("on");
@@ -657,8 +662,8 @@ renderer.setAnimationLoop(() => {
   } else {
     backToGate.animate(clock.elapsedTime);
     const away = Math.hypot(me.x - plan.exit.x, me.z - plan.exit.z);
-    if (mode === "walk" && away < plan.exit.r - 0.14) travel(placeAtGate);
-    else if (mode === "walk" && away < 3.5) hint = "Walk into the yellow arrow to go back to the main gate";
+    if (mode === "walk" && away < plan.exit.r - 0.14) travel(placeOnDoorstep);
+    else if (mode === "walk" && away < 3.5) hint = "Walk into the yellow arrow to go outside";
   }
   target = mode === "walk" && !outside ? findTarget() : null;
   showPrompt();

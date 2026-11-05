@@ -125,7 +125,7 @@ export function planHall(n, upper = 0) {
     add("Upper floor", places);
   }
 
-  // the circle back to the main gate beside the entrance doors, then where visitors start, then two signboards
+  // the circle leading outside beside the entrance doors, then where visitors start, then two signboards
   // either side of the aisle, turned towards the start
   const entrance = galleries[0].end, start = toWorld(0, entrance - 3.4, 0);
   const [exitX, exitZ] = toWorld(0, entrance - 1.6, -2.4);  // off the aisle, clear of a third-person camera
