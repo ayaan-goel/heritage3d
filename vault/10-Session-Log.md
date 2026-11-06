@@ -270,3 +270,11 @@ Newest first. Every session must add an entry (see `CLAUDE.md`).
 - Team asked to measure visual fidelity, then to stop at the pilot as they were leaving. Added `src/heritage3d/visual.py`, `tests/test_visual.py`, `scripts/evaluate_visual.py`. Ran `evaluate_visual.py --artifacts Ark_HM_658_HI --levels L5 L4 L1 --museum --previews` and `--artifacts Ark_HM_1260B_HI --levels L5 --previews`: both finished, results in [[07-Results]]; comparison images for L4 and the museum GLB checked by eye. `pytest -q` → 78 passed. Full run not started.
 
 **Next action** — team: walk from the gate up the drive into the museum and to the upper floor in a normal browser. Then run the full visual fidelity measurement overnight, measure RQ3's remaining costs, and write up RQ1–RQ3.
+
+## 2026-11-05 to 06 — visual fidelity, full run (directed by Ayaan Goel and Kshiti Bhavsar)
+
+- Team said "START" on return; the full measurement ran in the background from 21:41 to 06:15 (`evaluate_visual.py` for 40 × 5 levels, the 19 cut-off artifacts at L3, then `--museum`): 263 results, exit 0, no errors in `experiments/logs/visual_full.log`. 8.8 h against my estimate of about 17 h: L1 took a median 412 s per model, not the pilot's 814 s.
+- New `scripts/analyze_visual.py`; ran it: tables and plots listed in [[07-Results]]. Plots checked by eye; median labels moved under the axis to stop them overlapping the dots. `pytest -q` → 78 passed.
+
+**Next action** — measure RQ3's rendering cost and real download time, then write up RQ1–RQ3.
+

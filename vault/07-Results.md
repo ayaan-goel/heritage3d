@@ -504,7 +504,43 @@ Across L1–L4 time grows as about images^1.34 (median per artifact), so doublin
 
 **Found while building it:** the batch runs textured with OpenMVS's default seam leveling, which damages these renders (`export_glb.py`), so this measurement re-textures with it off. The stored `scene_dense_texture*` files and the `textured_mesh_mb` cost column come from the leveled versions. Geometry and F-scores do not use the texture.
 
-**Full run, not started:** L1 re-texturing took 770 s here, much more than expected, so about 25 min per artifact over five levels, about 16 h for the 40, plus about 1 h for the museum models and the cut-off set (rough estimate from this one artifact). The script is resumable.
+**Full run:** done, next section.
+
+## Visual fidelity — all levels, cut-off set and museum models — 2026-11-06
+
+Ran 2026-11-05 21:41 to 2026-11-06 06:15 (8.8 h, 263 measurements, no errors; log `experiments/logs/visual_full.log`): 40 main-set artifacts × 5 levels, the 19 cut-off artifacts at L3, the 44 museum GLBs. Summary by `python scripts/analyze_visual.py`: `experiments/results/visual_levels.csv`, `visual_paired.csv`, `visual_all.csv`; plots `experiments/plots/visual_by_level.png`, `visual_museum.png`. Method as in the pilot above.
+
+Main set, medians over 40 artifacts (each artifact's value is its mean over the 12 held-out views):
+
+| Level | PSNR (dB) | SSIM | Silhouette IoU | PSNR where both show the object (dB) | IoU below 0.9 | Empty render |
+|---|---|---|---|---|---|---|
+| L1 | 29.55 | 0.918 | 0.995 | 32.41 | 2 | 0 |
+| L2 | 29.03 | 0.919 | 0.995 | 32.42 | 2 | 0 |
+| L3 | 29.25 | 0.924 | 0.995 | 32.42 | 2 | 0 |
+| L4 | 29.20 | 0.922 | 0.995 | 32.49 | 6 | 1 |
+| L5 | 14.39 | 0.595 | 0.791 | 25.61 | 25 | 4 |
+
+Paired differences on the same 40 artifacts (median, bootstrap 95% interval, Wilcoxon p with Holm's correction):
+
+| Compare | PSNR (dB) | p | SSIM | p |
+|---|---|---|---|---|
+| L2 − L1 | −0.34 (−0.58, −0.16) | < 0.001 | −0.0006 (−0.0036, 0.0010) | 0.92 |
+| L3 − L1 | −0.41 (−0.75, 0.04) | 0.065 | +0.0035 (−0.0001, 0.0059) | 0.49 |
+| L4 − L1 | −0.47 (−1.57, 0.07) | 0.065 | +0.0048 (−0.0066, 0.0087) | 1.0 |
+| L5 − L1 | −12.72 (−16.27, −8.72) | < 0.001 | −0.283 (−0.438, −0.194) | < 0.001 |
+| L4 − L3 | +0.06 (−0.32, 0.40) | 0.69 | +0.0019 (−0.0036, 0.0042) | 1.0 |
+| Museum GLB − full L3 (44 exhibits) | −0.20 (−0.24, −0.16) | < 0.001 | −0.0047 (−0.0051, −0.0043) | < 0.001 |
+
+Over the 200 main-set models, the visual measures rank models much as geometry does: Spearman ρ 0.80 (PSNR) and 0.87 (SSIM) against mesh F, 0.75 and 0.83 against cloud F. The weakest renders from L1 to L4 are the artifacts that fail on geometry (`Ark_HM_1260B_HI`, `Ark_HM_1260C_HI`, `Ark_HM_31_HI`, and `Ark_HM_38_HI` at L4 with no model). Cut-off set at L3: median PSNR 28.71 dB, SSIM 0.926 over 19; the 14 exhibited ones 30.32 dB and 0.929, against 29.88 dB and 0.930 for the 30 exhibited main-set artifacts at L3.
+
+**Measured, for this set under this setup:**
+
+- **RQ1 visual part:** appearance follows the same pattern as geometry. L2 to L4 look as good as L1 to within half a decibel of PSNR, with no significant SSIM difference and the same silhouettes; L5 collapses (median 14.4 dB, silhouette IoU 0.79, 4 empty renders). L1 is slightly ahead on PSNR, by 0.34 to 0.47 dB in median, significant only against L2 after correction. A plausible reason is L1's larger texture (4096 px against 2048 px at the other levels, from the same TextureMesh limit) (hypothesis, not tested). SSIM, which weighs structure rather than exact colour, shows no such lead.
+- **H2 holds visually too:** L3 and L4 match L1 within these margins, at 17% and 6.3% of its time.
+- **RQ3:** the museum models lose 0.20 dB PSNR and 0.005 SSIM against the full L3 model, consistently on 43 and 44 of 44 exhibits, at 19% of the file size. That loss is smaller than the gap between L1 and L3, and about a fiftieth of L5's. Rendering cost and real download time are still not measured.
+- **The cut-off set looks as good as the main set** at L3 on these measures, with the same framing caveat as its F-scores.
+
+**Limits:** the renders are unlit, like the museum models, and the CHSD photos are renders too, so these measure agreement with the dataset's own images, not with a real object's look. PSNR and SSIM are pixel measures; no perceptual or user study was done (out of scope). The textures here are the re-textured ones with seam leveling off, not the batch's stored ones. Texture size differs between levels, so texture resolution is part of what each level delivers here.
 
 ## Cut-off trial — `Ark_HM_640_HI` at L3 — 2026-11-04
 

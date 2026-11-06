@@ -94,6 +94,11 @@ Runs every level of the first N artifacts in the fixed order (the 40 artifacts n
 python scripts/analyze_tradeoff.py    # tables in experiments/results/tradeoff_*.csv, plots in experiments/plots/tradeoff_*.png
 ```
 
+```powershell
+python scripts/evaluate_visual.py --count 40 --levels L1 L2 L3 L4 L5   # renders from held-out views against the photos (hours)
+python scripts/analyze_visual.py                                       # visual_*.csv and plots
+```
+
 Compares the five levels on the 40 main-set artifacts from the stored runs: every cost separately, shares of L1, how many artifacts reach F >= 0.95 at each level, each artifact's cheapest sufficient level, and paired tests between levels. No weighted score is made from the costs.
 
 ## Virtual museum
