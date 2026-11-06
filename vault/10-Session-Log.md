@@ -276,5 +276,7 @@ Newest first. Every session must add an entry (see `CLAUDE.md`).
 - Team said "START" on return; the full measurement ran in the background from 21:41 to 06:15 (`evaluate_visual.py` for 40 × 5 levels, the 19 cut-off artifacts at L3, then `--museum`): 263 results, exit 0, no errors in `experiments/logs/visual_full.log`. 8.8 h against my estimate of about 17 h: L1 took a median 412 s per model, not the pilot's 814 s.
 - New `scripts/analyze_visual.py`; ran it: tables and plots listed in [[07-Results]]. Plots checked by eye; median labels moved under the axis to stop them overlapping the dots. `pytest -q` → 78 passed.
 
-**Next action** — measure RQ3's rendering cost and real download time, then write up RQ1–RQ3.
+- Team asked to measure RQ3's rendering and download cost. Added `scripts/export_full_glb.py` (ran: 44 full models, 670 MB, outside the repo), `scripts/bench_server.py`, `bench/index.html`, `bench/bench.js`, `scripts/analyze_rq3.py`. First timing method was tied to the display refresh (every model 16.6 ms); switched to offscreen batches of 30 draws. Ran the benchmark locally and at 20 Mbit/s, then `analyze_rq3.py`: results in [[07-Results]]. Plot checked by eye; subtitle fixed. Also corrected in [[07-Results]] an unsupported claim that L1 textures were larger. `pytest -q` → 78 passed.
+
+**Next action** — write up RQ1–RQ3 and H1–H3 for the report; mentor to confirm Option A and the joint trade-off reporting.
 

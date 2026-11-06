@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RQ3 Model Benchmark</title>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+      }
+    }
+  </script>
+  <style>
+    :root { --bg: #fcfcfb; --ink: #0b0b0b; --muted: #52514e; }
+    @media (prefers-color-scheme: dark) { :root { --bg: #1a1a19; --ink: #f0efec; --muted: #c3c2b7; } }
+    body { margin: 0; padding: 16px; background: var(--bg); color: var(--ink); font: 14px system-ui, sans-serif; }
+    canvas { display: block; max-width: 100%; height: auto; background: #1c1915; }
+    p { color: var(--muted); }
+  </style>
+</head>
+<body>
+  <h1>RQ3 model benchmark</h1>
+  <p>Loads each exhibit's museum and full model, times download, decoding, GPU upload and drawing, and saves the results.
+    Options: <code>?mbps=20</code> sends the models at that bandwidth and times downloads only; <code>?repeat=3</code>;
+    <code>?only=Ark_HM_272_HI</code>.</p>
+  <p id="status">Starting…</p>
+  <canvas id="view" width="1280" height="720"></canvas>
+  <script type="module" src="bench.js"></script>
+</body>
+</html>

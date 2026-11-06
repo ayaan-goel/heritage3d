@@ -101,6 +101,14 @@ python scripts/analyze_visual.py                                       # visual_
 
 Compares the five levels on the 40 main-set artifacts from the stored runs: every cost separately, shares of L1, how many artifacts reach F >= 0.95 at each level, each artifact's cheapest sufficient level, and paired tests between levels. No weighted score is made from the costs.
 
+## Museum model costs (RQ3)
+
+```powershell
+python scripts/export_full_glb.py      # full L3 models, outside the repo
+python scripts/bench_server.py         # then open http://localhost:8766/ (and ?mbps=20 for downloads)
+python scripts/analyze_rq3.py          # rq3_*.csv and experiments/plots/rq3_costs.png
+```
+
 ## Virtual museum
 
 ```
