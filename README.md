@@ -99,7 +99,7 @@ python scripts/evaluate_visual.py --count 40 --levels L1 L2 L3 L4 L5   # renders
 python scripts/analyze_visual.py                                       # visual_*.csv and plots
 ```
 
-Compares the five levels on the 40 main-set artifacts from the stored runs: every cost separately, shares of L1, how many artifacts reach F >= 0.95 at each level, each artifact's cheapest sufficient level, and paired tests between levels. No weighted score is made from the costs.
+Compares the five levels on the 40 main-set artifacts from the stored runs: every cost separately, shares of L1, how many artifacts reach F >= 0.95 at each level, each artifact's cheapest sufficient level, and paired tests between levels. On top of the side-by-side costs it gives each level a combined score (half quality, half saving against L1) and checks how the ranking changes with the weighting; this part needs `visual_all.csv` from `analyze_visual.py`.
 
 ## Museum model costs (RQ3)
 

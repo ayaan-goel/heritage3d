@@ -5,13 +5,18 @@ Writes:
     experiments/results/tradeoff_sufficient.csv  one row per artifact: its cheapest sufficient level
     experiments/results/tradeoff_policies.csv    one level for every artifact, against hindsight
     experiments/results/tradeoff_paired.csv      level differences on the same artifacts, with tests
-    experiments/plots/tradeoff_quality_vs_time.png, tradeoff_cost_by_level.png, tradeoff_sufficient.png
+    experiments/results/tradeoff_score.csv       combined score per level, with its parts (equal weights)
+    experiments/results/tradeoff_weights.csv     the score and ranking of the levels for quality weights 0 to 1
+    experiments/plots/tradeoff_quality_vs_time.png, tradeoff_cost_by_level.png, tradeoff_sufficient.png, tradeoff_score.png
+
+The combined score needs the visual results (experiments/results/visual_all.csv, from analyze_visual.py) for SSIM.
 
 Usage (PowerShell):
     python scripts/analyze_tradeoff.py
 """
 
 import argparse
+import csv
 import json
 import sys
 from pathlib import Path
@@ -20,12 +25,14 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from heritage3d.compare import collect, write_csv  # noqa: E402
 from heritage3d.config import DEFAULT_CONFIG, REPO_ROOT, load_config  # noqa: E402
-from heritage3d.tradeoff import QUALITY, level_table, paired_differences, policies, sufficient_table, time_exponent  # noqa: E402
+from heritage3d.tradeoff import (QUALITY, combined_score, level_table, paired_differences, policies, score_inputs,  # noqa: E402
+                                 sufficient_table, time_exponent, weight_check)
 
 THRESHOLDS = (0.90, 0.95, 0.98)
 SURFACE, INK, MUTED, GRID = "#fcfcfb", "#0b0b0b", "#52514e", "#e4e3df"
 LEVEL_COLOR = {"L1": "#0d366b", "L2": "#1c5cab", "L3": "#2a78d6", "L4": "#5598e7", "L5": "#86b6ef"}
 BLUE, ORANGE, NEUTRAL = "#2a78d6", "#eb6834", "#b9b8b2"
+WEIGHTS = [round(i / 20, 2) for i in range(21)]
 PAIRS = [("L2", "L1"), ("L3", "L1"), ("L4", "L1"), ("L5", "L1"), ("L4", "L3")]
 
 
@@ -113,6 +120,32 @@ def plot_sufficient(table, sufficient, levels, threshold, path):
     fig.savefig(path, dpi=150)
 
 
+def plot_score(weights, levels, path):
+    plt = setup()
+    fig, ax = plt.subplots(figsize=(7.5, 4.2))
+    xs = [w["quality_weight"] for w in weights]
+    for level in levels:
+        ys = [w[f"score_{level}"] for w in weights]
+        ax.plot(xs, ys, color=LEVEL_COLOR[level], lw=2)
+        ax.annotate(level, (0, ys[0]), xytext=(6, 4), textcoords="offset points", ha="left", va="bottom", fontsize=9, fontweight="bold",
+                    color=LEVEL_COLOR[level])
+    ax.axvline(0.5, color=MUTED, lw=1, ls=(0, (4, 3)))
+    ax.annotate("equal weights", (0.5, 0.02), xycoords=("data", "axes fraction"), xytext=(4, 0), textcoords="offset points",
+                fontsize=9, color=MUTED)
+    ax.set_xlim(0, 1)
+    ax.set_ylim(0, 1)
+    ax.set_xlabel("Weight on quality (the rest goes to saving against L1)")
+    ax.set_ylabel("Combined score (0 to 1)")
+    ax.set_title("Combined score of each level as the weighting changes")
+    fig.tight_layout()
+    fig.savefig(path, dpi=150)
+
+
+def load_ssim(path):
+    with open(path, encoding="utf-8") as f:
+        return {(r["artifact"], r["level"]): float(r["mean_ssim"]) for r in csv.DictReader(f) if r["set"] == "main"}
+
+
 def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--config", type=Path, default=DEFAULT_CONFIG)
@@ -140,7 +173,14 @@ def main(argv=None):
     plot_cost_by_level(table, plots / "tradeoff_cost_by_level.png")
     plot_sufficient(table, sufficient, levels, threshold, plots / "tradeoff_sufficient.png")
 
-    for rows in (table, plans, paired):
+    inputs = score_inputs(rows_by_artifact, load_ssim(results / "visual_all.csv"), levels, threshold)
+    scores = [{k: round(v, 4) if isinstance(v, float) else v for k, v in r.items()} for r in combined_score(inputs)]
+    weights = weight_check(inputs, WEIGHTS)
+    write_csv(scores, results / "tradeoff_score.csv")
+    write_csv(weights, results / "tradeoff_weights.csv")
+    plot_score(weights, levels, plots / "tradeoff_score.png")
+
+    for rows in (table, plans, paired, scores, weights):
         for row in rows:
             print(row)
     print("time exponent L1-L4:", time_exponent(rows_by_artifact, levels[:4]))

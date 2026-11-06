@@ -5,7 +5,8 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from heritage3d.tradeoff import cheapest_sufficient, holm, level_table, paired_differences, policies, sufficient_table, time_exponent
+from heritage3d.tradeoff import (cheapest_sufficient, combined_score, holm, level_table, paired_differences, policies, score_inputs,
+                                 sufficient_table, time_exponent, weight_check)
 
 IMAGES = {"L1": 362, "L3": 92, "L5": 26}
 
@@ -77,3 +78,34 @@ def test_paired_differences_on_same_artifacts():
 def test_time_exponent_of_a_known_power_law():
     rows = {"a": [row(l, 0.9, seconds=3 * IMAGES[l] ** 1.5) for l in IMAGES]}
     assert time_exponent(rows, ["L1", "L3", "L5"]) == 1.5
+
+
+def ssim():
+    return {(a, l): s for a in ("good", "needs_many", "never") for l, s in (("L1", 0.9), ("L3", 0.9), ("L5", 0.5))}
+
+
+def test_score_inputs_are_per_artifact_shares_and_counts():
+    inputs = {r["level"]: r for r in score_inputs(data(), ssim(), ["L1", "L3", "L5"], 0.95)}
+    assert inputs["L1"]["time_share"] == 1 and inputs["L1"]["storage_share"] == 1
+    assert inputs["L3"]["time_share"] == pytest.approx(92 / 362)
+    assert inputs["L3"]["storage_share"] == pytest.approx((92 * 0.75 + 20) / (362 * 0.75 + 20))
+    assert inputs["L5"]["share_sufficient"] == pytest.approx(1 / 3) and inputs["L5"]["median_ssim"] == 0.5
+    assert inputs["L3"]["median_mesh_f"] == 0.90
+
+
+def test_combined_score_is_weighted_quality_plus_saving():
+    inputs = score_inputs(data(), ssim(), ["L1", "L3", "L5"], 0.95)
+    scores = {r["level"]: r for r in combined_score(inputs)}
+    l1 = scores["L1"]
+    assert l1["saving"] == 0 and l1["quality"] == pytest.approx((0.96 + 0.9 + 2 / 3) / 3)
+    assert l1["score"] == pytest.approx(l1["quality"] / 2)
+    only_quality = {r["level"]: r["score"] for r in combined_score(inputs, 1.0)}
+    assert only_quality["L1"] == pytest.approx(l1["quality"])
+
+
+def test_weight_check_ranks_levels_and_follows_the_weight():
+    inputs = score_inputs(data(), ssim(), ["L1", "L3", "L5"], 0.95)
+    out = {r["quality_weight"]: r for r in weight_check(inputs, [0.0, 1.0])}
+    assert out[0.0]["best"] == "L5"  # saving only: the cheapest level wins
+    assert out[1.0]["best"] == "L1"  # quality only: L1 has the most sufficient artifacts here
+    assert out[1.0]["ranking"].startswith("L1 > ")

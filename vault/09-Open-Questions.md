@@ -2,7 +2,7 @@
 
 ## Open
 
-- [ ] Team: confirm evaluation Option A as implemented (see [[04-Methodology]]) and the thresholds τ = 0.002/0.005/0.01 R.
+- [x] Team: confirm evaluation Option A → **confirmed by the team (2026-11-06)**: testing the RGB reconstructions against the depth maps was the plan from the dataset choice. Thresholds unchanged. Mentor has not reviewed it yet. See [[04-Methodology]].
 - [ ] Companion paper: Arampatzakis, Arnaoutoglou, Koutsoudis & Pavlidis, "Deep Learning-Based Monocular Depth Estimation in Cultural Heritage", CAA-GR 2024 proceedings (Springer), doi 10.1007/978-3-032-06389-2_15 (to verify: does it describe camera setup and depth encoding?). Team to check access via university library.
 - [ ] Are the original Virtual Hampson Museum models obtainable, and under what license?
 - [ ] Why does dense-cloud precision fall as images increase (L4 0.985 → L1 0.829)? Hypothesis: fixed OpenMVS fusion settings. Round 1: the same pattern on all six artifacts that reconstruct as one model; round 2: on six more (12 / 20).
@@ -17,7 +17,8 @@
 - [ ] How much of an object each cut-off view loses is not measured, so the upper-floor models may lack parts the F-score does not penalise (hypothesis). See [[07-Results]].
 - [x] Visual and texture fidelity (RQ1, RQ3): measured on all 263 models, 2026-11-06. See [[07-Results]].
 - [x] RQ3 rendering cost: full against museum models measured in the browser, 2026-11-06. See [[07-Results]].
-- [ ] Should the mentor be asked to accept the joint trade-off reporting, with no single cost-effectiveness score? See [[08-Decisions]].
+- [x] Single cost-effectiveness score? → **Hybrid (team, 2026-11-06):** side-by-side tables plus a combined score with a weight check. See [[08-Decisions]], [[07-Results]].
+- [ ] Team: show Prof. Singh the results chapter (`docs/report/results.md`), including the combined score's parts and weights.
 - [ ] Does the 44-exhibit hall hold its frame rate full screen, and how long does the 129.6 MB collection take to download once hosted? Only measured in the app's pane from localhost.
 - [x] Museum needs **≥ 30 exhibits** (team minimum, 2026-11-01). Closed 2026-11-04: all four last artifacts passed the unchanged rule (L3, mesh F ≥ 0.95), giving exactly 30 of the 40. No fallback level, extra artifacts or lower bar needed.
 - [ ] Where to host the museum (GitHub Pages from this repo, university server, or local demo only)? Team decision; GLBs are ~4 MB each.

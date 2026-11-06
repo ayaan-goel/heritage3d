@@ -1,8 +1,9 @@
 """Quality against cost across subset levels: RQ2 of the project, from the rows of compare.collect().
 
-Costs stay separate, as the project definition lists them; no weighted score is made from them. A level is
-"sufficient" for an artifact when its F-score reaches a threshold fixed in advance. Artifacts are paired, so
-levels are compared on the same objects.
+Costs are reported side by side. On top of that, combined_score() sums them up per level as one number between
+0 and 1 (half quality, half saving against L1 by default), and weight_check() shows how the ranking of the levels
+moves when that split changes. A level is "sufficient" for an artifact when its F-score reaches a threshold fixed
+in advance. Artifacts are paired, so levels are compared on the same objects.
 """
 
 from statistics import median
@@ -108,6 +109,57 @@ def paired_differences(rows_by_artifact, pairs, key, seed=0, resamples=10000):
     for row, adjusted in zip(out, holm([r["p_wilcoxon"] for r in out])):
         row["p_wilcoxon"] = round(row["p_wilcoxon"], 5)
         row["p_holm"] = round(adjusted, 5)
+    return out
+
+
+def storage_mb(row):
+    """Disk a run takes: its input images, dense cloud and textured mesh."""
+    return row["input_mb"] + (row["dense_cloud_mb"] or 0) + (row["textured_mesh_mb"] or 0)
+
+
+def score_inputs(rows_by_artifact, ssim, levels, threshold, base="L1"):
+    """Per level, the parts of the combined score, each between 0 and 1.
+
+    Quality: median mesh F, median SSIM (ssim maps (artifact, level) to the mean SSIM over the held-out views)
+    and the share of artifacts whose mesh F reaches the threshold, so a cheap level that fails often scores low.
+    Cost: median share of the same artifact's base-level time, peak RAM and storage."""
+    baseline = _at(rows_by_artifact, base)
+    costs = {"time": lambda r: r["total_s"], "peak_ram": lambda r: r["peak_mb"], "storage": storage_mb}
+    out = []
+    for level in levels:
+        rows = _at(rows_by_artifact, level)
+        row = {"level": level, "images": next(iter(rows.values()))["images"],
+               "median_mesh_f": median(r["mesh_f@0.002"] for r in rows.values()),
+               "median_ssim": median(ssim[(a, level)] for a in rows),
+               "share_sufficient": sum(r["mesh_f@0.002"] >= threshold for r in rows.values()) / len(rows)}
+        for name, cost in costs.items():
+            row[f"{name}_share"] = median(cost(rows[a]) / cost(baseline[a]) for a in rows)
+        out.append(row)
+    return out
+
+
+QUALITY_PARTS = ("median_mesh_f", "median_ssim", "share_sufficient")
+COST_PARTS = ("time_share", "peak_ram_share", "storage_share")
+
+
+def combined_score(inputs, quality_weight=0.5):
+    """score = w * quality + (1 - w) * saving, where quality is the mean of QUALITY_PARTS and saving is 1 minus the
+    mean of COST_PARTS (0 at the base level, near 1 for a nearly free one). Equal weights inside each side."""
+    out = []
+    for row in inputs:
+        quality = sum(row[k] for k in QUALITY_PARTS) / len(QUALITY_PARTS)
+        saving = 1 - sum(row[k] for k in COST_PARTS) / len(COST_PARTS)
+        out.append({**row, "quality": quality, "saving": saving, "score": quality_weight * quality + (1 - quality_weight) * saving})
+    return out
+
+
+def weight_check(inputs, weights):
+    """For each quality weight, the levels from best to worst score."""
+    out = []
+    for w in weights:
+        ranked = sorted(combined_score(inputs, w), key=lambda r: -r["score"])
+        out.append({"quality_weight": w, "ranking": " > ".join(r["level"] for r in ranked), "best": ranked[0]["level"],
+                    **{f"score_{r['level']}": round(r["score"], 3) for r in combined_score(inputs, w)}})
     return out
 
 

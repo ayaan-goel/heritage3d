@@ -488,6 +488,20 @@ Across L1–L4 time grows as about images^1.34 (median per artifact), so doublin
 
 **Limits:** synthetic CHSD renders, one pipeline, a laptop CPU, one set of 40 artifacts chosen as never cut off in the sample views, and an evaluation method (Option A) the team has yet to confirm. Time and memory are single runs per level, not repeated. Visual and texture quality have no measurement here, so RQ1 is answered for geometry only. Final GLB size exists only for the L3 exhibits. Point density is not computed, because the evaluation's point counts are after downsampling; dense cloud size stands in for it.
 
+## Combined cost-effectiveness score — 40 main-set artifacts — 2026-11-06
+
+`python scripts/analyze_tradeoff.py` (needs `visual_all.csv`): `experiments/results/tradeoff_score.csv`, `tradeoff_weights.csv`, plot `experiments/plots/tradeoff_score.png`. Definition in [[08-Decisions]]: score = w × quality + (1 − w) × saving; quality = mean of median mesh F, median SSIM and share reaching mesh F 0.95; saving = 1 − mean of median time, peak RAM and storage (input + dense cloud + textured mesh) shares of the same artifact's L1.
+
+| Level | Quality | Saving | Score (w = 0.5) |
+|---|---|---|---|
+| L1 | 0.893 | 0.000 | 0.446 |
+| L2 | 0.892 | 0.510 | 0.701 |
+| L3 | 0.887 | 0.689 | 0.788 |
+| L4 | 0.870 | 0.772 | **0.821** |
+| L5 | 0.433 | 0.825 | 0.629 |
+
+**Measured:** L4 scores best for quality weights 0.15–0.80, L3 for 0.85–0.95, L1 only at 1.0 (cost ignored), L5 only at 0.10 or below. L1 is last for every weight up to 0.60. The score agrees with the side-by-side trade-off; it adds no new measurement. Its parts and weights are the team's choice.
+
 ## Visual fidelity — method pilot only — 2026-11-05
 
 `scripts/evaluate_visual.py`, `src/heritage3d/visual.py`. Each model is rendered from 12 held-out views (azimuths 7, 97, 187, 277° × elevations −45, 0, 45°, used by no level) with the ideal CHSD cameras and compared with the CHSD photo, over the union of the two silhouettes, so missing parts count against the model. Files: `experiments/results/visual/`, comparison images in `experiments/plots/visual/`.

@@ -280,5 +280,8 @@ Newest first. Every session must add an entry (see `CLAUDE.md`).
 
 - Team asked for the results write-up ("Yes, draft it"). Wrote `docs/report/results.md`: setup, RQ1–RQ3 with tables and answers, H1–H3 verdicts, limitations, figure and source-file list. Every number checked against `tradeoff_*.csv`, `visual_*.csv`, `rq3_summary.csv`; museum-against-full geometry over all 44 exhibits computed from `experiments/results/museum/*_glb.json` (largest surface-F change 0.0003, Chamfer 0.3%) and added to [[07-Results]]. Corrected "a fiftieth" to "a sixty-fifth" of L5's PSNR loss in [[07-Results]]. Nothing re-run.
 
-**Next action** — team reads the draft and sends it to Prof. Singh with the two open points (Option A, joint trade-off reporting).
+- Closed the RQ3 benchmark server (port 8766) at the team's request.
+- Team confirmed Option A (planned at dataset choice) and asked for hybrid cost-effectiveness reporting: side by side plus a combined score. Checked the literature workbook first: its gap is costs and quality "not treated together", not a single score; discussed, team said build it. Added `score_inputs`, `combined_score`, `weight_check` to `src/heritage3d/tradeoff.py` with 3 tests; `analyze_tradeoff.py` now writes `tradeoff_score.csv`, `tradeoff_weights.csv`, `tradeoff_score.png`. Ran it: earlier CSVs unchanged, results in [[07-Results]]; plot labels moved once to stop overlaps. Results chapter updated (Section 3.1, Table 5). `pytest -q` → 81 passed.
+
+**Next action** — team shows the results chapter to Prof. Singh, including the combined score's parts and weights.
 

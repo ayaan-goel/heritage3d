@@ -1,6 +1,6 @@
 # Results: RQ1–RQ3 and H1–H3 (draft)
 
-> **Draft for the project report.** Every number below comes from a committed result file (listed in Section 7) and from real runs on this project's laptop. Two points are still waiting for the mentor's confirmation: the geometric evaluation method (Option A, reference geometry from the decoded CHSD depth maps) and reporting the cost-effectiveness as a joint trade-off instead of a single weighted score. If either changes, Sections 2–4 change with it.
+> **Draft for the project report.** Every number below comes from a committed result file (listed in Section 7) and from real runs on this project's laptop. Two team decisions to show the mentor: the geometric evaluation compares the RGB reconstructions with reference geometry from the CHSD depth maps (Option A, planned when the dataset was chosen), and cost-effectiveness is reported side by side with a combined score on top (Section 3.1).
 
 ## 1. What was measured
 
@@ -93,13 +93,35 @@ L5's costs are partly low because 14 of its runs produced no dense cloud and ski
 3. **The real trade-off is reliability against time, not quality against time.** Going from L4 to L3 more than doubles the time (2.7 h → 6.3 h for all 40) and recovers two more artifacts above the threshold; going further to L2 or L1 costs 15.5 h or 40.1 h and recovers one more. L4 is the most economical level and L3 the safer one; nothing finer than L2 gained anything here.
 4. **The threshold choice changes little.** With a sufficiency threshold of mesh F 0.90, L4 is the cheapest sufficient level for 22 artifacts; at 0.98, for 20.
 
-**Answer to RQ2.** Cost and quality are not traded smoothly. Processing cost rises steeply with image count (about images^1.34), while quality reaches its plateau at about 47 images and does not improve beyond it. The practical trade-off is between 47 images (lowest cost, 28 of 40 sufficient) and 92 images (2.3× the time, 30 of 40 sufficient); 182 or 362 images add cost without adding quality. Cost-effectiveness is reported as this joint picture (quality, reliability, time, memory and storage side by side) rather than as one weighted score, because the reviewed literature reports these costs separately and offers no agreed weighting.
+### 3.1 Combined cost-effectiveness score
+
+The reviewed literature reports quality and the costs of acquisition and computation separately. To summarise them together, each level also gets one combined score between 0 and 1:
+
+- **Quality** = mean of three parts, each between 0 and 1: median mesh F (shape), median SSIM (appearance), and the share of artifacts reaching mesh F ≥ 0.95 (reliability, so a cheap level that often fails scores low).
+- **Saving** = 1 − mean of three cost shares against the same artifact's L1 run: processing time, peak RAM, and storage (input images + dense cloud + textured mesh). L1 has saving 0.
+- **Score** = w × quality + (1 − w) × saving, with equal weights (w = 0.5) as the main setting.
+
+The score summarises the side-by-side tables; it does not replace them. The weights are a choice, so the ranking is also checked for every quality weight from 0 to 1 in steps of 0.05.
+
+**Table 5.** Combined score by level, equal weights.
+
+| Level | Images | Mesh F | SSIM | Share sufficient | Time share | RAM share | Storage share | Quality | Saving | **Score** |
+|---|---|---|---|---|---|---|---|---|---|---|
+| L1 | 362 | 0.985 | 0.918 | 0.775 | 1.000 | 1.000 | 1.000 | 0.893 | 0.000 | 0.446 |
+| L2 | 182 | 0.982 | 0.919 | 0.775 | 0.396 | 0.507 | 0.568 | 0.892 | 0.510 | 0.701 |
+| L3 | 92 | 0.989 | 0.924 | 0.750 | 0.167 | 0.456 | 0.309 | 0.887 | 0.689 | 0.788 |
+| **L4** | 47 | 0.988 | 0.922 | 0.700 | 0.063 | 0.456 | 0.164 | 0.870 | 0.772 | **0.821** |
+| L5 | 26 | 0.580 | 0.595 | 0.125 | 0.017 | 0.454 | 0.053 | 0.433 | 0.825 | 0.629 |
+
+**Weight check.** L4 has the best score for every quality weight from 0.15 to 0.80, and L3 from 0.85 to 0.95. L1 is best only when cost is ignored entirely (w = 1), and L5 only when quality counts for 10% or less. L1 is last for every quality weight up to 0.60.
+
+**Answer to RQ2.** Cost and quality are not traded smoothly. Processing cost rises steeply with image count (about images^1.34), while quality reaches its plateau at about 47 images and does not improve beyond it. The practical trade-off is between 47 images (lowest cost, 28 of 40 sufficient) and 92 images (2.3× the time, 30 of 40 sufficient); 182 or 362 images add cost without adding quality. The combined score agrees: with equal weights L4 is the most cost-effective level (0.82), followed by L3 (0.79), and this holds over a wide range of weights, so the conclusion does not hang on the weighting chosen.
 
 ## 4. RQ3 — Can an optimized model keep its fidelity while reducing storage and rendering cost?
 
 The museum model (about 100,000 triangles, ≤ 2048 px JPEG texture) is compared with the full model of the same L3 mesh on all 44 exhibits.
 
-**Table 5.** Museum model against full model, medians over 44 exhibits.
+**Table 6.** Museum model against full model, medians over 44 exhibits.
 
 | Measure | Museum model | Full model | Museum as share of full |
 |---|---|---|---|
@@ -133,7 +155,7 @@ Browser costs were measured in Chrome on the team laptop with three.js, three ru
 | Hypothesis | Verdict | Evidence |
 |---|---|---|
 | **H1:** Reducing input images reduces computational requirements, but excessive reduction decreases reconstruction quality and completeness. | **Supported**, with a limit on memory | Time falls to 6.3% of L1 at L4 and 1.7% at L5; input and cloud size fall with images. Peak RAM stops falling below L3 (about 2 GB). Quality and completeness collapse at L5: recall 0.41, mesh F 0.58, PSNR 14.4 dB, 14 runs with no cloud. |
-| **H2:** There is a practical range in which substantially fewer images give quality comparable to a much larger set. | **Supported** | L3 (92 images) and L4 (47 images) keep median mesh F within 0.003 of L1 (362 images) and PSNR within 0.5 dB, at 17% and 6.3% of the time. No equivalence margin was fixed in advance, so this is stated as measured differences with intervals, not as a formal equivalence test. |
+| **H2:** There is a practical range in which substantially fewer images give quality comparable to a much larger set. | **Supported** | L3 (92 images) and L4 (47 images) keep median mesh F within 0.003 of L1 (362 images) and PSNR within 0.5 dB, at 17% and 6.3% of the time; they have the best combined score for every quality weight from 0.15 to 0.95. No equivalence margin was fixed in advance, so this is stated as measured differences with intervals, not as a formal equivalence test. |
 | **H3:** Model optimization can reduce storage and rendering requirements while keeping sufficient visual quality for an interactive virtual museum. | **Supported** | File size 19%, download 23%, decoding 31%, drawing 43% of the full model, for 0.20 dB PSNR, 0.005 SSIM and no measurable geometric change; the 44-exhibit hall runs at 60 fps on integrated graphics. |
 
 ## 6. Limitations
@@ -141,7 +163,8 @@ Browser costs were measured in Chrome on the team laptop with three.js, three ru
 - **Synthetic data.** CHSD images are renders with ideal cameras, uniform lighting and a black background. These are controlled benchmark results, not universal claims about real museum photography; real-world validation is future work.
 - **One pipeline, one machine.** One frozen COLMAP + OpenMVS configuration on one laptop CPU; times and memory are single runs per level, not repeated. Other software or settings may move the thresholds (for example, the precision loss at L1 may depend on OpenMVS's fusion settings).
 - **Selection of artifacts.** The 40-artifact main set excludes artifacts cut off by the frame; the cut-off set was run at L3 only, so it gives no level comparison. Its reference shares the framing, so its F-scores may not fully penalise parts outside the frame (hypothesis).
-- **Evaluation method awaiting confirmation.** The geometric reference (Option A) and the 0.002 R tolerance were fixed before the comparison, but the mentor has yet to confirm them.
+- **Evaluation choices.** The geometric reference (Option A) and the 0.002 R tolerance were fixed before the comparison; the mentor has not yet reviewed them.
+- **Combined score.** Its parts and equal weights are the team's choice, not a standard from the literature. The weight check shows the ranking of L3 and L4 holds over most weightings, but a different set of parts could move it.
 - **Visual measures.** PSNR and SSIM against the dataset's own renders, unlit; no perceptual or user study (out of scope).
 - **Browser costs.** One laptop and one browser; bandwidth simulated on a local server with no latency; the site is not hosted yet. GPU memory is calculated from decoded sizes, not read from the driver.
 - **No sufficiency rule without reference geometry.** The cheapest sufficient level per artifact can only be found in hindsight; a real capture would choose one level in advance.
@@ -153,6 +176,7 @@ Browser costs were measured in Chrome on the team laptop with three.js, three ru
 | Quality against processing time, all 200 runs | `experiments/plots/tradeoff_quality_vs_time.png` |
 | Cost by level | `experiments/plots/tradeoff_cost_by_level.png` |
 | Cheapest sufficient level per artifact | `experiments/plots/tradeoff_sufficient.png` |
+| Combined score against the quality weight | `experiments/plots/tradeoff_score.png` |
 | Visual quality by level | `experiments/plots/visual_by_level.png` |
 | Museum model against full model, visual | `experiments/plots/visual_museum.png` |
 | Museum model against full model, browser costs | `experiments/plots/rq3_costs.png` |
@@ -160,8 +184,9 @@ Browser costs were measured in Chrome on the team laptop with three.js, three ru
 | Numbers in | Source file | Made by |
 |---|---|---|
 | Tables 1–4 (geometry and cost) | `experiments/results/tradeoff_levels.csv`, `tradeoff_paired.csv`, `tradeoff_policies.csv`, `tradeoff_sufficient.csv` | `scripts/analyze_tradeoff.py` |
+| Table 5 and weight check | `experiments/results/tradeoff_score.csv`, `tradeoff_weights.csv` | `scripts/analyze_tradeoff.py` |
 | Tables 1–2 (visual) | `experiments/results/visual_levels.csv`, `visual_paired.csv`, `visual_all.csv` | `scripts/analyze_visual.py` |
-| Table 5 (geometry) | `experiments/results/museum/<artifact>_glb.json` | `scripts/export_glb.py` |
-| Table 5 (browser) | `experiments/results/rq3_summary.csv`, `rq3_models.csv`, `rq3/bench_*.json` | `bench/`, `scripts/analyze_rq3.py` |
+| Table 6 (geometry) | `experiments/results/museum/<artifact>_glb.json` | `scripts/export_glb.py` |
+| Table 6 (browser) | `experiments/results/rq3_summary.csv`, `rq3_models.csv`, `rq3/bench_*.json` | `bench/`, `scripts/analyze_rq3.py` |
 | Hall frame rates | `vault/07-Results.md`, "Museum upper floor" | measured in the browser pane |
 | Per-run data | `experiments/results/runs/<artifact>_<level>{,_eval}.json` | `scripts/run_batch.py` |
