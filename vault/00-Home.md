@@ -5,11 +5,12 @@
 
 > Updating this vault at the end of every session is **mandatory** (see `CLAUDE.md`).
 
-## Current status (updated 2026-11-05)
+## Current status (updated 2026-11-06)
 
 - **Quality-against-cost analysis done on all 40** (2026-11-05): L4 takes 6.3% of L1's time and L3 17%, with median mesh F within 0.003 of L1. Reaching mesh F 0.95: L1 31, L2 31, L3 30, L4 28, L5 5; 9 never do. H1 and H2 supported for geometry.  See [[07-Results]].
 - **Visual fidelity measured on all 263 models** (2026-11-06): L2–L4 match L1 within 0.5 dB PSNR with no SSIM difference; L5 collapses (14.4 dB). Museum models lose only 0.20 dB and 0.005 SSIM against the full L3 model. RQ1 now answered for appearance too. See [[07-Results]].
-- **RQ3 measured in the browser** (2026-11-06): against the full L3 model, the museum model is 19% of the size, downloads in 23% of the time at 20 Mbit/s, decodes in 31% and draws in 43%, at 0.20 dB PSNR. H3 supported. All RQs and hypotheses now have results; the write-up is next. See [[07-Results]].
+- **RQ3 measured in the browser** (2026-11-06): against the full L3 model, the museum model is 19% of the size, downloads in 23% of the time at 20 Mbit/s, decodes in 31% and draws in 43%, at 0.20 dB PSNR. H3 supported. All RQs and hypotheses now have results. See [[07-Results]].
+- **Results chapter drafted** (2026-11-06): `docs/report/results.md` answers RQ1–RQ3 and H1–H3 with tables, limitations and the source file of every number. Draft until Prof. Singh confirms Option A and the joint trade-off reporting.
 - **The museum building is visible through the main gate** (2026-11-05): dome, columned entrance and name at the end of the drive, plus a drive sign. Its wings follow the hall's real floor plan; its outward style is invented, not a real campus building. The gates now stand open and visitors walk up the drive; the yellow arrow is at the museum's doors. Not yet walked at normal speed in a visible browser.
 - **Museum has an upper floor: 44 exhibits, 129.6 MB** (2026-11-05). Stairs past the north gallery lead to an upper gallery with the 14 passing cut-off artifacts (Nos. 31–44), labelled as a separate set. 60 fps in the app's pane; not yet walked in a normal browser. See [[07-Results]].
 - **Cut-off set run at L3** (2026-11-05, separate from the 40): 19 artifacts cut off in at most 30% of sample views, 14 pass the exhibit rule. See [[07-Results]].
@@ -39,7 +40,7 @@
 ## Next action
 
 1. Team: walk the stairs and upper floor in a normal browser, full screen (hard refresh with Ctrl+Shift+R if the page shows an old version).
-2. Write up RQ1–RQ3 and H1–H3 for the report from [[07-Results]]; ask Prof. Singh to confirm the evaluation method (Option A) and the joint trade-off reporting.
+2. Team: read `docs/report/results.md` and send it to Prof. Singh with the two open points (evaluation method Option A, joint trade-off reporting).
 3. Team: walk the new hall in a normal browser (`python -m http.server 8000 --directory museum`), check the feel (speed, mouse sensitivity, placards) and decide where to host it ([[09-Open-Questions]]); later: load-time measurement for RQ3.
 4. Team: confirm the evaluation method (Option A, decoded CHSD depth — [[04-Methodology]]).
 5. The zips in `Downloads` can be kept as backup or deleted (team's choice).

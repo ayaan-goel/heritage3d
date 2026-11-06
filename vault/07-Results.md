@@ -537,7 +537,7 @@ Over the 200 main-set models, the visual measures rank models much as geometry d
 
 - **RQ1 visual part:** appearance follows the same pattern as geometry. L2 to L4 look as good as L1 to within half a decibel of PSNR, with no significant SSIM difference and the same silhouettes; L5 collapses (median 14.4 dB, silhouette IoU 0.79, 4 empty renders). L1 is slightly ahead on PSNR, by 0.34 to 0.47 dB in median, significant only against L2 after correction. Why is not established: texture size could play a part, since TextureMesh picks the atlas size itself (stored textures seen at 2048 and 4096 px, at L3 as well as L1), but the re-textured sizes were not recorded (hypothesis, not tested). SSIM, which weighs structure rather than exact colour, shows no such lead.
 - **H2 holds visually too:** L3 and L4 match L1 within these margins, at 17% and 6.3% of its time.
-- **RQ3:** the museum models lose 0.20 dB PSNR and 0.005 SSIM against the full L3 model, consistently on 43 and 44 of 44 exhibits, at 19% of the file size. That loss is smaller than the gap between L1 and L3, and about a fiftieth of L5's. Rendering cost and real download time are still not measured.
+- **RQ3:** the museum models lose 0.20 dB PSNR and 0.005 SSIM against the full L3 model, consistently on 43 and 44 of 44 exhibits, at 19% of the file size. That loss is smaller than the gap between L1 and L3, and about a sixty-fifth of L5's (12.7 dB). Rendering cost and download time: next section.
 - **The cut-off set looks as good as the main set** at L3 on these measures, with the same framing caveat as its F-scores.
 
 **Limits:** the renders are unlit, like the museum models, and the CHSD photos are renders too, so these measure agreement with the dataset's own images, not with a real object's look. PSNR and SSIM are pixel measures; no perceptual or user study was done (out of scope). The textures here are the re-textured ones with seam leveling off, not the batch's stored ones. Texture size is chosen by TextureMesh per model and was not recorded, so it is part of what each model delivers here.
@@ -559,6 +559,8 @@ Medians over 44 exhibits:
 | GPU memory, estimated (geometry + RGBA textures with mipmaps) | 2.5 + 21.3 MB | 10.9 + 21.3 MB | |
 
 All 44 together: 129.6 MB against 669 MB; download at 20 Mbit/s measured 68 s against 281 s. Calculated from size at 10 / 25 / 50 / 100 Mbit/s: museum 109 / 43 / 22 / 11 s, full 561 / 225 / 112 / 56 s; one median museum model 2.5 / 1.0 / 0.5 / 0.25 s. The measured 20 Mbit/s times were a median 1.10 × the calculated ones (transfer overhead). Estimated GPU memory for the whole hall: about 1.0 GB museum, 2.0 GB full.
+
+Over all 44 exhibits the museum model's surface F@0.002 R differs from the full model's by at most 0.0003 (median −0.00002) and its Chamfer by at most 0.3% (from `experiments/results/museum/*_glb.json`, checked 2026-11-06).
 
 **Measured, for this laptop:**
 

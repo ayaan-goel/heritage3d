@@ -278,5 +278,7 @@ Newest first. Every session must add an entry (see `CLAUDE.md`).
 
 - Team asked to measure RQ3's rendering and download cost. Added `scripts/export_full_glb.py` (ran: 44 full models, 670 MB, outside the repo), `scripts/bench_server.py`, `bench/index.html`, `bench/bench.js`, `scripts/analyze_rq3.py`. First timing method was tied to the display refresh (every model 16.6 ms); switched to offscreen batches of 30 draws. Ran the benchmark locally and at 20 Mbit/s, then `analyze_rq3.py`: results in [[07-Results]]. Plot checked by eye; subtitle fixed. Also corrected in [[07-Results]] an unsupported claim that L1 textures were larger. `pytest -q` → 78 passed.
 
-**Next action** — write up RQ1–RQ3 and H1–H3 for the report; mentor to confirm Option A and the joint trade-off reporting.
+- Team asked for the results write-up ("Yes, draft it"). Wrote `docs/report/results.md`: setup, RQ1–RQ3 with tables and answers, H1–H3 verdicts, limitations, figure and source-file list. Every number checked against `tradeoff_*.csv`, `visual_*.csv`, `rq3_summary.csv`; museum-against-full geometry over all 44 exhibits computed from `experiments/results/museum/*_glb.json` (largest surface-F change 0.0003, Chamfer 0.3%) and added to [[07-Results]]. Corrected "a fiftieth" to "a sixty-fifth" of L5's PSNR loss in [[07-Results]]. Nothing re-run.
+
+**Next action** — team reads the draft and sends it to Prof. Singh with the two open points (Option A, joint trade-off reporting).
 
