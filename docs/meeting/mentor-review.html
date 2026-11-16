@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mentor Review Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fbf8f3; --paper: #ffffff; --ink: #24201b; --muted: #6b6359; --line: #e9e1d5;
+    --clay: #b5562f; --clay-soft: #f6e4da; --sage: #4f7a5a; --sage-soft: #e3efe5;
+    --sky: #3d6d99; --sky-soft: #e2ecf5; --gold: #a87a16; --gold-soft: #f7edd2;
+    --rose: #a8435b; --rose-soft: #f6e0e5;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1b1916; --paper: #24211d; --ink: #f1ece4; --muted: #b5ab9d; --line: #3a352e;
+      --clay: #e58a62; --clay-soft: #3b2a21; --sage: #8fc09b; --sage-soft: #233229;
+      --sky: #8ab6df; --sky-soft: #1f2c39; --gold: #e2b952; --gold-soft: #362c16;
+      --rose: #e48aa0; --rose-soft: #3a222a;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1b1916; --paper: #24211d; --ink: #f1ece4; --muted: #b5ab9d; --line: #3a352e;
+    --clay: #e58a62; --clay-soft: #3b2a21; --sage: #8fc09b; --sage-soft: #233229;
+    --sky: #8ab6df; --sky-soft: #1f2c39; --gold: #e2b952; --gold-soft: #362c16;
+    --rose: #e48aa0; --rose-soft: #3a222a;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.6 Inter, system-ui, sans-serif; }
+  .wrap { max-width: 920px; margin: 0 auto; padding: 32px 16px 64px; }
+  h1, h2, h3 { font-family: Fraunces, Georgia, serif; line-height: 1.2; margin: 0; }
+  h1 { font-size: clamp(30px, 6vw, 44px); font-weight: 700; }
+  h2 { font-size: 26px; font-weight: 700; margin: 0 0 6px; display: flex; align-items: center; gap: 12px; }
+  h3 { font-size: 18px; font-weight: 600; margin: 18px 0 8px; }
+  p { margin: 8px 0; }
+  a { color: var(--sky); }
+  code { font: 13px/1.4 ui-monospace, Consolas, monospace; background: var(--line); padding: 1px 5px; border-radius: 4px; overflow-wrap: anywhere; }
+  .muted { color: var(--muted); }
+  .num { display: inline-grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--clay); color: #fff;
+         font: 700 16px Inter, sans-serif; flex: none; }
+
+  /* cover */
+  .cover { background: var(--paper); border: 1px solid var(--line); border-radius: 22px; padding: 30px 28px; position: relative; overflow: hidden; }
+  .cover::after { content: ""; position: absolute; right: -60px; top: -60px; width: 220px; height: 220px; border-radius: 50%;
+                  background: radial-gradient(circle at 40% 40%, var(--clay-soft), transparent 70%); }
+  .eyebrow { text-transform: uppercase; letter-spacing: .12em; font-size: 12px; font-weight: 700; color: var(--clay); }
+  .cover .sub { font-size: 17px; color: var(--muted); margin-top: 10px; max-width: 640px; }
+  .meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+  .chip { font-size: 13px; padding: 4px 11px; border-radius: 999px; background: var(--bg); border: 1px solid var(--line); }
+
+  section { margin-top: 34px; }
+  .lead { color: var(--muted); margin: 0 0 14px 46px; }
+  .card { background: var(--paper); border: 1px solid var(--line); border-radius: 16px; padding: 18px 20px; margin: 12px 0; break-inside: avoid; }
+  .grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+  .stat { background: var(--paper); border: 1px solid var(--line); border-radius: 16px; padding: 14px 16px; break-inside: avoid; }
+  .stat b { display: block; font: 700 26px Fraunces, Georgia, serif; }
+  .stat span { font-size: 13px; color: var(--muted); }
+  .t-clay { border-top: 4px solid var(--clay); } .t-sage { border-top: 4px solid var(--sage); }
+  .t-sky { border-top: 4px solid var(--sky); } .t-gold { border-top: 4px solid var(--gold); }
+
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); font-weight: 600; }
+  td.r, th.r { text-align: right; font-variant-numeric: tabular-nums; }
+  .scroll { overflow-x: auto; }
+  tr.hi td { background: var(--sage-soft); }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .04em; padding: 2px 8px; border-radius: 999px; white-space: nowrap; }
+  .ok { background: var(--sage-soft); color: var(--sage); } .warn { background: var(--gold-soft); color: var(--gold); }
+  .bad { background: var(--rose-soft); color: var(--rose); } .info { background: var(--sky-soft); color: var(--sky); }
+
+  ol.steps { list-style: none; padding: 0; margin: 0; counter-reset: s; }
+  ol.steps li { counter-increment: s; position: relative; padding: 10px 0 10px 44px; border-bottom: 1px dashed var(--line); }
+  ol.steps li:last-child { border-bottom: 0; }
+  ol.steps li::before { content: counter(s); position: absolute; left: 0; top: 10px; width: 28px; height: 28px; border-radius: 9px;
+                        background: var(--clay-soft); color: var(--clay); font-weight: 700; display: grid; place-items: center; font-size: 14px; }
+  ul.check { list-style: none; padding: 0; margin: 0; }
+  ul.check li { padding: 6px 0 6px 30px; position: relative; }
+  ul.check li::before { content: ""; position: absolute; left: 2px; top: 10px; width: 16px; height: 16px; border: 2px solid var(--sage); border-radius: 5px; }
+
+  .ask { border-left: 4px solid var(--clay); }
+  .ask .q { font-weight: 600; font-size: 16px; }
+  .ask .why { color: var(--muted); font-size: 14px; }
+  .ask .prop { margin-top: 6px; font-size: 14px; }
+
+  details.qa { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; margin: 8px 0; break-inside: avoid; }
+  details.qa summary { cursor: pointer; padding: 12px 16px; font-weight: 600; list-style: none; display: flex; gap: 10px; }
+  details.qa summary::-webkit-details-marker { display: none; }
+  details.qa summary::before { content: "Q"; flex: none; width: 22px; height: 22px; border-radius: 6px; background: var(--sky-soft); color: var(--sky);
+                               display: grid; place-items: center; font-size: 12px; font-weight: 700; margin-top: 1px; }
+  details.qa .a { padding: 0 16px 14px 48px; color: var(--ink); }
+  details.qa .a p:first-child { margin-top: 0; }
+  .qgroup { margin-top: 22px; font: 600 13px Inter, sans-serif; text-transform: uppercase; letter-spacing: .08em; color: var(--clay); }
+
+  .note { background: var(--gold-soft); border-radius: 12px; padding: 12px 16px; font-size: 14px; margin: 12px 0; break-inside: avoid; }
+  .two { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+  .who { display: flex; gap: 10px; align-items: center; font-weight: 600; margin-bottom: 6px; }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  footer { margin-top: 40px; font-size: 13px; color: var(--muted); text-align: center; }
+  .noprint { }
+
+  @media (max-width: 560px) { .lead { margin-left: 0; } .cover { padding: 22px 18px; } }
+  @media print {
+    @page { size: A4; margin: 14mm 12mm; }
+    body { background: #fff; font-size: 12.5px; }
+    .wrap { max-width: none; padding: 0; }
+    section { margin-top: 20px; }
+    h2 { break-after: avoid; }
+    .pb { break-before: page; }
+    details.qa summary::before { content: "Q"; }
+    .noprint { display: none; }
+    a { color: inherit; text-decoration: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="cover">
+  <div class="eyebrow">Mentor review · Thursday 19 / Friday 20 November 2026</div>
+  <h1>heritage3d: meeting guide for Prof. Komal Singh</h1>
+  <p class="sub">What to show, what to discuss, what to ask, and the questions she is likely to ask back, with short answers backed by our own results.</p>
+  <div class="meta">
+    <span class="chip">Ayaan Goel</span><span class="chip">Kshiti Bhavsar</span>
+    <span class="chip">Mentor: Prof. Komal Singh</span><span class="chip">Status: all experiments done, report chapter drafted</span>
+  </div>
+</header>
+
+<!-- 1 -->
+<section>
+  <h2><span class="num">1</span>The project in one minute</h2>
+  <p class="lead">Say this first. It frames everything else.</p>
+  <div class="card">
+    <p><b>Question:</b> how many photos do you really need to digitize a heritage artifact well enough for preservation and a virtual museum, and what does each extra photo cost in computing?</p>
+    <p><b>What we did:</b> took the same artifacts from the CHSD dataset, made five photo sets of decreasing size (362 → 26 images), ran every set through the same free, CPU-only pipeline (COLMAP + OpenMVS) on our own laptop, measured shape accuracy, appearance, time, memory and storage, and put the passing models into a walkable 3D web museum.</p>
+    <p><b>Answer:</b> 47–92 photos give the same quality as 362, at 6–17% of the computing time. Fewer than that (26) breaks down. The museum's compressed models look the same as the full ones at a fifth of the size.</p>
+  </div>
+  <div class="grid">
+    <div class="stat t-clay"><b>200</b><span>reconstructions: 40 artifacts × 5 photo levels</span></div>
+    <div class="stat t-sage"><b>6.3%</b><span>of L1's time at L4, with the same mesh quality</span></div>
+    <div class="stat t-sky"><b>44</b><span>exhibits in the web museum, 129.6 MB in all</span></div>
+    <div class="stat t-gold"><b>3 / 3</b><span>hypotheses supported by measured results</span></div>
+  </div>
+</section>
+
+<!-- 2 -->
+<section>
+  <h2><span class="num">2</span>Suggested meeting plan</h2>
+  <p class="lead">About 40 minutes. Demo early, while attention is fresh; keep the asks for the end so they are not squeezed out.</p>
+  <div class="card scroll">
+    <table>
+      <tr><th>Time</th><th>Part</th><th>Who (suggested)</th><th>Material</th></tr>
+      <tr><td>3 min</td><td>Problem, research questions, novelty</td><td>Ayaan</td><td>Section 1 above; <code>vault/01-Project-Definition.md</code></td></tr>
+      <tr><td>4 min</td><td>Dataset and method</td><td>Kshiti</td><td>Section 4 below</td></tr>
+      <tr><td>8 min</td><td>Live museum demo</td><td>Kshiti</td><td>Museum in Chrome, full screen (Section 3)</td></tr>
+      <tr><td>12 min</td><td>Results: RQ1, RQ2 (with combined score), RQ3</td><td>Ayaan</td><td><code>docs/report/results.md</code> and the charts</td></tr>
+      <tr><td>3 min</td><td>Limitations, honestly</td><td>Kshiti</td><td>Section 5 below</td></tr>
+      <tr><td>10 min</td><td>Our questions to her</td><td>Both</td><td>Section 6 below</td></tr>
+    </table>
+  </div>
+  <p class="muted">The split is only a suggestion: swap parts so each of you presents something technical and something from the demo.</p>
+</section>
+
+<!-- 3 -->
+<section class="pb">
+  <h2><span class="num">3</span>What to show</h2>
+  <p class="lead">In this order. Each item says where to find it.</p>
+
+  <div class="card">
+    <h3 style="margin-top:0">The day before: checklist</h3>
+    <ul class="check">
+      <li><b>Walk the whole museum once in a normal Chrome window, full screen.</b> It has only been tested inside the Claude app's browser pane so far. Hard refresh with <code>Ctrl+Shift+R</code>.</li>
+      <li>Check the internet works in the meeting room: the museum loads its 3D library (three.js) from the internet.</li>
+      <li>Laptop on the charger, other heavy programs closed, notifications off.</li>
+      <li>Open these tabs in advance: the museum, the seven charts, the Excel sheet, <code>docs/report/results.md</code>.</li>
+      <li>Have a fallback: a few screenshots or a short screen recording of the museum, in case the room's network or projector fails.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0">A. The virtual museum (compulsory deliverable)</h3>
+    <p>Start it from <code>D:\heritage3d</code>:</p>
+    <p><code>python -m http.server 8000 --directory museum</code> then open <code>http://localhost:8000</code></p>
+    <ol class="steps">
+      <li><b>Gate scene:</b> the visit starts at a 3D model of the PDEU main gate; the museum building is visible at the end of the drive. Walk through the open gates and up the drive (hold <b>Shift</b> to go faster).</li>
+      <li><b>Lobby and rotunda:</b> entrance signboards with the project title and team. Show the placards: each one carries the measured numbers for that artifact.</li>
+      <li><b>Close-up:</b> press <b>E</b> at a pedestal for the 360° view with its information panel; <b>Esc</b> or <b>E</b> to leave.</li>
+      <li><b>Stairs and upper floor:</b> the 14 artifacts from the separate cut-off set (Nos. 31–44), labelled as a separate set.</li>
+      <li><b>Extras if time allows:</b> <b>V</b> switches first/third person, <b>C</b> changes the character, <b>M</b> shows the map, the list view at <code>/list.html</code>. Leave through the exit circle at the doors.</li>
+    </ol>
+    <p class="muted">Point to make: it is a static website, 44 models at about 3 MB each, running at 60 fps on the laptop's built-in Intel graphics in our tests. Not yet hosted online.</p>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0">B. Results charts (in <code>experiments/plots/</code>)</h3>
+    <div class="scroll"><table>
+      <tr><th>Chart</th><th>The one sentence to say</th></tr>
+      <tr><td><code>tradeoff_quality_vs_time.png</code></td><td>Quality stays flat from L1 to L4 while time falls to about 6%; L5 drops off.</td></tr>
+      <tr><td><code>tradeoff_cost_by_level.png</code></td><td>Time and storage fall with fewer images; memory stops falling at about 2 GB.</td></tr>
+      <tr><td><code>tradeoff_sufficient.png</code></td><td>Most artifacts already pass the quality bar at L4; 9 never pass at any level.</td></tr>
+      <tr><td><code>tradeoff_score.png</code></td><td>The combined score picks L4 (or L3) for almost any weighting.</td></tr>
+      <tr><td><code>visual_by_level.png</code></td><td>Appearance follows geometry: L1–L4 look the same, L5 collapses.</td></tr>
+      <tr><td><code>visual_museum.png</code></td><td>The compressed museum models lose only 0.2 dB against the full models.</td></tr>
+      <tr><td><code>rq3_costs.png</code></td><td>Museum models download, decode and draw much faster than full models.</td></tr>
+    </table></div>
+  </div>
+
+  <div class="two">
+    <div class="card">
+      <h3 style="margin-top:0">C. Team Excel sheet</h3>
+      <p><code>experiments/results/artifact_status.xlsx</code>: one row per artifact, with status, scores and museum number. Good for "show me one artifact" questions.</p>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">D. Evidence and reproducibility</h3>
+      <p>The GitHub repo, the vault (decision log with dates), run logs in <code>experiments/logs/</code>, and 81 automatic tests. Shows the results are from real runs.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 4 -->
+<section class="pb">
+  <h2><span class="num">4</span>What to discuss</h2>
+  <p class="lead">The method in brief, then the results per research question.</p>
+
+  <div class="card">
+    <h3 style="margin-top:0">Method in brief</h3>
+    <div class="scroll"><table>
+      <tr><th>Item</th><th>What we did</th></tr>
+      <tr><td>Dataset</td><td>CHSD: 81 artifacts, each rendered from 360 azimuths × 5 elevations (800 × 600 px) with a depth map per view. Main set: the 40 artifacts never cut off by the frame in the sample views. Separate cut-off set: 19 artifacts, at L3 only.</td></tr>
+      <tr><td>Photo levels</td><td>L1 362 · L2 182 · L3 92 · L4 47 · L5 26 images (azimuth steps 3°, 6°, 12°, 24°, 45°; the two pole views always kept).</td></tr>
+      <tr><td>Pipeline</td><td>COLMAP 4.2.1 (CPU) for camera positions and sparse points, OpenMVS 2.4.0 (CPU) for dense cloud, mesh and texture. One frozen setting for every run. RGB images only.</td></tr>
+      <tr><td>Shape accuracy</td><td>F-score at 0.002 R against reference geometry from all 1,800 depth maps (R = camera-to-object distance). Depth maps are used only for evaluation.</td></tr>
+      <tr><td>Appearance</td><td>PSNR, SSIM, silhouette match from 12 held-out views used by no level.</td></tr>
+      <tr><td>Cost</td><td>Processing time, peak RAM, storage, each run measured on the laptop (Intel i7-1255U, 16 GB, no NVIDIA GPU).</td></tr>
+      <tr><td>Statistics</td><td>Paired Wilcoxon tests on the same 40 artifacts, Holm correction, bootstrap 95% intervals.</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0">Results by level (medians over 40 artifacts)</h3>
+    <div class="scroll"><table>
+      <tr><th>Level</th><th class="r">Images</th><th class="r">Time</th><th class="r">Peak RAM</th><th class="r">Mesh F</th><th class="r">PSNR dB</th><th class="r">SSIM</th><th class="r">Pass ≥ 0.95</th><th class="r">Score</th></tr>
+      <tr><td>L1</td><td class="r">362</td><td class="r">55.4 min</td><td class="r">4.4 GB</td><td class="r">0.984</td><td class="r">29.55</td><td class="r">0.918</td><td class="r">31</td><td class="r">0.45</td></tr>
+      <tr><td>L2</td><td class="r">182</td><td class="r">22.4 min</td><td class="r">2.3 GB</td><td class="r">0.982</td><td class="r">29.03</td><td class="r">0.919</td><td class="r">31</td><td class="r">0.70</td></tr>
+      <tr><td>L3</td><td class="r">92</td><td class="r">9.7 min</td><td class="r">2.0 GB</td><td class="r">0.989</td><td class="r">29.25</td><td class="r">0.924</td><td class="r">30</td><td class="r">0.79</td></tr>
+      <tr class="hi"><td><b>L4</b></td><td class="r">47</td><td class="r">3.9 min</td><td class="r">2.0 GB</td><td class="r">0.988</td><td class="r">29.20</td><td class="r">0.922</td><td class="r">28</td><td class="r"><b>0.82</b></td></tr>
+      <tr><td>L5</td><td class="r">26</td><td class="r">1.0 min</td><td class="r">2.0 GB</td><td class="r">0.580</td><td class="r">14.39</td><td class="r">0.595</td><td class="r">5</td><td class="r">0.63</td></tr>
+    </table></div>
+  </div>
+
+  <div class="two">
+    <div class="card t-clay">
+      <h3 style="margin-top:0">RQ1 · Quality <span class="tag ok">answered</span></h3>
+      <p>Quality behaves like a threshold, not a slope. From 362 down to 47 images, shape and appearance stay the same; at 26 images coverage breaks and both collapse (14 of 40 runs make no dense cloud).</p>
+      <p class="muted">Surprise worth mentioning: more images made the dense cloud slightly <i>less</i> precise at the tight tolerance (cause not established).</p>
+    </div>
+    <div class="card t-sage">
+      <h3 style="margin-top:0">RQ2 · Trade-off <span class="tag ok">answered</span></h3>
+      <p>Time grows faster than the image count (about images<sup>1.34</sup>) but quality stops improving at 47 images. For all 40 artifacts: L4 2.7 h (28 pass), L3 6.3 h (30 pass), L1 40.1 h (31 pass).</p>
+      <p class="muted">Combined score: L4 best (0.82) with equal weights; L4 or L3 best for quality weights from 0.15 to 0.95.</p>
+    </div>
+    <div class="card t-sky">
+      <h3 style="margin-top:0">RQ3 · Museum models <span class="tag ok">answered</span></h3>
+      <p>Compressed models (100k triangles) keep the same shape accuracy and lose 0.2 dB PSNR, at 19% of the file size. In the browser: download 23%, decoding 31%, drawing 43% of the full model's time.</p>
+      <p class="muted">Whole collection at 20 Mbit/s: 68 s against 281 s.</p>
+    </div>
+    <div class="card t-gold">
+      <h3 style="margin-top:0">Hypotheses</h3>
+      <p><span class="tag ok">H1 supported</span> fewer images cut cost; too few (L5) cut quality. Memory stops falling below L3.</p>
+      <p><span class="tag ok">H2 supported</span> 47–92 images match 362 (no formal equivalence margin was set).</p>
+      <p><span class="tag ok">H3 supported</span> optimized models keep fidelity at a fraction of the cost.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0">Novelty: how to word it</h3>
+    <p>"Earlier studies show that low-cost photogrammetry works, or measure quality, or report runtime, mostly <b>separately</b> and often for sites rather than single objects. We measure <b>acquisition effort, computing cost and quality together</b>, on the same artifacts, under one controlled, reproducible setup, and carry the result through to a working virtual museum. The novelty is the framework and its integration, not a new reconstruction algorithm."</p>
+    <p class="muted">Source: the literature workbook, sheets "Gap Matrix" and "Gap RQ Novelty". Do not claim a new algorithm or "first ever"; claim the controlled, joint analysis.</p>
+  </div>
+</section>
+
+<!-- 5 -->
+<section>
+  <h2><span class="num">5</span>Limitations to state before she asks</h2>
+  <p class="lead">Raising them ourselves shows we understand the work.</p>
+  <div class="card">
+    <ul>
+      <li><b>Synthetic data.</b> CHSD images are renders with perfect cameras and lighting. Results are benchmark findings, not proof for real museum photos.</li>
+      <li><b>One pipeline, one laptop.</b> One frozen COLMAP + OpenMVS setting; each run timed once, not repeated.</li>
+      <li><b>Split models.</b> In some artifacts COLMAP splits the photos into two separate models and we only densify the larger one, so part of the object is missing. Kept as a reported finding; fixing it would change the frozen pipeline.</li>
+      <li><b>Hard objects.</b> 9 of 40 artifacts never pass at any level (small, plain, low-texture objects and the split models).</li>
+      <li><b>The combined score's weights are our choice.</b> That is why we show the weight check and keep the full tables.</li>
+      <li><b>Museum not hosted yet;</b> download times use a simulated 20 Mbit/s connection. Full-screen performance not measured yet.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 6 -->
+<section class="pb">
+  <h2><span class="num">6</span>What to ask her</h2>
+  <p class="lead">Decisions only she can make. Each has our proposal, so the answer can be a simple yes or no.</p>
+
+  <div class="card ask">
+    <div class="q">1. Is evaluating accuracy against the CHSD depth maps, at a 0.002 R tolerance, acceptable?</div>
+    <div class="why">Everything in RQ1–RQ3 rests on it. The team chose it when picking the dataset.</div>
+    <div class="prop"><span class="tag info">Our proposal</span> keep it; 0.005 R and 0.01 R are also reported as checks.</div>
+  </div>
+  <div class="card ask">
+    <div class="q">2. Is the hybrid reporting of cost-effectiveness (full tables plus a combined score with a weight check) acceptable?</div>
+    <div class="why">The literature lists the cost measures but gives no formula for combining them.</div>
+    <div class="prop"><span class="tag info">Our proposal</span> equal weights as the main result, with the weight check in the report.</div>
+  </div>
+  <div class="card ask">
+    <div class="q">3. Is the synthetic dataset enough, or do you want a small real-photo test?</div>
+    <div class="why">Real-world validation was defined as optional, separate future work.</div>
+    <div class="prop"><span class="tag info">Our proposal</span> keep it as future work and state it as a limitation.</div>
+  </div>
+  <div class="card ask">
+    <div class="q">4. What format and structure should the final report (and presentation) follow?</div>
+    <div class="why">Our results chapter is drafted; we want it to fit the department's template.</div>
+  </div>
+  <div class="card ask">
+    <div class="q">5. Should we aim to turn this into a paper, and if so, which venue?</div>
+    <div class="why">The results are complete and reproducible; a conference or journal paper may be possible.</div>
+  </div>
+  <div class="card ask">
+    <div class="q">6. Where should the museum be hosted, and is showing the PDEU gate and logo fine?</div>
+    <div class="why">Options: GitHub Pages, a university server, or a local demo only.</div>
+  </div>
+  <div class="card ask">
+    <div class="q">7. Should the split-model problem be fixed, or reported as a limitation?</div>
+    <div class="why">Fixing it means re-running affected artifacts with a changed pipeline.</div>
+    <div class="prop"><span class="tag info">Our proposal</span> report it as a limitation; scope is frozen.</div>
+  </div>
+  <div class="card ask">
+    <div class="q">8. Some literature-review sources are in weaker venues (Section 8). Should we replace them?</div>
+    <div class="prop"><span class="tag info">Our proposal</span> replace the four weakest with Scopus-indexed papers.</div>
+  </div>
+  <div class="card ask">
+    <div class="q">9. Can the library get us the companion CHSD paper (doi 10.1007/978-3-032-06389-2_15)?</div>
+    <div class="why">It describes how the dataset was made, which we should cite properly.</div>
+  </div>
+</section>
+
+<!-- 7 -->
+<section class="pb">
+  <h2><span class="num">7</span>Questions she may ask, with answers</h2>
+  <p class="lead">Click a question to see the answer. In the PDF all answers are open. Keep answers short, then offer the detail.</p>
+
+  <div class="qgroup">Motivation and novelty</div>
+  <details class="qa" open><summary>What is new here? Photogrammetry of artifacts has been done many times.</summary><div class="a">
+    <p>Yes, the reconstruction itself is established. What is less studied is a controlled, per-artifact analysis of <b>how many photos are enough</b>, linked to computing cost and quality together, under one reproducible setup, carried through to a web museum. That gap is in our literature review's gap matrix. We do not claim a new algorithm.</p></div></details>
+  <details class="qa" open><summary>Who benefits from this?</summary><div class="a">
+    <p>Small museums and colleges with a normal camera and a laptop: the result says around 50–90 photos per object are enough, which saves capture time and hours of processing per object, and the web-museum part shows how to publish the models cheaply.</p></div></details>
+  <details class="qa" open><summary>Where is the "cost" in cost-effective? You did not measure money.</summary><div class="a">
+    <p>Cost here is effort and resources: the number of photos (capture effort), processing time, peak memory and storage, all on low-cost hardware with free software. We did not convert these to rupees; the number of photos stands in for capture time.</p></div></details>
+
+  <div class="qgroup">Dataset</div>
+  <details class="qa" open><summary>Why a synthetic dataset and not real photos?</summary><div class="a">
+    <p>Because a controlled experiment needs exact ground truth. CHSD gives exact cameras and a depth map for every view, so we can measure accuracy precisely and change only the number of photos. With real photos, lighting, blur and camera errors would mix into the result. The cost is generalisation, which we state as a limitation.</p></div></details>
+  <details class="qa" open><summary>Why only 40 of the 81 artifacts in the main set?</summary><div class="a">
+    <p>41 of the 81 are cut off by the image frame in some views, which would damage both the reconstruction and the reference. The 40 that are never cut off form the main set. We also ran the 19 least cut-off ones at L3 as a separate set: 14 passed and are on the museum's upper floor.</p></div></details>
+  <details class="qa" open><summary>Are the depth maps used to build the models?</summary><div class="a">
+    <p>No. Reconstruction uses RGB images only. Depth maps are used only to build the reference for measuring accuracy.</p></div></details>
+
+  <div class="qgroup">Method</div>
+  <details class="qa" open><summary>Why COLMAP and OpenMVS, not Meshroom, Metashape or RealityCapture?</summary><div class="a">
+    <p>They are free, open-source, scriptable and run on a CPU. Our laptop has no NVIDIA GPU, and COLMAP's own dense step needs CUDA, so OpenMVS does the dense part on the CPU. Metashape and RealityCapture are proprietary. Comparing software was out of scope.</p></div></details>
+  <details class="qa" open><summary>Why not NeRF or Gaussian Splatting?</summary><div class="a">
+    <p>They were explicitly out of scope: they need a GPU, and the aim is a low-cost, established pipeline. Our literature review covers them as background.</p></div></details>
+  <details class="qa" open><summary>How were the photo subsets chosen? Is it fair to other levels?</summary><div class="a">
+    <p>Each level takes every n-th azimuth on all five elevation rings (steps 3°, 6°, 12°, 24°, 45°), so coverage stays even all round; the two straight up/down views are always kept. Same artifact, same settings, only the number of photos changes.</p></div></details>
+  <details class="qa" open><summary>What is the F-score, and why 0.002 R?</summary><div class="a">
+    <p>It combines precision (how much of the model is close to the true surface) and recall (how much of the true surface the model covers), at a distance tolerance. It is the usual measure in multi-view stereo benchmarks such as Tanks and Temples. 0.002 R is a tight tolerance, about 0.25% of the pilot object's size; we also report 0.005 R and 0.01 R.</p></div></details>
+  <details class="qa" open><summary>How do you line up your model with the reference?</summary><div class="a">
+    <p>Through the cameras: COLMAP's camera positions are aligned to CHSD's known camera positions. In the pilot the cameras lined up to within 0.00025 R on average, much smaller than the 0.002 R tolerance.</p></div></details>
+  <details class="qa" open><summary>Why the threshold 0.95, and why the mesh, not the point cloud?</summary><div class="a">
+    <p>The mesh is what the museum shows. The 0.95 bar was fixed on 31 October, before the trade-off analysis. Changing it to 0.90 or 0.98 changes little: L4 stays the cheapest passing level for most artifacts.</p></div></details>
+  <details class="qa" open><summary>Why Wilcoxon tests?</summary><div class="a">
+    <p>The comparisons are paired (same artifact at two levels), the differences are not normally distributed, and there are 40 pairs, so a non-parametric paired test fits. Holm's correction handles several comparisons at once.</p></div></details>
+
+  <div class="qgroup">Results</div>
+  <details class="qa" open><summary>Why does quality not improve with more photos? Isn't more data always better?</summary><div class="a">
+    <p>On the mesh, quality is already near its ceiling at 47 photos. On the dense cloud, more photos actually lowered precision at the tight tolerance (0.981 at L4 vs 0.795 at L1), while coverage stayed the same. Our hypothesis is that many closely spaced views add slightly misplaced points that the fixed OpenMVS settings do not filter. We have not proven the cause. At a looser tolerance (0.01 R) every level from L1 to L4 scores 0.998 or more.</p></div></details>
+  <details class="qa" open><summary>Why does L5 fail?</summary><div class="a">
+    <p>At 45° between photos, neighbouring images overlap too little to match features, so cameras fail to register and the dense step has too few neighbours. 14 of 40 L5 runs produced no dense cloud; recall falls to 0.41.</p></div></details>
+  <details class="qa" open><summary>So which level do you recommend?</summary><div class="a">
+    <p>L4 (47 photos) is the most economical: same median quality at 6.3% of L1's time. L3 (92 photos) is the safer choice: it loses two fewer artifacts for about twice L4's time. Beyond L2 nothing was gained.</p></div></details>
+  <details class="qa" open><summary>Why did 9 artifacts never pass, even with 362 photos?</summary><div class="a">
+    <p>Two causes: COLMAP splitting the photos into separate models (only the larger is densified, so one side is missing), and small, plain, low-texture objects with few features to match (the second is a hypothesis). More photos did not rescue them.</p></div></details>
+  <details class="qa" open><summary>Why is the museum built from L3 and not L4?</summary><div class="a">
+    <p>L3 was the lowest level with no extra breakdowns when the museum rule was fixed (after round 1), and the museum needs reliability across many objects. The rule is L3 mesh F ≥ 0.95; the 30 main-set exhibits are exactly the 30 artifacts that pass at L3.</p></div></details>
+  <details class="qa" open><summary>How was the combined score built? Aren't the weights arbitrary?</summary><div class="a">
+    <p>Score = half quality + half saving. Quality is the average of median mesh F, median SSIM and the share of artifacts that pass; saving is 1 minus the average of time, memory and storage relative to L1. The weights are a choice, which is why we recomputed it for every weighting from 0 to 1: L4 wins from 0.15 to 0.80, L3 from 0.85 to 0.95. The conclusion does not depend on the exact weights.</p></div></details>
+  <details class="qa" open><summary>Are your times reliable? Did you run anything else at the same time?</summary><div class="a">
+    <p>Runs went in overnight batches with a guard that discarded any level where the laptop slept or ran on battery. Each level ran once, so there is some run-to-run noise; the differences between levels (up to 55×) are far larger than that.</p></div></details>
+
+  <div class="qgroup">Virtual museum</div>
+  <details class="qa" open><summary>How did you make the models web-ready?</summary><div class="a">
+    <p>Each L3 mesh is reduced to about 100,000 triangles and its texture saved as JPEG of at most 2048 px, packed as a GLB file. Median 15.7 MB → 2.9 MB, with no measurable loss of shape accuracy (at most 0.0003 in F-score) and 0.2 dB PSNR.</p></div></details>
+  <details class="qa" open><summary>What is it built with? Will it run on a phone?</summary><div class="a">
+    <p>A static website with three.js (WebGL), no server-side code. It held 60 fps on the laptop's integrated Intel graphics. It has not been tested on phones yet, and it is not hosted online yet.</p></div></details>
+  <details class="qa" open><summary>Is the building a real campus building?</summary><div class="a">
+    <p>The gate scene models the PDEU main gate; the museum building itself is our own design, laid out from the hall's real floor plan. It is not a real campus building.</p></div></details>
+
+  <div class="qgroup">Limitations and future work</div>
+  <details class="qa" open><summary>Would these results hold for real photos?</summary><div class="a">
+    <p>The trend (a plateau and a breakdown point) is likely to hold, but the exact numbers may shift with real lighting, blur and camera errors. That is a hypothesis; testing it with real photos is the natural next step.</p></div></details>
+  <details class="qa" open><summary>What would you do with more time?</summary><div class="a">
+    <p>A small real-photo test; densifying both halves of split models; trying a cheaper feature matcher to cut L1's matching time; hosting the museum and measuring real download times; a small user study (out of scope now).</p></div></details>
+  <details class="qa" open><summary>What did you write yourselves, and how do you know it is correct?</summary><div class="a">
+    <p>The subset generator, batch runner, evaluation (alignment, reference, F-scores), the visual renderer, the statistics, the GLB export and the whole museum. 81 automatic tests cover the core code, and every number is traceable to a committed result file and log.</p></div></details>
+</section>
+
+<!-- 8 -->
+<section class="pb">
+  <h2><span class="num">8</span>Literature review: where the papers come from</h2>
+  <p class="lead">Your question: are they all IEEE, or Scopus-indexed, or local? Short answer: <b>mostly international, peer-reviewed, Scopus-indexed venues; only 3 are IEEE; about 4 are weak or unconfirmed.</b></p>
+
+  <div class="grid">
+    <div class="stat t-sky"><b>29</b><span>unique papers (34 rows; 5 papers are listed in two categories)</span></div>
+    <div class="stat t-clay"><b>3</b><span>IEEE (conference papers)</span></div>
+    <div class="stat t-sage"><b>~25</b><span>in venues normally indexed in Scopus</span></div>
+    <div class="stat t-gold"><b>4</b><span>weak or not confirmed in Scopus</span></div>
+  </div>
+
+  <div class="card scroll">
+    <table>
+      <tr><th>Publisher / venue</th><th class="r">Papers</th><th>Which</th><th>Scopus</th></tr>
+      <tr><td><b>IEEE</b> conferences: I2MTC 2024, ICIR 2024, Digital Heritage 2015</td><td class="r">3</td><td>Croci et al.; Valente et al.; Guidi, Micoli &amp; Gonizzi Barsanti</td><td><span class="tag ok">usually indexed</span></td></tr>
+      <tr><td><b>ISPRS Archives</b> (Copernicus)</td><td class="r">6</td><td>Iakovaki et al.; Poux et al.; Croce et al.; Cuca et al.; Maschio et al.; Pavelka &amp; Váňa</td><td><span class="tag ok">indexed</span></td></tr>
+      <tr><td><b>Elsevier</b>: Journal of Cultural Heritage, Information Fusion, Digital Applications in Archaeology and Cultural Heritage</td><td class="r">5</td><td>Morita et al.; Ferdani et al.; Balado et al.; Virtual museums (2021); Antikythera virtual museum (2023)</td><td><span class="tag ok">indexed</span></td></tr>
+      <tr><td><b>MDPI</b>: Remote Sensing, Applied Sciences, Informatics</td><td class="r">4</td><td>Tzanetakis et al.; Maté-González et al.; Pepe et al.; Rattanarungrot et al.</td><td><span class="tag ok">indexed</span></td></tr>
+      <tr><td><b>Springer Nature</b>: Heritage Science</td><td class="r">3</td><td>He &amp; Jia; Xu et al.; Zheng et al.</td><td><span class="tag ok">indexed</span></td></tr>
+      <tr><td><b>PLOS ONE</b></td><td class="r">2</td><td>Medina et al.; Li &amp; Lv</td><td><span class="tag ok">indexed</span></td></tr>
+      <tr><td>Emerald: J. Cultural Heritage Management and Sustainable Development; Ubiquity: J. Computer Applications in Archaeology</td><td class="r">2</td><td>Bamuni Hill study; Raykovska et al.</td><td><span class="tag ok">indexed</span></td></tr>
+      <tr><td>Journal of the Korean Society of Surveying, Geodesy, Photogrammetry and Cartography</td><td class="r">1</td><td>Kim et al. (2024)</td><td><span class="tag warn">unclear</span> sources conflict on whether coverage continued after 2020</td></tr>
+      <tr><td>Atlantis Press: ICIAAI 2025 proceedings (Advances in Computer Science Research)</td><td class="r">1</td><td>Lu (2025)</td><td><span class="tag warn">not confirmed</span> the page states no indexing</td></tr>
+      <tr><td>Geoinformatics FCE CTU (Czech university journal)</td><td class="r">1</td><td>Kirchhöfer, Chandler &amp; Wackrow (2012)</td><td><span class="tag bad">not found</span> DOAJ only</td></tr>
+      <tr><td>RUAS (Universitas Brawijaya, Indonesia)</td><td class="r">1</td><td>Dharmatanna &amp; Agustianti (2025)</td><td><span class="tag bad">not found</span> national (SINTA 4), DOAJ</td></tr>
+    </table>
+  </div>
+  <div class="note">
+    <b>How this was checked:</b> the publisher comes from each paper's DOI or link in the workbook, plus a web look-up for the five without a DOI (Guidi 2015 is an IEEE Digital Heritage paper; Maté-González 2025 is in MDPI <i>Remote Sensing</i>, doi 10.3390/rs17142535; Medina 2020 is in <i>PLOS ONE</i>). "Indexed" for the big journals and proceedings is from general knowledge of these venues, <b>not a check of each paper on Scopus (to verify)</b>. Confirm any you cite as Scopus on the <a href="https://www.scopus.com/sources">Scopus Sources list</a> through the university login.
+  </div>
+  <div class="card">
+    <h3 style="margin-top:0">Small fixes to make in the workbook</h3>
+    <ul>
+      <li>Cite Maté-González et al. by its journal DOI (10.3390/rs17142535) instead of the university portal link; it is a Top-10 paper.</li>
+      <li>Guidi et al. 2015 links to a university repository; add the IEEE Digital Heritage 2015 reference.</li>
+      <li>Consider replacing the four weak sources, mainly Kirchhöfer 2012 and Dharmatanna 2025, with Scopus-indexed papers.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 9 -->
+<section>
+  <h2><span class="num">9</span>Where everything is</h2>
+  <div class="card scroll">
+    <table>
+      <tr><th>What</th><th>Where</th></tr>
+      <tr><td>Results chapter for the report</td><td><code>docs/report/results.md</code></td></tr>
+      <tr><td>Every measured result, dated</td><td><code>vault/07-Results.md</code></td></tr>
+      <tr><td>Decisions with reasons</td><td><code>vault/08-Decisions.md</code></td></tr>
+      <tr><td>Open questions</td><td><code>vault/09-Open-Questions.md</code></td></tr>
+      <tr><td>All numbers (CSV, JSON)</td><td><code>experiments/results/</code></td></tr>
+      <tr><td>All charts</td><td><code>experiments/plots/</code></td></tr>
+      <tr><td>Team Excel sheet</td><td><code>experiments/results/artifact_status.xlsx</code></td></tr>
+      <tr><td>Literature review</td><td><code>docs/literature/Literature_Review_Cultural_Heritage_Artifacts_FINAL.xlsx</code></td></tr>
+      <tr><td>Museum</td><td><code>museum/</code> (start with <code>python -m http.server 8000 --directory museum</code>)</td></tr>
+    </table>
+  </div>
+</section>
+
+<footer>heritage3d · Ayaan Goel &amp; Kshiti Bhavsar · prepared 16 November 2026 from the project's committed results</footer>
+</div>
+<script>
+  // in print, open every answer
+  addEventListener("beforeprint", () => document.querySelectorAll("details").forEach((d) => d.open = true));
+</script>
+</body>
+</html>

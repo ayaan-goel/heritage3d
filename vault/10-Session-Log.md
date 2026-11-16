@@ -285,3 +285,11 @@ Newest first. Every session must add an entry (see `CLAUDE.md`).
 
 **Next action** — team shows the results chapter to Prof. Singh, including the combined score's parts and weights.
 
+## 2026-11-16 — mentor meeting guide (directed by Ayaan Goel and Kshiti Bhavsar)
+
+- Team asked for a well-designed HTML/PDF guide for the Prof. Singh meeting (what to show, discuss, ask, likely cross-questions) and whether the literature papers are IEEE, Scopus or local.
+- Read the literature workbook (34 rows, 29 unique papers) and classified venues from DOIs; looked up the five without DOIs on the web (Medina 2020 PLOS ONE; Maté-González 2025 Remote Sensing; Guidi 2015 IEEE Digital Heritage; Lu 2025 Atlantis ICIAAI; RUAS and Geoinformatics FCE CTU indexing). Scopus status of the big venues not checked per paper (to verify). Recorded in [[02-Literature-Review]].
+- Wrote `docs/meeting/mentor-review.html`; printed `mentor-review.pdf` with headless Chrome (17 pages). Checked the HTML in the browser pane at 820 px; four stat tiles fixed to one row. PDF pages not viewed as images (installing a PDF renderer was blocked); text extraction shows the cover and all sections present. Numbers taken from [[07-Results]] and the result CSVs; nothing re-run.
+
+**Next action** — team walks the museum in normal Chrome full screen before the meeting, then meets Prof. Singh with the guide.
+

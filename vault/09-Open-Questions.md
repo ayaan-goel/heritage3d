@@ -18,7 +18,8 @@
 - [x] Visual and texture fidelity (RQ1, RQ3): measured on all 263 models, 2026-11-06. See [[07-Results]].
 - [x] RQ3 rendering cost: full against museum models measured in the browser, 2026-11-06. See [[07-Results]].
 - [x] Single cost-effectiveness score? → **Hybrid (team, 2026-11-06):** side-by-side tables plus a combined score with a weight check. See [[08-Decisions]], [[07-Results]].
-- [ ] Team: show Prof. Singh the results chapter (`docs/report/results.md`), including the combined score's parts and weights.
+- [ ] Team: show Prof. Singh the results chapter (`docs/report/results.md`), including the combined score's parts and weights. Meeting Thu 19 / Fri 20 Nov 2026; guide in `docs/meeting/mentor-review.html` (+ PDF).
+- [ ] Replace the four weak literature sources (not confirmed in Scopus) with indexed papers? Ask Prof. Singh. See [[02-Literature-Review]].
 - [ ] Does the 44-exhibit hall hold its frame rate full screen, and how long does the 129.6 MB collection take to download once hosted? Only measured in the app's pane from localhost.
 - [x] Museum needs **≥ 30 exhibits** (team minimum, 2026-11-01). Closed 2026-11-04: all four last artifacts passed the unchanged rule (L3, mesh F ≥ 0.95), giving exactly 30 of the 40. No fallback level, extra artifacts or lower bar needed.
 - [ ] Where to host the museum (GitHub Pages from this repo, university server, or local demo only)? Team decision; GLBs are ~4 MB each.

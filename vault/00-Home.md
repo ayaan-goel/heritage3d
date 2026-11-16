@@ -5,8 +5,9 @@
 
 > Updating this vault at the end of every session is **mandatory** (see `CLAUDE.md`).
 
-## Current status (updated 2026-11-06)
+## Current status (updated 2026-11-16)
 
+- **Mentor meeting guide ready** (2026-11-16): `docs/meeting/mentor-review.html` and `.pdf`: what to show, discuss and ask, likely questions with answers, and where the literature papers are published (29 unique: 3 IEEE, ~25 in normally Scopus-indexed venues, 4 weak). Meeting Thu 19 / Fri 20 Nov.
 - **Quality-against-cost analysis done on all 40** (2026-11-05): L4 takes 6.3% of L1's time and L3 17%, with median mesh F within 0.003 of L1. Reaching mesh F 0.95: L1 31, L2 31, L3 30, L4 28, L5 5; 9 never do. H1 and H2 supported for geometry.  See [[07-Results]].
 - **Visual fidelity measured on all 263 models** (2026-11-06): L2–L4 match L1 within 0.5 dB PSNR with no SSIM difference; L5 collapses (14.4 dB). Museum models lose only 0.20 dB and 0.005 SSIM against the full L3 model. RQ1 now answered for appearance too. See [[07-Results]].
 - **RQ3 measured in the browser** (2026-11-06): against the full L3 model, the museum model is 19% of the size, downloads in 23% of the time at 20 Mbit/s, decodes in 31% and draws in 43%, at 0.20 dB PSNR. H3 supported. All RQs and hypotheses now have results. See [[07-Results]].
@@ -40,7 +41,7 @@
 ## Next action
 
 1. Team: walk the stairs and upper floor in a normal browser, full screen (hard refresh with Ctrl+Shift+R if the page shows an old version).
-2. Team: read `docs/report/results.md` and show it to Prof. Singh, including the combined score's parts and weights.
+2. Team: before the meeting, walk the museum in normal Chrome full screen and check the room's internet (three.js loads from a CDN); then meet Prof. Singh with `docs/meeting/mentor-review.pdf` and the questions in its Section 6.
 3. Team: walk the new hall in a normal browser (`python -m http.server 8000 --directory museum`), check the feel (speed, mouse sensitivity, placards) and decide where to host it ([[09-Open-Questions]]); later: load-time measurement for RQ3.
 4. Team: confirm the evaluation method (Option A, decoded CHSD depth — [[04-Methodology]]).
 5. The zips in `Downloads` can be kept as backup or deleted (team's choice).
