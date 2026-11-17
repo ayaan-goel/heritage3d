@@ -292,4 +292,13 @@ Newest first. Every session must add an entry (see `CLAUDE.md`).
 - Wrote `docs/meeting/mentor-review.html`; printed `mentor-review.pdf` with headless Chrome (17 pages). Checked the HTML in the browser pane at 820 px; four stat tiles fixed to one row. PDF pages not viewed as images (installing a PDF renderer was blocked); text extraction shows the cover and all sections present. Numbers taken from [[07-Results]] and the result CSVs; nothing re-run.
 
 **Next action** — team walks the museum in normal Chrome full screen before the meeting, then meets Prof. Singh with the guide.
+- Team reported walking the whole museum in normal Chrome, full screen: all good (frame rate not measured there). Room internet check and a screenshot/recording fallback noted for the meeting.
+
+## 2026-11-17 — final-evaluation deliverables (directed by Ayaan Goel and Kshiti Bhavsar)
+
+- Team added `Deliverables/` with the department's report format, PPT guidelines, poster template and panel list (team T212: 23BCP264, 23BCP275). Asked for all deliverables; chose a full report draft with a truthful AI declaration, all four deliverables, pip installs, and bracketed blanks for department/designation.
+- Installed python-docx and python-pptx (pip). Wrote `scripts/deliverables/`: `fetch_refs.py` (Crossref metadata for 29 papers → `docs/report/references.json`; four entries corrected from publisher pages), `common.py`, `diagram.py`, `museum_shots.mjs` (headless Chrome screenshots of the museum; the browser pane was hidden), `build_report.py`, `build_slides.py`, `build_poster.py`, `to_pdf.ps1` (Word/PowerPoint export, updates contents and lists).
+- Ran all: report 35 pages (contents, 11 tables, 10 figures, 39 references, no field errors), presentation 20 slides, poster 1 page; slides and poster checked as images, report checked by text extraction. Close-up screenshot failed to frame the exhibit, replaced by the held-out-view comparison image. Added `Deliverables/README.md` (index + fill-in checklist) and `Deliverables/Demo/` (start script, demo checklist). Nothing re-run; numbers from committed results. `pytest -q` → 81 passed. Starting the bench server reopened the benchmark page, which re-ran and overwrote `experiments/results/rq3/bench_local.json`; restored from git (committed results unchanged).
+
+**Next action** — team fills the blanks, reviews and edits the report, confirms the AI declaration with Prof. Singh.
 
