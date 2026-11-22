@@ -326,3 +326,4 @@ Newest first. Every session must add an entry (see `CLAUDE.md`).
 
 - Team's further manual presentation edits (saved 13:04) committed as they are. All deliverables committed; only the department's guideline PDFs and panel list stay git-ignored on purpose.
 - Presentation slide 16 timeline now spans 10 Aug – 20 Nov (9 milestones). Dates before 25 Oct (topic, literature review, RQs/dataset/methodology, mid-term) were proposed and approved by the team, not taken from project records; 25 Oct onwards from the session log. Committed with the team's 14:27 edits.
+- Team's manual report edits (Word, saved 14:05, PDF 14:06) committed as they are.
