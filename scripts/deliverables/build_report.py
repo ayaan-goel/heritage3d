@@ -125,7 +125,13 @@ def new_section(fmt=None, start=1, number=True):
 
 
 def page_break():
-    doc.add_paragraph().add_run().add_break(WD_BREAK.PAGE)
+    """Page break at the end of the last paragraph; a separate empty paragraph could spill onto a blank page."""
+    last = doc.element.body[-2]  # body[-1] is the section properties
+    if last.tag == qn("w:p"):
+        from docx.text.paragraph import Paragraph
+        Paragraph(last, doc._body).add_run().add_break(WD_BREAK.PAGE)
+    else:  # a table: needs a paragraph to carry the break
+        doc.add_paragraph().add_run().add_break(WD_BREAK.PAGE)
 
 
 def caption(kind, text):
@@ -189,22 +195,22 @@ LOGO = OUT.parent / "museum" / "hall" / "pdeu-logo.png"
 
 def front_page(color, last=False):
     col = BLUE if color else None
-    par = doc.add_paragraph(); par.alignment = WD_ALIGN_PARAGRAPH.CENTER; par.paragraph_format.space_after = Pt(14)
-    par.add_run().add_picture(str(LOGO), width=Inches(1.6))
+    par = doc.add_paragraph(); par.alignment = WD_ALIGN_PARAGRAPH.CENTER; par.paragraph_format.space_after = Pt(10)
+    par.add_run().add_picture(str(LOGO), width=Inches(1.35))
     p("A Minor Project Report", align="c", size=16, after=4, color=col)
     p("on", align="c", size=13, after=10)
-    p(TITLE, bold=True, align="c", size=20, after=24, color=col)
+    p(TITLE, bold=True, align="c", size=20, after=16, color=col)
     p("by", align="c", after=4)
     for name, roll in TEAM:
         p(f"{name}  ({roll})", bold=True, align="c", size=14, after=2)
-    p("", after=18)
+    p("", after=6)
     p("Under the Guidance of", align="c", after=4)
     p(GUIDE, bold=True, align="c", size=14, after=2)
-    p(DESIGNATION, align="c", after=24)
+    p(DESIGNATION, align="c", after=16)
     p("Submitted to", align="c", after=4)
     p(DEPARTMENT, bold=True, align="c", after=2)
     p("School of Technology", align="c", after=2)
-    p("Pandit Deendayal Energy University, Gandhinagar", align="c", after=24)
+    p("Pandit Deendayal Energy University, Gandhinagar", align="c", after=16)
     p(MONTH, bold=True, align="c", size=14, color=col)
     if not last:
         page_break()
@@ -241,23 +247,21 @@ p("In accordance with the department's guidelines on the use of artificial-intel
   "interpretation of the results are our own.")
 p("This declaration affirms that the work presented in this report was genuinely carried out by us and, to the best of our "
   "knowledge, is original.")
-p("", after=10)
 dec = doc.add_table(rows=1, cols=2)
 for cell, (name, roll) in zip(dec.rows[0].cells, TEAM):
     cell.text = ""
     for i, line in enumerate(("Sign: ____________________", name, roll, DEPARTMENT, "School of Technology",
                               "Pandit Deendayal Energy University", "Gandhinagar")):
-        par = cell.add_paragraph(line); par.paragraph_format.line_spacing = 1.15; par.paragraph_format.space_after = Pt(0)
+        par = cell.add_paragraph(line); par.paragraph_format.line_spacing = 1.0; par.paragraph_format.space_after = Pt(0)
+        par.runs[0].font.size = Pt(11)
         if i == 1:
             par.runs[0].bold = True
-p("", after=6)
-p("Date: 23-11-2026", align="l", after=0)
-p("Place: Gandhinagar", align="l", after=14)
+p("Date: 23-11-2026          Place: Gandhinagar", align="l", after=8).paragraph_format.space_before = Pt(10)
 p("List of Tools Used for the Report with Purpose:", bold=True, align="l", keep=True)
 bullets([
-    "Claude Code (Anthropic): writing and testing the pipeline, evaluation and analysis code; building the web museum; "
-    "producing plots and tables; drafting the text of this report, the presentation and the poster, which we reviewed and edited.",
-    "COLMAP, OpenMVS, Python (NumPy, SciPy, Matplotlib) and three.js: reconstruction, evaluation and visualisation software (not AI tools).",
+    "Claude Code (Anthropic): writing and testing code, building the web museum, plots and tables, and drafting the text of "
+    "this report, the presentation and the poster, which we reviewed and edited.",
+    "COLMAP, OpenMVS, Python and three.js: reconstruction, evaluation and visualisation software (not AI tools).",
 ])
 page_break()
 
@@ -518,7 +522,7 @@ for f, cap in (("museum_gate.jpg", "Virtual museum: the visit starts at the univ
                ("museum_lobby.jpg", "Virtual museum: entrance lobby with the project signboards"),
                ("museum_rotunda.jpg", "Virtual museum: domed rotunda with exhibits on pedestals"),
                ("museum_upper.jpg", "Virtual museum: upper gallery holding the cut-off set")):
-    figure(FIG / f, cap, 5.6)
+    figure(FIG / f, cap, 4.4)
 h2("4.5 Testing")
 p("Functional correctness was checked with 81 unit tests covering subset generation, configuration, the evaluation "
   "metrics, the statistics, the combined score and the visual renderer. Each reconstruction was checked by a preview "
