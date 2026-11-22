@@ -19,8 +19,9 @@ The software itself (pipeline, analysis, museum) is in the repository; every num
 
 ## Fill in before submitting
 
-- [ ] **Department name** and **Prof. Komal Singh's designation**: replace `[Name of the Department]` and `[Designation]` (report cover, title page, certificate, declaration; slide 1).
-- [ ] **Evaluation date** on slide 1 (`[Evaluation date]`); **examiner's name and designation** on the certificate.
+- [x] **Department name** and **Prof. Komal Singh's designation**: Department of Computer Science and Engineering; Assistant Professor (filled 2026-11-22).
+- [x] **Evaluation date** on slide 1: 23-11-2026.
+- [ ] **Examiner's name and designation** on the report certificate (`[Name of Examiner]`, `[Designation]`).
 - [ ] **AI-use declaration** (report page 4): it states truthfully that an AI coding assistant was used, including for drafting text. Confirm this wording with Prof. Singh, then delete the red note.
 - [ ] Read and edit the report text, then right-click the contents page → Update Field if page numbers move.
 - [ ] Add the school logo to the poster's top-right box if required.

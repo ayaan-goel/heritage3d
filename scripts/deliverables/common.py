@@ -13,12 +13,12 @@ TITLE = "Cost-Effective Image-Based 3D Digitization of Cultural Heritage Artifac
 TEAM = [("Ayaan Goel", "23BCP264"), ("Kshiti Bhavsar", "23BCP275")]
 TEAM_ID = "T212"
 GUIDE = "Prof. Komal Singh"
-DESIGNATION = "[Designation]"
-DEPARTMENT = "[Name of the Department]"
+DESIGNATION = "Assistant Professor"
+DEPARTMENT = "Department of Computer Science and Engineering"
 PROGRAMME = "B.Tech Computer Engineering, Semester VII"
 INSTITUTE = "School of Technology, Pandit Deendayal Energy University, Gandhinagar"
 MONTH = "November 2026"
-EVAL_DATE = "[Evaluation date]"
+EVAL_DATE = "23-11-2026"
 
 # Medians over the 40 main-set artifacts (tradeoff_levels.csv, visual_levels.csv, tradeoff_score.csv)
 LEVELS = [  # level, images, step, time min, time share, RAM GB, mesh F, cloud F, PSNR, SSIM, pass, score
