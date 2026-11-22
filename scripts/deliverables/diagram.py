@@ -1,10 +1,16 @@
-"""Pipeline diagram for the report, slides and poster -> Deliverables/figures/pipeline.png"""
+"""Pipeline diagram for the report, slides and poster -> Deliverables/figures/pipeline.png
+(--heritage: parchment palette for poster v2 -> pipeline_heritage.png)"""
+import sys
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.patches import FancyBboxPatch
 
-NAVY, CLAY, SAGE, INK, MUTED, BG = "#1d3557", "#b5562f", "#4f7a5a", "#1f1f1f", "#5a5a5a", "#ffffff"
+HERITAGE = "--heritage" in sys.argv
+if HERITAGE:
+    NAVY, CLAY, SAGE, INK, MUTED, BG, CARD = "#5b3a29", "#a8492b", "#66773a", "#3b2f2a", "#7a6a5c", "#f7f0e1", "#fffaf0"
+else:
+    NAVY, CLAY, SAGE, INK, MUTED, BG, CARD = "#1d3557", "#b5562f", "#4f7a5a", "#1f1f1f", "#5a5a5a", "#ffffff", "white"
 boxes = [  # x, y, w, h, title, lines, colour
     (0.2, 3.1, 2.3, 1.3, "CHSD dataset", ["81 artifacts, 1,800 RGB views", "800 × 600 px, CC BY-NC-SA"], NAVY),
     (3.0, 3.1, 2.3, 1.3, "Image subsets", ["L1 362 · L2 182 · L3 92", "L4 47 · L5 26 images"], NAVY),
@@ -18,7 +24,7 @@ boxes = [  # x, y, w, h, title, lines, colour
 fig, ax = plt.subplots(figsize=(11.6, 4.9), dpi=200)
 ax.set_xlim(0, 11.1); ax.set_ylim(0.3, 5.0); ax.axis("off"); fig.patch.set_facecolor(BG)
 for x, y, w, h, t, lines, c in boxes:
-    ax.add_patch(FancyBboxPatch((x, y), w, h, boxstyle="round,pad=0.02,rounding_size=0.12", fc="white", ec=c, lw=2))
+    ax.add_patch(FancyBboxPatch((x, y), w, h, boxstyle="round,pad=0.02,rounding_size=0.12", fc=CARD, ec=c, lw=2))
     ax.add_patch(FancyBboxPatch((x, y + h - 0.42), w, 0.42, boxstyle="round,pad=0.02,rounding_size=0.12", fc=c, ec=c, lw=2))
     ax.text(x + w / 2, y + h - 0.21, t, ha="center", va="center", color="white", fontsize=10.5, fontweight="bold")
     for i, l in enumerate(lines):
@@ -32,4 +38,4 @@ ax.annotate("", (9.2, 2.42), (9.2, 2.8), arrowprops=dict(arrowstyle="-|>", color
 ax.text(5.2, 2.58, "depth maps → reference geometry (evaluation only, never input)", color=CLAY, fontsize=8.6, ha="center", style="italic")
 ax.text(0.2, 4.75, "Reconstruction (same frozen settings for every level, RGB only)", color=NAVY, fontsize=10, fontweight="bold")
 ax.text(0.2, 0.45, "Evaluation, analysis and delivery", color=CLAY, fontsize=10, fontweight="bold")
-fig.tight_layout(); fig.savefig("Deliverables/figures/pipeline.png", facecolor=BG)
+fig.tight_layout(); fig.savefig("Deliverables/figures/" + ("pipeline_heritage.png" if HERITAGE else "pipeline.png"), facecolor=BG)

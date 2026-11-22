@@ -302,3 +302,9 @@ Newest first. Every session must add an entry (see `CLAUDE.md`).
 
 **Next action** — team fills the blanks, reviews and edits the report, confirms the AI declaration with Prof. Singh.
 
+## 2026-11-22 — poster version 2 (directed by Ayaan Goel and Kshiti Bhavsar)
+
+- Team asked for a new poster keeping the old one: add the acquisition-cost table with the combined score and its formula, reconsider the chart, clean up formatting, add a heritage theme. Added `diagram.py --heritage` (→ `pipeline_heritage.png`), `score_chart.py` (→ `score_breakdown.png`: each level's score split into quality and saving parts, replacing the weight-sensitivity lines on the poster) and `build_poster_v2.py` (→ `Deliverables/Poster/heritage3d_Poster_v2.pptx/.pdf`; parchment, brown/terracotta/gold, Georgia headings, gold frame). Values from `tradeoff_score.csv` and `tradeoff_levels.csv`. Checked as an image twice; RQ bullets, formula box and text sizes fixed. Version 1 untouched. `Presentation.pptx` had been edited outside this session and was left out of the commit.
+
+**Next action** — team picks poster v1 or v2; fill the remaining blanks in the deliverables.
+
