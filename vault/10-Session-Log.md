@@ -322,3 +322,5 @@ Newest first. Every session must add an entry (see `CLAUDE.md`).
 - Fig. 3 caption moved under its chart as well (both captions below their charts), applied to the team's 12:35 save after they closed PowerPoint; a first attempt while PowerPoint was open failed to save and changed nothing.
 - Results right half redesigned on request: one large poster-sized score chart (`score_chart_poster.py` → `score_breakdown_poster.png`), caption below, three big-number tiles (6.3%, 0.82, −0.2 dB); quality-vs-time chart and side bullet columns removed; museum figures renumbered Fig. 4–5. Built on the team's 12:38 save with PowerPoint closed; checked as an image.
 - Team's manual poster edits (saved 12:50) committed as they are.
+- Presentation v2: added numbered captions to all 13 images (Fig. 1–13) in the team's edited file (in place, PowerPoint closed, checked as images); slide 14 side descriptions became captions. Committed with the team's manual edits and their deletion of presentation v1 and the old PDFs.
+
