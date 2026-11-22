@@ -1,0 +1,457 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Final Evaluation Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#fbf8ff; --paper:#fff; --ink:#2b2135; --muted:#6c6079; --line:#e6dcf3; --purple:#4b2577; --violet:#9b59d0;
+          --lav:#cc99ff; --lavl:#f4ecff; --green:#4f7a5a; --greenl:#e4efe6; --gold:#9a6b10; --goldl:#fbf0d6; --rose:#a8435b; --rosel:#f8e3e8; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#1b1622; --paper:#241d2d; --ink:#f0eaf7; --muted:#b8aac8; --line:#3b3047;
+          --purple:#d4b5ff; --violet:#c08af0; --lav:#8a5cc0; --lavl:#2f2540; --green:#9ac7a5; --greenl:#21302a; --gold:#e6bf6a; --goldl:#33291a; --rose:#e895a8; --rosel:#3a222b; } }
+  :root[data-theme="dark"] { --bg:#1b1622; --paper:#241d2d; --ink:#f0eaf7; --muted:#b8aac8; --line:#3b3047; --purple:#d4b5ff; --violet:#c08af0;
+          --lav:#8a5cc0; --lavl:#2f2540; --green:#9ac7a5; --greenl:#21302a; --gold:#e6bf6a; --goldl:#33291a; --rose:#e895a8; --rosel:#3a222b; }
+  * { box-sizing:border-box; }
+  html { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:15.5px/1.65 Inter, system-ui, sans-serif; }
+  .wrap { max-width:900px; margin:0 auto; padding:28px 16px 70px; }
+  h1,h2,h3 { font-family:Fraunces, Georgia, serif; line-height:1.2; margin:0; color:var(--purple); }
+  h1 { font-size:clamp(30px,6vw,42px); }
+  h2 { font-size:25px; margin:0 0 4px; display:flex; gap:12px; align-items:baseline; }
+  h3 { font-size:18px; margin:22px 0 6px; }
+  p { margin:8px 0; } ul,ol { margin:8px 0; padding-left:22px; } li { margin:4px 0; }
+  code { font:13px ui-monospace, Consolas, monospace; background:var(--lavl); padding:1px 5px; border-radius:4px; overflow-wrap:anywhere; }
+  .muted { color:var(--muted); }
+  .cover { background:var(--paper); border:1px solid var(--line); border-radius:22px; padding:28px; }
+  .eyebrow { font-size:12px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--violet); }
+  .chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+  .chip { font-size:12.5px; padding:4px 11px; border-radius:999px; background:var(--lavl); color:var(--purple); font-weight:600; }
+  section { margin-top:36px; }
+  .part { font:700 12px Inter, sans-serif; letter-spacing:.14em; text-transform:uppercase; color:var(--violet); }
+  .time { font:600 12px Inter, sans-serif; color:var(--muted); margin-left:auto; white-space:nowrap; }
+  .lead { color:var(--muted); margin:2px 0 12px; }
+  .card { background:var(--paper); border:1px solid var(--line); border-radius:14px; padding:16px 18px; margin:12px 0; break-inside:avoid; }
+  .say { background:var(--lavl); border-left:4px solid var(--violet); border-radius:10px; padding:12px 16px; margin:12px 0; break-inside:avoid; }
+  .say b:first-child { color:var(--purple); }
+  .warn { background:var(--goldl); border-left:4px solid var(--gold); border-radius:10px; padding:12px 16px; margin:12px 0; break-inside:avoid; }
+  .bad { background:var(--rosel); border-left:4px solid var(--rose); border-radius:10px; padding:12px 16px; margin:12px 0; break-inside:avoid; }
+  .grid { display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); }
+  .stat { background:var(--paper); border:1px solid var(--line); border-radius:14px; padding:12px 14px; break-inside:avoid; }
+  .stat b { display:block; font:700 26px Fraunces, Georgia, serif; color:var(--purple); }
+  .stat span { font-size:13px; color:var(--muted); }
+  table { width:100%; border-collapse:collapse; font-size:14px; margin:8px 0; }
+  th,td { text-align:left; padding:7px 9px; border-bottom:1px solid var(--line); vertical-align:top; }
+  th { font-size:12px; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); }
+  td.r { text-align:right; font-variant-numeric:tabular-nums; }
+  tr.hi td { background:var(--lavl); font-weight:600; }
+  .scroll { overflow-x:auto; }
+  .flow { display:flex; flex-wrap:wrap; gap:6px; align-items:center; margin:10px 0; }
+  .flow span { background:var(--paper); border:1px solid var(--lav); border-radius:8px; padding:5px 10px; font-size:13.5px; font-weight:600; color:var(--purple); }
+  .flow i { color:var(--violet); font-style:normal; }
+  .qa { background:var(--paper); border:1px solid var(--line); border-radius:12px; padding:13px 16px; margin:10px 0; break-inside:avoid; }
+  .qa .q { font-weight:700; color:var(--purple); display:flex; gap:9px; }
+  .qa .q::before { content:"Q"; flex:none; width:22px; height:22px; border-radius:6px; background:var(--lavl); color:var(--violet); display:grid; place-items:center; font-size:12px; margin-top:2px; }
+  .qa .a { margin:6px 0 0 31px; }
+  .qa .tag { font-size:11px; font-weight:700; color:var(--violet); background:var(--lavl); border-radius:999px; padding:1px 8px; margin-left:6px; white-space:nowrap; }
+  .toc ol { columns:2; column-gap:30px; } .toc li { break-inside:avoid; }
+  .check li { list-style:none; margin-left:-20px; } .check li::before { content:"☐  "; color:var(--violet); }
+  footer { margin-top:44px; text-align:center; font-size:13px; color:var(--muted); }
+  @media (max-width:600px) { .toc ol { columns:1; } .wrap { padding:18px 16px 50px; } }
+  @media print { @page { size:A4; margin:13mm 12mm; } body { background:#fff; font-size:12.5px; } .wrap { max-width:none; padding:0; }
+    h2 { break-after:avoid; } .pb { break-before:page; } section { margin-top:22px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="cover">
+  <div class="eyebrow">Minor project · final evaluation · 23-11-2026</div>
+  <h1>heritage3d: everything you need, A to Z</h1>
+  <p class="muted" style="font-size:17px;margin-top:10px">A one-pass study guide for Ayaan and Kshiti. Read it top to bottom once: every idea is explained before it is used, and your own questions are answered near the end, where you will have all the background.</p>
+  <div class="chips"><span class="chip">Team T212</span><span class="chip">Mentor: Prof. Komal Singh</span><span class="chip">Panel: 2 faculty from CSE</span><span class="chip">PPT on projector + A3 poster</span><span class="chip">Reading time ≈ 2.5 h</span></div>
+</header>
+
+<section class="toc card">
+  <h3 style="margin-top:0">Route through the guide (with reading time)</h3>
+  <ol>
+    <li>The project in one page · 10 min</li>
+    <li>The building blocks of 3D · 25 min</li>
+    <li>How COLMAP and OpenMVS work inside · 25 min</li>
+    <li>The dataset · 10 min</li>
+    <li>What we did, step by step · 20 min</li>
+    <li>How we measured quality and cost · 15 min</li>
+    <li>The virtual museum and its code · 20 min</li>
+    <li>Results and the numbers to remember · 15 min</li>
+    <li>Literature, gap, novelty, methodology · 10 min</li>
+    <li>Tech stack and project structure · 5 min</li>
+    <li>Your questions, answered · 20 min</li>
+    <li>More questions the panel may ask · 15 min</li>
+    <li>On the day · 5 min</li>
+    <li>Glossary · reference</li>
+  </ol>
+</section>
+
+<!-- 1 -->
+<section>
+  <h2><span class="part">Part 1</span>The project in one page<span class="time">10 min</span></h2>
+  <div class="card">
+    <p><b>Title:</b> Cost-Effective Image-Based 3D Digitization of Cultural Heritage Artifacts for Virtual Museum Applications.</p>
+    <p><b>The problem in plain words.</b> A museum can turn an object into a 3D model just by photographing it from many sides and letting software rebuild its shape. Every extra photo costs capture time, storage and, most of all, computer time. Too few photos and parts of the object come out missing or wrong. <b>So how many photos are actually enough?</b> Nobody had measured this carefully for single objects under controlled conditions.</p>
+    <p><b>What we did.</b> We took 40 artifacts from a public dataset (CHSD). For each one we made five photo sets of decreasing size (362, 182, 92, 47, 26 photos), rebuilt the 3D model from every set with the same free software on our own laptop (no graphics card), and measured three things: how accurate the shape is, how good it looks, and how much time, memory and storage it cost. That is 200 reconstructions. Then we compressed the good models for the web and built a walkable 3D virtual museum that shows 44 of them.</p>
+    <p><b>The answer.</b> 47 to 92 photos give the same quality as 362, in 6–17% of the processing time. 26 photos are too few. Compressed web models keep their accuracy at about a fifth of the file size.</p>
+  </div>
+  <h3>Research questions (RQ) and hypotheses (H)</h3>
+  <div class="scroll"><table>
+    <tr><th></th><th>Question / claim</th><th>Answer</th></tr>
+    <tr><td>RQ1</td><td>How does the number of photos affect shape and appearance quality?</td><td>Threshold, not a slope: 47+ photos ≈ 362; 26 breaks down</td></tr>
+    <tr><td>RQ2</td><td>What is the trade-off between photos, processing cost and quality?</td><td>Cost rises steeply, quality plateaus at 47; L4 most cost-effective, L3 safer</td></tr>
+    <tr><td>RQ3</td><td>Can an optimised (compressed) model stay faithful while being cheaper to store and show?</td><td>Yes: 19% size, −0.2 dB, no measurable shape change</td></tr>
+    <tr><td>H1</td><td>Fewer photos cut cost, but too few cut quality</td><td>Supported</td></tr>
+    <tr><td>H2</td><td>A range of far fewer photos matches a large set</td><td>Supported (47–92 photos)</td></tr>
+    <tr><td>H3</td><td>Optimisation cuts storage/rendering cost with enough quality</td><td>Supported</td></tr>
+  </table></div>
+  <div class="say"><b>Say it in one line:</b> “Same artifact, five photo budgets, same pipeline, then compare quality against cost, and deliver the good models in a web museum.”</div>
+</section>
+
+<!-- 2 -->
+<section class="pb">
+  <h2><span class="part">Part 2</span>The building blocks of 3D<span class="time">25 min</span></h2>
+  <p class="lead">Learn these words first; everything later uses them.</p>
+  <h3>2.1 How a computer stores a 3D object</h3>
+  <ul>
+    <li><b>Point cloud:</b> a big list of 3D points (x, y, z), often with a colour each. Like a statue made of sand grains. No surface, just dots.</li>
+    <li><b>Mesh:</b> a surface made of tiny triangles joined at their corners (vertices). This is what games and the web use. Our full models have about 400,000 triangles; museum models 100,000.</li>
+    <li><b>Texture:</b> an image “painted” onto the mesh, so the surface shows the real colours and patterns. It is stored as a texture atlas, one image holding many patches.</li>
+    <li><b>Textured mesh = mesh + texture.</b> <b>This is our final output.</b></li>
+    <li><b>GLB:</b> the binary version of glTF, the standard 3D file format for the web: mesh + texture in one file.</li>
+  </ul>
+  <h3>2.2 Ways to digitize an object</h3>
+  <div class="scroll"><table>
+    <tr><th>Method</th><th>How</th><th>Cost</th><th>Used?</th></tr>
+    <tr><td>Laser / structured-light scanner</td><td>Special device measures distances directly</td><td>Expensive hardware</td><td>No</td></tr>
+    <tr><td><b>Photogrammetry (SfM + MVS)</b></td><td>Many ordinary photos → software works out 3D shape</td><td>Camera + free software</td><td><b>Yes, this is ours</b></td></tr>
+    <tr><td>NeRF (Neural Radiance Fields)</td><td>A neural network learns to render new views of the object</td><td>Needs a GPU, training time; no clean mesh by default</td><td>No (out of scope)</td></tr>
+    <tr><td>3D Gaussian Splatting (3DGS)</td><td>Millions of small coloured blobs, optimised to match the photos; very fast to view</td><td>Needs a GPU; output is blobs, not a mesh</td><td>No (out of scope)</td></tr>
+  </table></div>
+  <div class="say"><b>If asked “which 3D reconstruction method did you use?”</b> “Classical photogrammetry: structure from motion to find the cameras, multi-view stereo to get a dense <b>point cloud</b>, then a triangle <b>mesh</b> with a <b>texture</b>. Our final model is a textured mesh. We did not use NeRF or Gaussian Splatting: they need a GPU, and they were out of our agreed scope.”</div>
+  <h3>2.3 The two big steps of photogrammetry</h3>
+  <div class="flow"><span>Photos</span><i>→</i><span>SfM: where was each camera?</span><i>→</i><span>MVS: dense 3D points</span><i>→</i><span>Mesh</span><i>→</i><span>Texture</span></div>
+  <ul>
+    <li><b>Structure from Motion (SfM):</b> looks at the photos, finds the same small details in different photos, and from that works out <b>where each photo was taken from</b> (camera position and angle, called the camera pose) plus a <b>sparse</b> set of 3D points (thousands). Done by <b>COLMAP</b>.</li>
+    <li><b>Multi-View Stereo (MVS):</b> now that cameras are known, it compares photos pixel by pixel to estimate depth everywhere, giving a <b>dense</b> point cloud (around a million points), then a mesh and texture. Done by <b>OpenMVS</b>.</li>
+  </ul>
+  <div class="card"><b>Analogy:</b> SfM is like working out where every tourist stood by comparing their holiday photos of the same building. MVS is then using those known positions to measure the building's shape in detail.</div>
+  <h3>2.4 Words about cameras and views</h3>
+  <ul>
+    <li><b>Azimuth:</b> the angle around the object (like walking around it). <b>Elevation:</b> how high the camera is (looking down or up).</li>
+    <li><b>Overlap:</b> how much two neighbouring photos show the same part. SfM needs overlap to match features. Too few photos means too little overlap, which is why 26 photos fail.</li>
+    <li><b>Intrinsics:</b> the camera's own properties (focal length, image centre). <b>Extrinsics / pose:</b> where it is and which way it points.</li>
+  </ul>
+</section>
+
+<!-- 3 -->
+<section class="pb">
+  <h2><span class="part">Part 3</span>How COLMAP and OpenMVS work inside<span class="time">25 min</span></h2>
+  <p class="lead">This is the part examiners like to probe. Know the stage names and what each does.</p>
+  <h3>3.1 COLMAP: Structure from Motion (we used the CPU build, version 4.2.1)</h3>
+  <ol>
+    <li><b>Feature extraction</b> (<code>feature_extractor</code>): finds thousands of distinctive small patches in every photo using <b>SIFT</b> (Scale-Invariant Feature Transform). Each feature gets a descriptor, a 128-number fingerprint, that stays similar when the patch is seen from a slightly different angle, size or light. We told COLMAP that all photos come from <b>one camera</b> with a simple pinhole model (<code>SIMPLE_PINHOLE</code>: one focal length plus image centre), because CHSD uses one ideal virtual camera.</li>
+    <li><b>Feature matching</b> (<code>exhaustive_matcher</code>): compares the fingerprints between <b>every pair of photos</b> to find the same points. Wrong matches are removed by <b>geometric verification</b>: COLMAP fits the relation between two views (the essential/fundamental matrix) with <b>RANSAC</b>, a method that repeatedly tries small random samples and keeps the model most matches agree with. Exhaustive matching compares n×(n−1)/2 pairs, so it grows with the square of the photo count. That is why 362 photos are so slow: 65,341 pairs against 4,186 for 92 photos.</li>
+    <li><b>Mapping</b> (<code>mapper</code>, incremental SfM):
+      <ul>
+        <li><b>Start:</b> picks a good starting pair of photos and sets them up in 3D.</li>
+        <li><b>Register:</b> adds one photo at a time, finding its pose from points already in 3D (a step called PnP, Perspective-n-Point).</li>
+        <li><b>Triangulate:</b> creates new 3D points from matching features.</li>
+        <li><b>Refine:</b> regularly runs <b>bundle adjustment</b>, a big optimisation that adjusts all cameras and points together so the projected points land as close as possible to where they were seen. The leftover error is the <b>reprojection error</b>; ours was about 0.2 pixels, which is very good.</li>
+      </ul></li>
+    <li><b>Output:</b> camera poses + sparse point cloud. If some photos cannot be linked to the rest, COLMAP may produce <b>two separate models</b> (a “split”). Our pipeline then densifies only the larger one, which is a known limitation (see Part 8).</li>
+    <li><b>Undistortion</b> (<code>image_undistorter</code>): prepares images and cameras in the exact format the dense step needs.</li>
+  </ol>
+  <h3>3.2 OpenMVS: dense reconstruction, mesh, texture (version 2.4.0, CPU)</h3>
+  <ol>
+    <li><b>InterfaceCOLMAP:</b> converts COLMAP's output into OpenMVS's scene file.</li>
+    <li><b>DensifyPointCloud:</b> for each photo, picks neighbouring photos and estimates a <b>depth map</b> (distance of every pixel) using <b>PatchMatch</b> stereo. PatchMatch starts with random depth guesses, keeps the ones whose small image patches look alike across views, and spreads good guesses to neighbouring pixels. All depth maps are then <b>fused</b> into one dense point cloud, keeping points that several views agree on. Setting: <code>--resolution-level 1</code> (half resolution, but OpenMVS keeps a 640 px minimum, so our 800×600 images stayed full size).</li>
+    <li><b>ReconstructMesh:</b> turns the points into a watertight surface. It builds a <b>Delaunay tetrahedralization</b> (fills space with tetrahedra connecting the points), then decides which tetrahedra are inside or outside the object using the camera rays that saw each point, solved as a <b>graph cut</b> (minimum cut). The boundary between inside and outside becomes the triangle mesh.</li>
+    <li><b>TextureMesh:</b> chooses, for every triangle, the best photo to take its colour from (a sharp, front-facing view, with neighbours preferring the same photo to avoid patchwork), packs the patches into a texture atlas, and can level colour differences at the seams.</li>
+  </ol>
+  <div class="warn"><b>A real problem we found:</b> OpenMVS's default seam levelling turned some faces black on CHSD's black-background images. For museum and visual-quality models we re-textured with seam levelling switched off. Geometry and F-scores never used the texture, so they were unaffected.</div>
+  <h3>3.3 Why COLMAP + OpenMVS, and why not COLMAP alone?</h3>
+  <p>COLMAP can also do dense MVS, but only with an NVIDIA GPU (CUDA). Our laptop has Intel Iris Xe graphics, no CUDA. COLMAP's SfM runs fine on CPU; OpenMVS does the dense part on CPU and reads COLMAP's output directly. The method stays the same (SfM + MVS); only the dense tool changes.</p>
+</section>
+
+<!-- 4 -->
+<section class="pb">
+  <h2><span class="part">Part 4</span>The dataset: CHSD<span class="time">10 min</span></h2>
+  <div class="card">
+    <ul>
+      <li><b>Name:</b> Cultural Heritage Synthetic Depth Dataset (CHSD), downloaded from <b>Zenodo</b> (an open research data site): RGB images doi 10.5281/zenodo.11492154 (46.2 GB) and depth maps doi 10.5281/zenodo.11484461 (7.9 GB). MD5 checksums verified after download.</li>
+      <li><b>What it is:</b> its authors took 3D models of <b>81 heritage artifacts</b> from the Virtual Hampson Museum collection (pots, vessels, figurines, beads, a pipe…) and rendered virtual photos of each on a virtual turntable.</li>
+      <li><b>Per artifact:</b> 360 positions around it (every 1°) × 5 camera heights (−90°, −45°, 0°, 45°, 90°; the ±90° rings are straight-down/up views) = <b>1,800 views</b>, 800×600 px on a black background, plus a 16-bit <b>depth map</b> for every view. 81 × 1,800 = 145,800 files per part.</li>
+      <li><b>Licence:</b> CC BY-NC-SA 4.0: non-commercial, give credit, share derived work (our models) under the same licence. The museum shows the credit in its corner.</li>
+    </ul>
+  </div>
+  <h3>Why a synthetic dataset?</h3>
+  <p>A controlled experiment needs a perfect answer key. CHSD gives exact cameras and a depth map for every view, so we can measure accuracy precisely and change only the number of photos. With real photos, blur, lighting and camera errors would mix into the result. The price is that results are benchmark findings, not a guarantee for real museum photos (our main limitation).</p>
+  <h3>Main set and cut-off set</h3>
+  <ul>
+    <li>We inspected all 81: in <b>41</b> the object is cut off by the image edge in some views (partly outside the picture). That would damage both the reconstruction and the reference.</li>
+    <li><b>Main set = the 40 never cut off</b>, all five levels each (200 runs). <b>Cut-off set = 19</b> artifacts cut off in at most 30% of sample views, run at one level (L3) only; 14 passed and are on the museum's upper floor.</li>
+  </ul>
+  <div class="say"><b>Rule to remember:</b> photos (RGB) are the only input to reconstruction. Depth maps are used only to check accuracy, never to build models.</div>
+</section>
+
+<!-- 5 -->
+<section class="pb">
+  <h2><span class="part">Part 5</span>What we did, step by step<span class="time">20 min</span></h2>
+  <ol>
+    <li><b>Setup (Oct):</b> installed COLMAP and OpenMVS (CPU), Python; wrote <code>check_env.py</code> to verify tools before each run.</li>
+    <li><b>Dataset check:</b> downloaded, verified checksums, extracted, inspected all 81 artifacts (file counts, cut-off views, depth encoding).</li>
+    <li><b>Photo levels:</b> a subset generator picks every n-th azimuth on all rings:
+      <div class="scroll"><table><tr><th>Level</th><th>Step around object</th><th>Photos</th><th>Share of L1</th></tr>
+      <tr><td>L1</td><td>3°</td><td class="r">362</td><td class="r">100%</td></tr><tr><td>L2</td><td>6°</td><td class="r">182</td><td class="r">50%</td></tr>
+      <tr><td>L3</td><td>12°</td><td class="r">92</td><td class="r">25%</td></tr><tr><td>L4</td><td>24°</td><td class="r">47</td><td class="r">13%</td></tr>
+      <tr><td>L5</td><td>45°</td><td class="r">26</td><td class="r">7%</td></tr></table></div>
+      Spacing stays even all round; only the number changes.</li>
+    <li><b>Pilot (30 Oct):</b> one artifact at all five levels to check everything works; then all settings were <b>frozen</b> so every run is comparable.</li>
+    <li><b>Batch runs (31 Oct – 4 Nov):</b> 200 reconstructions in 7 overnight batches, about 65 hours of computing. A resumable batch runner restarts where it stopped; a guard redid any run where the laptop slept or ran on battery, so timings are fair. Each run records time and peak memory per stage.</li>
+    <li><b>Evaluation:</b> every model compared with the reference shape (Part 6), plus the appearance check on 263 models (8.8 hours).</li>
+    <li><b>Analysis:</b> tables, paired statistics, the combined score, charts.</li>
+    <li><b>Museum:</b> exported passing models as compressed GLB files and built the walkable museum (Part 7); then measured download and drawing cost in the browser (RQ3).</li>
+    <li><b>Documentation:</b> results in the vault (project notes) and repository; report, slides, poster.</li>
+  </ol>
+  <div class="card"><b>Reproducibility:</b> one configuration file fixes every setting; every result is a file next to its log; 81 automatic tests check the code; everything is in Git (GitHub). Raw data and meshes stay outside the repository because of size.</div>
+</section>
+
+<!-- 6 -->
+<section class="pb">
+  <h2><span class="part">Part 6</span>How we measured quality and cost<span class="time">15 min</span></h2>
+  <h3>6.1 Shape accuracy (geometry)</h3>
+  <ol>
+    <li><b>Reference shape:</b> we turned all 1,800 depth maps of the artifact into 3D points (“back-projection”) and merged them: the answer key.</li>
+    <li><b>Alignment:</b> COLMAP's model has its own arbitrary scale and orientation. We matched it to the dataset using the camera positions (a similarity transform, Umeyama method). Cameras lined up to about 0.0003 R, far below our tolerance.</li>
+    <li><b>Unit R:</b> distance from camera to object centre; objects are about 0.3–0.8 R across. Using R makes all artifacts comparable.</li>
+    <li><b>F-score at 0.002 R:</b> <b>precision</b> = share of our points within 0.002 R of the true surface (“is what we built in the right place?”); <b>recall</b> = share of the true surface we covered within 0.002 R (“did we build all of it?”). F = 2·P·R / (P + R), from 0 to 1. Checked also at 0.005 R and 0.01 R. This is the standard summary in 3D benchmarks such as Tanks and Temples.</li>
+    <li>Also: <b>Chamfer distance</b> (average distance both ways) and <b>Hausdorff 95%</b> (near-worst distance). Main measure: <b>mesh F</b>, because the museum shows the mesh.</li>
+  </ol>
+  <h3>6.2 Appearance (visual)</h3>
+  <p>We rendered each model from <b>12 held-out views</b> (angles no photo set used) and compared with the dataset image: <b>PSNR</b> (pixel difference in decibels, higher is better, about 29 dB here), <b>SSIM</b> (structural similarity 0–1, how alike edges and textures look) and <b>silhouette IoU</b> (overlap of outlines).</p>
+  <h3>6.3 Cost</h3>
+  <p>Processing time, peak memory (RAM) and storage per run, all measured on the laptop.</p>
+  <h3>6.4 Statistics (why the numbers are trustworthy)</h3>
+  <ul>
+    <li><b>Paired comparison:</b> levels compared on the same 40 artifacts.</li>
+    <li><b>Wilcoxon signed-rank test:</b> checks whether one level is consistently better than another without assuming normal data.</li>
+    <li><b>Holm correction:</b> adjusts p-values because we did several comparisons.</li>
+    <li><b>Bootstrap 95% interval:</b> resamples the artifacts 10,000 times to show how certain each median difference is.</li>
+    <li><b>Sufficiency bar:</b> mesh F ≥ 0.95, fixed before analysis (also the museum's exhibit rule).</li>
+  </ul>
+  <h3>6.5 The combined cost-effectiveness score</h3>
+  <div class="card"><p style="text-align:center;font-size:17px"><b>Score = w·Q + (1 − w)·S</b>, with w = 0.5</p>
+  <p><b>Q (quality)</b> = mean of median mesh F, median SSIM and the share of artifacts that pass. <b>S (saving)</b> = 1 − mean of time, RAM and storage as a share of L1. L1 saves nothing (S = 0). The weights are our choice, so we recomputed the ranking for every w from 0 to 1: L4 wins for w 0.15–0.80, L3 for 0.85–0.95. The conclusion does not depend on the weights.</p></div>
+</section>
+
+<!-- 7 -->
+<section class="pb">
+  <h2><span class="part">Part 7</span>The virtual museum and its code<span class="time">20 min</span></h2>
+  <p class="lead">Built from scratch by us in JavaScript on <b>three.js</b>, a free open-source WebGL library (WebGL = the browser's 3D graphics). three.js is the engine; the museum is our own design.</p>
+  <h3>7.1 From model to exhibit</h3>
+  <div class="flow"><span>L3 mesh (≈400k triangles)</span><i>→</i><span>decimate to 100k</span><i>→</i><span>re-texture, JPEG ≤ 2048 px</span><i>→</i><span>GLB file ≈ 3 MB</span><i>→</i><span>artifacts.json list</span><i>→</i><span>museum</span></div>
+  <p><b>Exhibit rule:</b> an artifact is shown only if its L3 mesh F ≥ 0.95. The Python script <code>export_glb.py</code> does all of this and writes <code>museum/artifacts.json</code> (each exhibit's name, file and measured facts for its placard).</p>
+  <h3>7.2 The JavaScript files (components)</h3>
+  <div class="scroll"><table>
+    <tr><th>File</th><th>What it does</th></tr>
+    <tr><td><code>main.js</code></td><td>The heart: reads artifacts.json, builds the hall, loads each GLB onto its pedestal (nearest first), walking with WASD + mouse (pointer lock), collisions, the 360° close-up (key E), map (M), first/third person (V), menus, frame-rate counter.</td></tr>
+    <tr><td><code>layout.js</code></td><td>The floor plan, sized from the number of exhibits: domed rotunda + four galleries, a staircase and an upper gallery for the cut-off set; gives the floor height anywhere (for stairs).</td></tr>
+    <tr><td><code>building.js</code></td><td>Builds the architecture (walls, dome, arches, windows, stairs, pedestals) from the plan; parts with the same material are merged so the whole building costs only a few draw calls (fast).</td></tr>
+    <tr><td><code>textures.js</code></td><td>Draws marble, plaster and floor textures in code, so the hall needs no image files.</td></tr>
+    <tr><td><code>labels.js</code></td><td>Writes text on canvases: pedestal placards, gallery signs, signboards, information panel.</td></tr>
+    <tr><td><code>gate.js</code></td><td>The outdoor start scene: PDEU main gate, street, drive (modelled by hand from photos), walkable up to the museum.</td></tr>
+    <tr><td><code>exterior.js</code></td><td>The museum building seen from outside, drawn from the same floor plan.</td></tr>
+    <tr><td><code>portal.js</code></td><td>The yellow arrow and glowing circle that move you between the gate and the hall.</td></tr>
+    <tr><td><code>character.js</code></td><td>The simple figure seen in third-person view.</td></tr>
+    <tr><td><code>list.html / list.js</code></td><td>A simple list view showing one model at a time (uses Google's model-viewer).</td></tr>
+  </table></div>
+  <h3>7.3 Performance</h3>
+  <p>60 frames per second with all 44 exhibits on the laptop's integrated graphics (up to about 4.3 million triangles on screen). Whole collection: 129.6 MB; nearest models load first so the hall is usable within seconds.</p>
+  <h3>7.4 How to run it</h3>
+  <p>It is a static website (no server code). In the <code>museum</code> folder run <code>python -m http.server 8000</code> and open <code>http://localhost:8000</code> (or double-click <code>Deliverables/Demo/Run_Museum.bat</code>). Opening index.html by double-click does not work (browsers block local model loading). Needs internet for three.js.</p>
+</section>
+
+<!-- 8 -->
+<section class="pb">
+  <h2><span class="part">Part 8</span>Results and the numbers to remember<span class="time">15 min</span></h2>
+  <div class="grid">
+    <div class="stat"><b>200</b><span>reconstructions (40 × 5)</span></div>
+    <div class="stat"><b>47–92</b><span>photos give L1's quality</span></div>
+    <div class="stat"><b>6.3%</b><span>of L1's time at L4</span></div>
+    <div class="stat"><b>0.82</b><span>best combined score (L4)</span></div>
+    <div class="stat"><b>19%</b><span>file size of museum models</span></div>
+    <div class="stat"><b>−0.2 dB</b><span>visual cost of compression</span></div>
+    <div class="stat"><b>44</b><span>exhibits, 60 fps</span></div>
+    <div class="stat"><b>65 h</b><span>of computing on a laptop CPU</span></div>
+  </div>
+  <div class="scroll"><table>
+    <tr><th>Level</th><th class="r">Photos</th><th class="r">Time</th><th class="r">RAM</th><th class="r">Mesh F</th><th class="r">PSNR</th><th class="r">Pass ≥ 0.95</th><th class="r">Score</th></tr>
+    <tr><td>L1</td><td class="r">362</td><td class="r">55.4 min</td><td class="r">4.4 GB</td><td class="r">0.984</td><td class="r">29.6</td><td class="r">31/40</td><td class="r">0.45</td></tr>
+    <tr><td>L2</td><td class="r">182</td><td class="r">22.4 min</td><td class="r">2.3 GB</td><td class="r">0.982</td><td class="r">29.0</td><td class="r">31/40</td><td class="r">0.70</td></tr>
+    <tr><td>L3</td><td class="r">92</td><td class="r">9.7 min</td><td class="r">2.0 GB</td><td class="r">0.989</td><td class="r">29.2</td><td class="r">30/40</td><td class="r">0.79</td></tr>
+    <tr class="hi"><td>L4</td><td class="r">47</td><td class="r">3.9 min</td><td class="r">2.0 GB</td><td class="r">0.988</td><td class="r">29.2</td><td class="r">28/40</td><td class="r">0.82</td></tr>
+    <tr><td>L5</td><td class="r">26</td><td class="r">1.0 min</td><td class="r">2.0 GB</td><td class="r">0.580</td><td class="r">14.4</td><td class="r">5/40</td><td class="r">0.63</td></tr>
+  </table></div>
+  <p class="muted">Medians over the 40 artifacts. Time grows as about photos<sup>1.34</sup>. All 40 at L4 take 2.7 h (28 pass), at L3 6.3 h (30), at L1 40.1 h (31).</p>
+  <h3>Three findings to explain in your own words</h3>
+  <ul>
+    <li><b>Threshold:</b> quality is flat from 362 down to 47 photos, then collapses at 26 (14 of 40 runs produced no dense cloud).</li>
+    <li><b>Surprise:</b> more photos made the dense cloud slightly <i>less</i> precise at the tight tolerance (0.98 at L4 vs 0.80 at L1). Likely cause (not proven): many closely spaced views add slightly misplaced points that the fixed settings don't filter. The mesh is unaffected.</li>
+    <li><b>Some objects never pass:</b> 9 of 40 fail even with 362 photos (see Q1 in Part 11).</li>
+  </ul>
+  <h3>Limitations (say them before you are asked)</h3>
+  <ul><li>Synthetic images (ideal cameras, lighting).</li><li>One pipeline, one laptop; each run timed once.</li><li>Split SfM models: only the largest densified.</li><li>Cut-off set only at L3.</li><li>Combined-score weights are our choice (checked over all weights).</li><li>Museum not hosted online yet; download speed simulated.</li></ul>
+</section>
+
+<!-- 9 -->
+<section class="pb">
+  <h2><span class="part">Part 9</span>Literature, gap, novelty, methodology<span class="time">10 min</span></h2>
+  <h3>Literature review</h3>
+  <p>29 papers (2011–2026) in an Excel workbook (<code>docs/literature/…FINAL.xlsx</code>), in four themes: <b>artifact digitization</b>, <b>image-based reconstruction</b>, <b>low-cost digitization</b>, <b>virtual museums</b>. For each: problem, method, data, metrics, findings, limitation. Mostly international peer-reviewed venues (ISPRS Archives, Elsevier, MDPI, Springer Nature, PLOS ONE, 3 IEEE conference papers). What they show: digitization works, SfM-MVS is mature and cheap, low-cost capture is feasible, web museums work. What they mostly do: add hardware, compare methods/devices, focus on sites or user experience.</p>
+  <h3>Research gap</h3>
+  <p>Image count is rarely varied systematically <b>for single artifacts</b>, and acquisition effort, computing cost and quality are seldom measured <b>together</b> on the same objects, nor carried through to web delivery.</p>
+  <h3>Novelty</h3>
+  <div class="say"><b>Say:</b> “Not a new algorithm. Our novelty is a controlled, reproducible framework that links photo effort and computing cost to shape and appearance quality, per artifact, with statistics and a combined score, carried through to a working virtual museum.” Do not claim “first ever”.</div>
+  <h3>Proposed vs actual methodology</h3>
+  <div class="scroll"><table>
+    <tr><th>Proposed (mid-term)</th><th>Actual</th><th>Why</th></tr>
+    <tr><td>Image subsets 100/50/25/12.5/6.25%</td><td>L1–L5 by azimuth step: 362/182/92/47/26 (≈100/50/25/13/7%)</td><td>Even spacing round the object; pole views kept</td></tr>
+    <tr><td>COLMAP for SfM and dense MVS</td><td>COLMAP SfM (CPU) + OpenMVS dense (CPU)</td><td>No CUDA GPU on the laptop</td></tr>
+    <tr><td>Pilot artifact, then more</td><td>Pilot, then 40-artifact main set + 19 cut-off</td><td>Enough for statistics</td></tr>
+    <tr><td>Geometric evaluation</td><td>+ visual fidelity (PSNR/SSIM) + browser cost</td><td>To answer RQ1 and RQ3 fully</td></tr>
+    <tr><td>Cost metrics side by side</td><td>Side by side + combined score with weight check</td><td>Team decision for a single summary</td></tr>
+    <tr><td>Simple web viewer</td><td>Walkable two-floor museum with gate scene</td><td>Museum was a compulsory deliverable</td></tr>
+  </table></div>
+</section>
+
+<!-- 10 -->
+<section>
+  <h2><span class="part">Part 10</span>Tech stack and project structure<span class="time">5 min</span></h2>
+  <div class="scroll"><table>
+    <tr><th>Layer</th><th>Tools</th></tr>
+    <tr><td>Reconstruction</td><td>COLMAP 4.2.1 (CPU) for SfM; OpenMVS 2.4.0 (CPU) for dense cloud, mesh, texture</td></tr>
+    <tr><td>Pipeline, evaluation, analysis</td><td>Python 3.13: NumPy, SciPy (statistics), Matplotlib (charts), OpenPyXL (Excel); pytest (81 tests)</td></tr>
+    <tr><td>Museum</td><td>JavaScript + three.js r170 (WebGL), HTML/CSS, GLB models; static site</td></tr>
+    <tr><td>Hardware</td><td>HP Envy x360: Intel i7-1255U, 16 GB RAM, Intel Iris Xe (no NVIDIA, no CUDA), Windows 11</td></tr>
+    <tr><td>Project management</td><td>Git + GitHub; Obsidian vault for notes, decisions and the session log; AI coding assistant (Claude Code)</td></tr>
+  </table></div>
+  <p class="muted">Folders: <code>configs/</code> settings · <code>src/heritage3d/</code> shared Python code · <code>scripts/</code> tools for each step · <code>tests/</code> · <code>experiments/results, plots, logs</code> · <code>museum/</code> · <code>vault/</code> · <code>Deliverables/</code>.</p>
+</section>
+
+<!-- 11 -->
+<section class="pb">
+  <h2><span class="part">Part 11</span>Your questions, answered<span class="time">20 min</span></h2>
+  <p class="lead">Grouped in the order a panel usually goes: data and background, method, results, then you, then the future.</p>
+
+  <div class="qa"><div class="q">Where did you get the dataset?</div><div class="a">From Zenodo: the Cultural Heritage Synthetic Depth Dataset (CHSD), two records (RGB images and depth maps, DOIs in Part 4), licence CC BY-NC-SA 4.0. It contains 81 artifacts from the Virtual Hampson Museum collection, 1,800 rendered views each. We verified the download with checksums and inspected every artifact.</div></div>
+
+  <div class="qa"><div class="q">Show your literature review.</div><div class="a">Open the Excel workbook (<code>docs/literature/Literature_Review_Cultural_Heritage_Artifacts_FINAL.xlsx</code>): 29 papers in four themes with method, metrics, findings and limitations, plus a gap matrix, the top-10 papers and our final project definition. Report Chapter 2 summarises it; slide 5 compares six closest works.</div></div>
+
+  <div class="qa"><div class="q">What are the research gaps?</div><div class="a">Existing work proves low-cost digitization, quality measurement and web museums each work, but rarely varies the number of photos systematically for single artifacts, and rarely measures photo effort, computing cost and quality together on the same objects, carried through to web delivery.</div></div>
+
+  <div class="qa"><div class="q">What is the novelty?</div><div class="a">A controlled, reproducible framework, not a new algorithm: same artifact, five photo budgets, same pipeline; shape, appearance and cost measured together with statistics and a combined score; results carried into a working virtual museum with measured browser costs.</div></div>
+
+  <div class="qa"><div class="q">Proposed vs actual methodology?</div><div class="a">Same core (photo subsets → SfM + MVS → evaluate → web museum). Changes: OpenMVS instead of COLMAP's dense step (no CUDA), levels defined by azimuth step, 40 + 19 artifacts, added visual fidelity, browser cost and a combined score. Table in Part 9.</div></div>
+
+  <div class="qa"><div class="q">What is your tech stack?</div><div class="a">Reconstruction: COLMAP (SfM) + OpenMVS (dense, mesh, texture), both on CPU. Analysis: Python with NumPy, SciPy, Matplotlib, tested with pytest. Museum: JavaScript with three.js (WebGL), GLB models, static website. Git/GitHub for version control.</div></div>
+
+  <div class="qa"><div class="q">Why did some artifacts not pass the museum score (mesh F ≥ 0.95 at L3)?</div><div class="a">10 of 40 main-set and 5 of 19 cut-off artifacts failed. Two causes:
+    <ol>
+      <li><b>Split reconstructions:</b> SfM could not link all photos into one model and made two. Our pipeline densifies only the larger, so one side of the object is missing (e.g. Ark_HM_341, 31, 797, 703; three cut-off failures).</li>
+      <li><b>Small, plain, low-texture objects:</b> too few distinctive features to match (e.g. Ark_HM_1260B, 1260C, 38). This is our explanation; we did not test it separately.</li>
+    </ol>
+    One (Ark_HM_792) registered all photos but still scored low; we did not find the cause. More photos did not rescue them: 9 of 40 never pass even with 362.</div></div>
+
+  <div class="qa"><div class="q">What are your numbers? <span class="tag">key</span></div><div class="a">47–92 photos match 362 in quality at 6–17% of the time; 26 photos break down (mesh F 0.58). L4 has the best combined score, 0.82. Museum models: 19% of file size, 23% of download time, 43% of drawing time, −0.2 dB PSNR. 44 exhibits at 60 fps. Table in Part 8.</div></div>
+
+  <div class="qa"><div class="q">What are your limitations?</div><div class="a">Synthetic images; one pipeline and one laptop; each run timed once; split SfM models; cut-off set only at L3; combined-score weights are our choice (we checked all weights); museum not yet hosted, download speed simulated.</div></div>
+
+  <div class="qa"><div class="q">If I photograph an artifact with my phone, can you turn it into a 3D model?</div><div class="a"><b>Yes</b>, with the same pipeline: COLMAP works out the phone's camera itself. Our measured times are for 800×600 images (92 photos ≈ 10 min, 362 ≈ 55 min). Phone photos have about 25× more pixels, so on this laptop we would expect roughly 1–4 hours for 50–100 photos at full resolution, or much less if we resize them first. That is an estimate; we have not run real phone photos. Tips: walk around the object in even steps (~24°, at two or three heights), even light, plain background, no motion blur. We could not compute an F-score for it, because there is no reference shape for a real object.</div></div>
+  <div class="warn"><b>About your draft answer “3.5–4 hours”:</b> fine as an upper estimate for many full-resolution photos, but say it is an estimate and depends on photo count and resolution.</div>
+
+  <div class="qa"><div class="q">Why not use a GPU? Cost-effectiveness or resource limitation?</div><div class="a"><b>Both, and they point the same way.</b> Our laptop has Intel Iris Xe graphics, not an NVIDIA GPU, so CUDA-based tools (COLMAP's dense step, NeRF, 3DGS training) cannot run. And the project's aim is <i>cost-effective</i> digitization for small museums and colleges, which usually have exactly this kind of hardware. Showing it works on a CPU laptop is part of the result. A GPU would mainly make the dense step faster (likely, not measured by us).</div></div>
+
+  <div class="qa"><div class="q">How will you deploy the museum?</div><div class="a">It is a static website (HTML, JavaScript, 44 GLB files ≈ 130 MB, each ≈ 3 MB), so any static host works: <b>GitHub Pages</b> (publish the <code>museum</code> folder), <b>Netlify</b> (drag-and-drop the folder) or a university web server. No backend or database is needed; three.js loads from a CDN. The CC BY-NC-SA licence allows this, non-commercially and with the credit shown. Right now it runs locally for the demo; hosting is a next step.</div></div>
+
+  <div class="qa"><div class="q">How much did you do yourselves, and how much was AI?</div><div class="a"><b>Answer honestly, matching the declaration in the report.</b> We used an AI coding assistant (Claude Code) to write and test most of the code, run the batches, build the analysis and the museum, and draft documents. We decided the problem, research questions, dataset, method and scope; made every design decision (levels, exhibit rule, combined score, museum features); checked results and edited the documents. Every number comes from runs on our laptop, with logs. Then show you understand it, using this guide.</div></div>
+  <div class="bad">Do not claim you wrote everything by hand: the report's declaration states AI use, and a mismatch is worse than the honest answer.</div>
+
+  <div class="qa"><div class="q">What is the split of work between you two?</div><div class="a">No split is recorded in our project files: both of you directed every session together on the same laptop, and commits alternate between you. Agree tonight on a truthful split by area and both say the same thing. Example framing: “We worked together throughout; I led ___, she led ___.” Use the same split as in the presentation.</div></div>
+
+  <div class="qa"><div class="q">What did you learn?</div><div class="a">How 3D reconstruction works (SfM, MVS, meshing, texturing); how to design a fair experiment (one variable, frozen settings, paired comparison); evaluation metrics (F-score, Chamfer, PSNR, SSIM) and statistics (Wilcoxon, Holm, bootstrap); 3D on the web (three.js, GLB, performance); running long reproducible experiments with Git, logs and tests.</div></div>
+
+  <div class="qa"><div class="q">How will you use this in the future?</div><div class="a">As capture guidelines for real collections (≈50–90 photos per object, even spacing); digitizing a college or local museum collection on ordinary laptops; validating with real phone photos; hosting the museum; extending to neural methods (NeRF/3DGS) on the same controlled subsets; possibly a paper.</div></div>
+</section>
+
+<!-- 12 -->
+<section class="pb">
+  <h2><span class="part">Part 12</span>More questions the panel may ask<span class="time">15 min</span></h2>
+  <div class="qa"><div class="q">Why is L4 better than L1 on the dense cloud? More data should help.</div><div class="a">The mesh is equally good from L1 to L4. Only the dense cloud's precision falls with more photos at the tight 0.002 R tolerance; at 0.01 R all score ≥ 0.998. Likely cause: closely spaced views add slightly misplaced points (hypothesis).</div></div>
+  <div class="qa"><div class="q">Why does L5 fail?</div><div class="a">At 45° steps neighbouring photos overlap too little, so features cannot be matched, cameras fail to register and the dense step has too few neighbours. 14 of 40 L5 runs gave no dense cloud.</div></div>
+  <div class="qa"><div class="q">Which level do you recommend?</div><div class="a">L4 (47 photos) for the lowest cost with the same quality; L3 (92 photos) if reliability matters more, since it loses two fewer objects. Nothing beyond L2 helped.</div></div>
+  <div class="qa"><div class="q">Why is the museum built from L3, not L4?</div><div class="a">L3 had no extra failures when the museum rule was set, and a museum needs reliability across many objects. The 30 main-set exhibits are exactly the 30 that pass at L3.</div></div>
+  <div class="qa"><div class="q">What is F-score in one line?</div><div class="a">Harmonic mean of precision (built in the right place) and recall (built all of it) at a distance tolerance; 1 is perfect.</div></div>
+  <div class="qa"><div class="q">How do you know the evaluation is correct?</div><div class="a">The reference comes from independent depth maps, never from our model; alignment uses known cameras (residual 0.0003 R); failed reconstructions score near zero as expected; 81 unit tests cover the metrics.</div></div>
+  <div class="qa"><div class="q">Why not use more artifacts, or all 81?</div><div class="a">41 are cut off by the frame in some views, which would make the comparison unfair. The 40 clean ones gave enough pairs for statistics; 19 cut-off ones were tested separately.</div></div>
+  <div class="qa"><div class="q">Why these weights in the combined score?</div><div class="a">Equal weight is the neutral choice; we showed the winner for every weight from 0 to 1. L4 or L3 wins across 0.15–0.95.</div></div>
+  <div class="qa"><div class="q">What does decimation mean?</div><div class="a">Reducing the number of triangles while keeping the shape: about 400k → 100k. Our measurement shows shape accuracy changed by at most 0.0003 in F-score.</div></div>
+  <div class="qa"><div class="q">What does “cost-effective” mean here? You never measured money.</div><div class="a">Cost = effort and resources: number of photos (capture effort), processing time, memory and storage, all on free software and an ordinary laptop. Budget: ₹0.</div></div>
+  <div class="qa"><div class="q">Would this work for real objects?</div><div class="a">The pattern (a plateau, then a breakdown) is likely to hold, but exact numbers may shift with real blur and lighting. Testing with real photos is the next step.</div></div>
+  <div class="qa"><div class="q">What is the 3D model made of, technically?</div><div class="a">A triangle mesh (vertices + faces) with UV texture coordinates and one JPEG texture atlas, stored as GLB; about 100k triangles and 3 MB per exhibit.</div></div>
+  <div class="qa"><div class="q">Why is the museum fast on a laptop?</div><div class="a">Compressed models, merged building geometry (few draw calls), procedural textures, nearest-first loading, and simple lighting.</div></div>
+</section>
+
+<!-- 13 -->
+<section>
+  <h2><span class="part">Part 13</span>On the day<span class="time">5 min</span></h2>
+  <ul class="check">
+    <li>Laptop charged and on the charger; internet working (museum needs three.js from the web); notifications off.</li>
+    <li>Presentation open on the projector (<code>Deliverables/Presentation/heritage3d_Presentation_v2.pptx</code>); museum running in Chrome full screen (<code>Run_Museum.bat</code>, Ctrl+Shift+R once).</li>
+    <li>A3 poster printed and held ready; point at Fig. 2 (the reconstruction strip) and the score chart when explaining.</li>
+    <li>Fallback: screenshots in <code>Deliverables/figures/</code> if the network fails.</li>
+    <li>Agree tonight who presents which slides, and your work split answer.</li>
+  </ul>
+  <div class="card"><b>Suggested 8-minute flow:</b> problem and RQs (1 min) → method and dataset (2 min) → results: table, score chart, RQ3 (3 min) → museum demo: gate → lobby → close-up (E) → upper floor (2 min). Then questions.</div>
+  <div class="say"><b>Golden rules for answers:</b> short answer first, then one supporting number. If you don't know, say “we didn't measure that; it would be a good next step.” Never invent a number.</div>
+</section>
+
+<!-- 14 -->
+<section class="pb">
+  <h2><span class="part">Part 14</span>Glossary<span class="time">reference</span></h2>
+  <div class="scroll"><table>
+    <tr><td><b>Azimuth / elevation</b></td><td>Angle around the object / camera height angle</td></tr>
+    <tr><td><b>Bundle adjustment</b></td><td>Joint optimisation of all cameras and 3D points to minimise reprojection error</td></tr>
+    <tr><td><b>Chamfer distance</b></td><td>Average distance from model to reference and back</td></tr>
+    <tr><td><b>CUDA</b></td><td>NVIDIA's platform for running computations on its GPUs</td></tr>
+    <tr><td><b>Decimation</b></td><td>Reducing triangle count while keeping shape</td></tr>
+    <tr><td><b>Delaunay tetrahedralization</b></td><td>Filling space with tetrahedra between points; used to extract the mesh</td></tr>
+    <tr><td><b>Dense / sparse point cloud</b></td><td>Millions of points from MVS / thousands from SfM</td></tr>
+    <tr><td><b>Depth map</b></td><td>Image whose pixels store distance from the camera</td></tr>
+    <tr><td><b>F-score</b></td><td>Harmonic mean of precision and recall at a tolerance</td></tr>
+    <tr><td><b>GLB / glTF</b></td><td>Standard 3D file format for the web (binary / text)</td></tr>
+    <tr><td><b>Graph cut</b></td><td>Optimisation that splits a graph into two parts at minimum cost (inside vs outside)</td></tr>
+    <tr><td><b>Mesh / texture</b></td><td>Triangle surface / image painted onto it</td></tr>
+    <tr><td><b>MVS</b></td><td>Multi-view stereo: dense depth from many posed photos</td></tr>
+    <tr><td><b>PatchMatch</b></td><td>Fast stereo method: random depth guesses refined by spreading good ones</td></tr>
+    <tr><td><b>PSNR / SSIM</b></td><td>Pixel-difference score in dB / structural-similarity score 0–1</td></tr>
+    <tr><td><b>R</b></td><td>Camera-to-object-centre distance; our distance unit</td></tr>
+    <tr><td><b>RANSAC</b></td><td>Robust fitting by random sampling; removes wrong matches</td></tr>
+    <tr><td><b>Reprojection error</b></td><td>Distance in pixels between where a 3D point projects and where it was seen</td></tr>
+    <tr><td><b>SfM</b></td><td>Structure from motion: camera poses + sparse points from photos</td></tr>
+    <tr><td><b>SIFT</b></td><td>Feature detector/descriptor robust to scale, rotation and light</td></tr>
+    <tr><td><b>three.js / WebGL</b></td><td>JavaScript 3D library / the browser's 3D graphics interface</td></tr>
+    <tr><td><b>Wilcoxon / Holm / bootstrap</b></td><td>Paired rank test / multiple-comparison correction / resampling for confidence intervals</td></tr>
+  </table></div>
+</section>
+
+<footer>heritage3d · Team T212 · Ayaan Goel &amp; Kshiti Bhavsar · prepared 22-11-2026 from the project's committed results · all the best for tomorrow</footer>
+</div>
+</body>
+</html>
