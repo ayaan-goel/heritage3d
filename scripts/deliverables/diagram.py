@@ -1,5 +1,5 @@
 """Pipeline diagram for the report, slides and poster -> Deliverables/figures/pipeline.png
-(--heritage: pink palette for poster v2 -> pipeline_heritage.png)"""
+(--heritage: template lavender palette for poster v2 -> pipeline_heritage.png)"""
 import sys
 import matplotlib
 matplotlib.use("Agg")
@@ -8,7 +8,7 @@ from matplotlib.patches import FancyBboxPatch
 
 HERITAGE = "--heritage" in sys.argv
 if HERITAGE:
-    NAVY, CLAY, SAGE, INK, MUTED, BG, CARD = "#5e1f42", "#d6457a", "#6f9a7a", "#3a2230", "#8a6a7a", "#fdf2f6", "#ffffff"
+    NAVY, CLAY, SAGE, INK, MUTED, BG, CARD = "#4b2577", "#9b59d0", "#5e8c6a", "#2e2238", "#7a6a8a", "#ffffff", "#ffffff"
 else:
     NAVY, CLAY, SAGE, INK, MUTED, BG, CARD = "#1d3557", "#b5562f", "#4f7a5a", "#1f1f1f", "#5a5a5a", "#ffffff", "white"
 boxes = [  # x, y, w, h, title, lines, colour

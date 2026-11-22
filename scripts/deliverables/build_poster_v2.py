@@ -1,4 +1,4 @@
-"""A1 poster, version 2 (pink theme with serif headings, acquisition-cost table with the combined-score formula, score breakdown chart)
+"""A1 poster, version 2 (department template colours kept: lavender bars, Times New Roman headings; acquisition-cost table with the combined-score formula, score breakdown chart)
 on the department's template -> Deliverables/Poster/heritage3d_Poster_v2.pptx. Version 1 (build_poster.py) is kept."""
 import csv
 
@@ -11,9 +11,9 @@ from pptx.util import Inches, Pt
 from common import FIG, GUIDE, OUT, ROOT, TEAM, TEAM_ID, TITLE, references
 
 NUMS, REFS = references()
-BROWN, TERRA, GOLD, OLIVE = RGBColor(0x5E, 0x1F, 0x42), RGBColor(0xD6, 0x45, 0x7A), RGBColor(0xE8, 0x9B, 0xB5), RGBColor(0x6F, 0x9A, 0x7A)
-INK, CREAM, PARCH, PARCH2, HILITE = (RGBColor(0x3A, 0x22, 0x30), RGBColor(0xFF, 0xFF, 0xFF), RGBColor(0xFD, 0xF2, 0xF6),
-                                     RGBColor(0xFA, 0xE3, 0xEC), RGBColor(0xF7, 0xC8, 0xD8))
+BROWN, TERRA, GOLD, OLIVE = RGBColor(0x4B, 0x25, 0x77), RGBColor(0x9B, 0x59, 0xD0), RGBColor(0xCC, 0x99, 0xFF), RGBColor(0x5E, 0x8C, 0x6A)
+INK, CREAM, PARCH, PARCH2, HILITE = (RGBColor(0x2E, 0x22, 0x38), RGBColor(0xFF, 0xFF, 0xFF), RGBColor(0xFF, 0xFF, 0xFF),
+                                     RGBColor(0xF4, 0xEB, 0xFF), RGBColor(0xE6, 0xCC, 0xFF))
 SERIF, SANS = "Georgia", "Calibri"
 prs = Presentation(OUT / "Poster Template.pptx")
 s = prs.slides[0]
@@ -23,46 +23,34 @@ for sh in list(group.shapes):  # drop the sample SmartArt and "Insert ..." place
     if sh.shape_type is None or (sh.has_text_frame and sh.text_frame.text.strip().startswith("Insert")):
         sh._element.getparent().remove(sh._element)
 
-# parchment background behind everything
-bg = s.shapes.add_shape(MSO_SHAPE.RECTANGLE, 0, 0, W, H)
-bg.fill.solid(); bg.fill.fore_color.rgb = PARCH; bg.line.fill.background()
-s.shapes._spTree.remove(bg._element); s.shapes._spTree.insert(2, bg._element)
-
-
-def restyle(shape, lines, sizes, fonts, colors, fill=None, bold=True):
-    if fill is not None:
-        shape.fill.solid(); shape.fill.fore_color.rgb = fill
-    shape.line.fill.background()
+def set_words(shape, lines, sub_size=26):
+    """Change the words but keep the template's own formatting of the first run."""
     tf = shape.text_frame
-    tf.word_wrap = True
-    tf.vertical_anchor = MSO_ANCHOR.MIDDLE
     for p in list(tf.paragraphs)[1:]:
         p._p.getparent().remove(p._p)
-    for r in list(tf.paragraphs[0].runs):
+    runs = tf.paragraphs[0].runs
+    runs[0].text = lines[0]
+    for r in runs[1:]:
         r._r.getparent().remove(r._r)
-    for i, line in enumerate(lines):
-        p = tf.paragraphs[0] if i == 0 else tf.add_paragraph()
-        p.alignment = PP_ALIGN.CENTER
-        r = p.add_run(); r.text = line
-        r.font.size, r.font.name, r.font.color.rgb = Pt(sizes[i]), fonts[i], colors[i]
-        r.font.bold = bold and i == 0
+    for line in lines[1:]:
+        p = tf.add_paragraph(); p.alignment = tf.paragraphs[0].alignment
+        r = p.add_run(); r.text = line; r.font.size = Pt(sub_size); r.font.bold = False; r.font.name = "Times New Roman"
 
 
-HEADERS = {"Brief Motivation": "Brief Motivation", "Objective": "Objective", "Methodology": "Methodology",
-           "Expected Results": "Results", "Outcomes": "Outcomes", "Budget Utilization": "Budget and References"}
 for sh in group.shapes:
     t = sh.text_frame.text.strip() if sh.has_text_frame else ""
     if t.startswith("TITLE OF THE"):
-        restyle(sh, [TITLE, f"Team {TEAM_ID}   ·   " + "   ·   ".join(f"{n} ({r})" for n, r in TEAM) + f"   ·   Guide: {GUIDE}"],
-                [42, 25], [SERIF, SANS], [CREAM, GOLD], BROWN)
-        sh.text_frame.margin_left = sh.text_frame.margin_right = Inches(2.75)
-    elif t in HEADERS:
-        restyle(sh, [f"◆   {HEADERS[t]}   ◆"], [34], [SERIF], [CREAM], TERRA)
-    elif sh.shape_type == 9:  # divider between motivation and objective
-        sh.line.color.rgb = GOLD; sh.line.width = Pt(2)
+        set_words(sh, [TITLE, f"Team {TEAM_ID}   ·   " + "   ·   ".join(f"{n} ({r})" for n, r in TEAM) + f"   ·   Guide: {GUIDE}"])
+        tf = sh.text_frame; tf.word_wrap = True
+        tf.margin_left = tf.margin_right = Inches(2.75)
+        tf.paragraphs[0].runs[0].font.size = Pt(40)
+    elif t == "Expected Results":
+        set_words(sh, ["Results"])
+    elif t.startswith("Budget"):
+        set_words(sh, ["Budget and References"])
 for sh in s.shapes:
     if sh.has_text_frame and "Logo" in sh.text_frame.text:
-        restyle(sh, ["School of", "Technology"], [24, 24], [SERIF, SERIF], [CREAM, CREAM], BROWN, bold=False)
+        set_words(sh, ["School of", "Technology"], 24)
 
 
 def text(x, y, w, h, lines, size=24, color=INK, align=PP_ALIGN.LEFT, font=SANS, spacing=8):
@@ -162,10 +150,6 @@ panel(13.2, 28.1, 9.75, 1.15, CREAM)
 text(13.3, 28.2, 9.55, 1.0, ["**Budget: ₹0**  ·  free open-source software, open CC BY-NC-SA dataset, own laptop"], 21, align=PP_ALIGN.CENTER, spacing=0)
 keys = ["colmap", "openmvs", "chsd_rgb", "tanks", "Medina JJ, Maley JM, Sannapareddy S, Medina NN, Gilman CM, McCormack JE"]
 text(13.2, 29.45, 9.75, 3.6, [f"[{NUMS[k]}] {REFS[NUMS[k] - 1]}" for k in keys] + ["Full reference list in the project report."], 14, spacing=3)
-
-# gold frame on top
-frame = s.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(0.12), Inches(0.12), W - Inches(0.24), H - Inches(0.24))
-frame.fill.background(); frame.line.color.rgb = GOLD; frame.line.width = Pt(6)
 
 out = OUT / "Poster"
 prs.save(out / "heritage3d_Poster_v2.pptx")

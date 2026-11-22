@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 
 from common import FIG, ROOT
 
-BG, INK, MUTED, QUAL, SAVE, GOLD = "#fdf2f6", "#3a2230", "#8a6a7a", "#5e1f42", "#f29bb8", "#d6457a"
+BG, INK, MUTED, QUAL, SAVE, GOLD = "#ffffff", "#2e2238", "#7a6a8a", "#4b2577", "#cc99ff", "#9b59d0"
 rows = list(csv.DictReader(open(ROOT / "experiments/results/tradeoff_score.csv", encoding="utf-8")))
 w = 0.5
 plt.rcParams.update({"font.family": "Georgia", "font.size": 15, "text.color": INK, "axes.labelcolor": MUTED,
