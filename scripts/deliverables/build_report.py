@@ -1,6 +1,6 @@
 """Final project report (department format) -> Deliverables/Report/heritage3d_Report.docx
 
-Format: A4, Times New Roman 12 pt, 1.5 line spacing, margins top/bottom/right 1 inch and left 1.5 inch,
+Format: A4, Times New Roman 12 pt, 1.5 line spacing, Word "Narrow" margins (0.5 inch, team choice), page border,
 cover (colour) + title page + certificate + declaration + acknowledgement + abstract + contents + lists,
 chapters 1-5, conclusion, future work, appendices, references in alphabetical order.
 Tables of contents/figures/tables are Word fields, filled when the file is opened or exported (to_pdf.ps1).
@@ -22,8 +22,7 @@ BLUE = RGBColor(0x1D, 0x35, 0x57)
 doc = Document()
 sec = doc.sections[0]
 sec.page_height, sec.page_width = Cm(29.7), Cm(21.0)
-sec.top_margin = sec.bottom_margin = sec.right_margin = Inches(1)
-sec.left_margin = Inches(1.5)
+sec.top_margin = sec.bottom_margin = sec.right_margin = sec.left_margin = Inches(0.5)  # Word "Narrow" (team, 2026-11-22)
 st = doc.styles["Normal"]
 st.font.name = "Times New Roman"
 st.font.size = Pt(12)
@@ -37,6 +36,8 @@ for name, size in (("Heading 1", 16), ("Heading 2", 14), ("Heading 3", 12), ("Ti
     s.element.rPr.rFonts.set(qn("w:eastAsia"), "Times New Roman")
     s.element.rPr.rFonts.set(qn("w:ascii"), "Times New Roman")
     s.element.rPr.rFonts.set(qn("w:hAnsi"), "Times New Roman")
+    for theme in ("w:asciiTheme", "w:hAnsiTheme", "w:eastAsiaTheme", "w:cstheme"):  # theme fonts override explicit ones
+        s.element.rPr.rFonts.attrib.pop(qn(theme), None)
 doc.styles["Heading 1"].paragraph_format.space_before = Pt(0)
 doc.styles["Heading 1"].paragraph_format.space_after = Pt(18)
 doc.styles["Caption"].font.italic = False
@@ -86,6 +87,42 @@ def bullets(items):
         par.style = doc.styles["List Bullet"]
 
 
+def border(section):
+    """Single-line page border on every page of the section."""
+    pr = section._sectPr
+    for old in pr.findall(qn("w:pgBorders")):
+        pr.remove(old)
+    b = OxmlElement("w:pgBorders"); b.set(qn("w:offsetFrom"), "page")
+    for side in ("top", "left", "bottom", "right"):
+        e = OxmlElement(f"w:{side}")
+        for k, v in (("val", "single"), ("sz", "12"), ("space", "24"), ("color", "000000")):
+            e.set(qn(f"w:{k}"), v)
+        b.append(e)
+    # pgBorders must come after pgMar in sectPr
+    pr.insert(list(pr).index(pr.find(qn("w:pgMar"))) + 1, b)
+
+
+def new_section(fmt=None, start=1, number=True):
+    """Start a new page in a new section; fmt 'lowerRoman' or 'decimal'; number=False leaves the footer empty."""
+    s = doc.add_section(WD_SECTION.NEW_PAGE)
+    s.footer.is_linked_to_previous = False
+    for par in s.footer.paragraphs:
+        for r in list(par.runs):
+            r._r.getparent().remove(r._r)
+    pr = s._sectPr
+    for old in pr.findall(qn("w:pgNumType")):
+        pr.remove(old)
+    if fmt:
+        pg = OxmlElement("w:pgNumType"); pg.set(qn("w:fmt"), fmt); pg.set(qn("w:start"), str(start)); pr.append(pg)
+    if number:
+        f = s.footer.paragraphs[0]; f.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        field(f, " PAGE ", "1")
+        for r in f.runs:
+            r.font.name, r.font.size = "Times New Roman", Pt(11)
+    border(s)
+    return s
+
+
 def page_break():
     doc.add_paragraph().add_run().add_break(WD_BREAK.PAGE)
 
@@ -133,7 +170,7 @@ def table(text, header, rows, widths=None, size=10):
 
 
 def h1(text):
-    doc.add_heading(text, level=1)
+    doc.add_heading(text, level=1).alignment = WD_ALIGN_PARAGRAPH.CENTER
 
 
 def h2(text):
@@ -146,8 +183,13 @@ def equation(text):
 
 
 # ---------------------------------------------------------------- cover (colour) and title page (black and white)
-def front_page(color):
+LOGO = OUT.parent / "museum" / "hall" / "pdeu-logo.png"
+
+
+def front_page(color, last=False):
     col = BLUE if color else None
+    par = doc.add_paragraph(); par.alignment = WD_ALIGN_PARAGRAPH.CENTER; par.paragraph_format.space_after = Pt(14)
+    par.add_run().add_picture(str(LOGO), width=Inches(1.6))
     p("A Minor Project Report", align="c", size=16, after=4, color=col)
     p("on", align="c", size=13, after=10)
     p(TITLE, bold=True, align="c", size=20, after=24, color=col)
@@ -163,11 +205,14 @@ def front_page(color):
     p("School of Technology", align="c", after=2)
     p("Pandit Deendayal Energy University, Gandhinagar", align="c", after=24)
     p(MONTH, bold=True, align="c", size=14, color=col)
-    page_break()
+    if not last:
+        page_break()
 
 
+border(doc.sections[0])
 front_page(True)
-front_page(False)
+front_page(False, last=True)
+new_section("lowerRoman", 1)  # certificate to abbreviations: i, ii, iii ...
 
 # ---------------------------------------------------------------- certificate (Appendix 2 format)
 p("CERTIFICATE", bold=True, align="c", size=16, after=24)
@@ -184,31 +229,35 @@ for cell, (who, desig) in zip(sig.rows[0].cells, ((GUIDE, DESIGNATION), ("[Name 
         par = cell.add_paragraph(line); par.paragraph_format.line_spacing = 1.15; par.paragraph_format.space_after = Pt(0)
 page_break()
 
-# ---------------------------------------------------------------- declaration on AI use (Appendix 3, stated truthfully)
+# ---------------------------------------------------------------- declaration (department Appendix 3 layout, stated truthfully)
 p("DECLARATION", bold=True, align="c", size=16, after=18)
-p(f"We hereby declare that the project report entitled “{TITLE}” presents work carried out by us under the "
-  f"guidance of {GUIDE}. All experiments were run by us on our own laptop, and every result in this report comes from "
-  "those runs; the configurations, logs and result files are kept in the project repository.")
-p("In line with the department's requirement to disclose the use of AI tools, we state that an AI coding assistant was "
-  "used during this project, as listed below. The project decisions, the research questions, the choice of dataset and "
-  "method, and the interpretation of the results were ours, and we have read, checked and edited this report.")
-p("[Students: review this declaration with your guide before signing. The department's template declaration states that "
-  "no language model was used to create content; that statement would not be accurate for this report, so this "
-  "version discloses the actual use. Delete this note after confirming.]", italic=True, color=RGBColor(0xB0, 0x30, 0x30))
-p("List of tools used, with purpose:", bold=True, keep=True)
-bullets([
-    "Claude Code (Anthropic), an AI coding assistant: writing and testing the pipeline, evaluation and analysis code; "
-    "building the web museum; producing plots and tables; drafting text of this report, the presentation and the poster "
-    "from our measured results, which we then reviewed and edited.",
-    "COLMAP, OpenMVS, Python (NumPy, SciPy, Matplotlib), three.js: reconstruction, evaluation and visualisation software (not AI).",
-])
-p("", after=24)
+p(f"We hereby declare that the project report entitled “{TITLE}” is the result of work carried out by us under the "
+  f"guidance of {GUIDE}, {DESIGNATION}, {DEPARTMENT}. All experiments were run by us, and every result in this report comes "
+  "from those runs; the configurations, logs and result files are kept in the project repository.")
+p("In accordance with the department's guidelines on the use of artificial-intelligence tools, we disclose that an AI coding "
+  "assistant was used during this project, as listed below, including for drafting the text of this report from our measured "
+  "results. We have read, checked and edited the report, and the project decisions, the choice of dataset and method, and the "
+  "interpretation of the results are our own.")
+p("This declaration affirms that the work presented in this report was genuinely carried out by us and, to the best of our "
+  "knowledge, is original.")
+p("", after=10)
 dec = doc.add_table(rows=1, cols=2)
 for cell, (name, roll) in zip(dec.rows[0].cells, TEAM):
     cell.text = ""
-    for line in ("Sign: ____________________", name, roll, DEPARTMENT, "School of Technology, PDEU, Gandhinagar"):
+    for i, line in enumerate(("Sign: ____________________", name, roll, DEPARTMENT, "School of Technology",
+                              "Pandit Deendayal Energy University", "Gandhinagar")):
         par = cell.add_paragraph(line); par.paragraph_format.line_spacing = 1.15; par.paragraph_format.space_after = Pt(0)
-p("Date: ____________          Place: Gandhinagar", after=0)
+        if i == 1:
+            par.runs[0].bold = True
+p("", after=6)
+p("Date: 23-11-2026", align="l", after=0)
+p("Place: Gandhinagar", align="l", after=14)
+p("List of Tools Used for the Report with Purpose:", bold=True, align="l", keep=True)
+bullets([
+    "Claude Code (Anthropic): writing and testing the pipeline, evaluation and analysis code; building the web museum; "
+    "producing plots and tables; drafting the text of this report, the presentation and the poster, which we reviewed and edited.",
+    "COLMAP, OpenMVS, Python (NumPy, SciPy, Matplotlib) and three.js: reconstruction, evaluation and visualisation software (not AI tools).",
+])
 page_break()
 
 # ---------------------------------------------------------------- acknowledgement
@@ -262,8 +311,8 @@ abbr = [("3DGS", "3D Gaussian Splatting"), ("CHSD", "Cultural Heritage Synthetic
         ("R", "Camera-to-object-centre distance; unit of all distances"), ("RAM", "Random-access memory"),
         ("RQ, H", "Research question, hypothesis"), ("SfM", "Structure from motion"), ("SSIM", "Structural similarity index"),
         ("τ", "Distance tolerance of the F-score (0.002 R unless stated)"), ("w", "Weight on quality in the combined score")]
-table(None, ["Symbol", "Meaning"], abbr, widths=[1.3, 4.6], size=11)
-page_break()
+table(None, ["Symbol", "Meaning"], abbr, widths=[1.6, 5.6], size=11)
+new_section("decimal", 1)  # chapters onward: 1, 2, 3 ...
 
 # ---------------------------------------------------------------- chapter 1
 h1("Chapter 1: Introduction")
@@ -604,10 +653,6 @@ for i, ref in enumerate(REFS, 1):
     par.paragraph_format.space_after = Pt(4)
     par.add_run(f"[{i}]\t{ref}").font.size = Pt(11)
 
-# page numbers in the footer
-footer = doc.sections[0].footer.paragraphs[0]
-footer.alignment = WD_ALIGN_PARAGRAPH.CENTER
-field(footer, " PAGE ", "1")
 
 out = OUT / "Report"
 out.mkdir(parents=True, exist_ok=True)
