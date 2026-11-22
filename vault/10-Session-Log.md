@@ -324,3 +324,4 @@ Newest first. Every session must add an entry (see `CLAUDE.md`).
 - Team's manual poster edits (saved 12:50) committed as they are.
 - Presentation v2: added numbered captions to all 13 images (Fig. 1–13) in the team's edited file (in place, PowerPoint closed, checked as images); slide 14 side descriptions became captions. Committed with the team's manual edits and their deletion of presentation v1 and the old PDFs.
 
+- Team's further manual presentation edits (saved 13:04) committed as they are. All deliverables committed; only the department's guideline PDFs and panel list stay git-ignored on purpose.
