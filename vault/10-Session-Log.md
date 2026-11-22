@@ -308,3 +308,4 @@ Newest first. Every session must add an entry (see `CLAUDE.md`).
 
 **Next action** — team picks poster v1 or v2; fill the remaining blanks in the deliverables.
 
+- Team: poster colour must be pink. Poster v2, its diagram and chart switched to pink (#D6457A) with deep plum, blush background and a small sage accent; re-exported and checked as an image.

@@ -1,4 +1,4 @@
-"""A1 poster, version 2 (heritage theme, acquisition-cost table with the combined-score formula, score breakdown chart)
+"""A1 poster, version 2 (pink theme with serif headings, acquisition-cost table with the combined-score formula, score breakdown chart)
 on the department's template -> Deliverables/Poster/heritage3d_Poster_v2.pptx. Version 1 (build_poster.py) is kept."""
 import csv
 
@@ -11,9 +11,9 @@ from pptx.util import Inches, Pt
 from common import FIG, GUIDE, OUT, ROOT, TEAM, TEAM_ID, TITLE, references
 
 NUMS, REFS = references()
-BROWN, TERRA, GOLD, OLIVE = RGBColor(0x5B, 0x3A, 0x29), RGBColor(0xA8, 0x49, 0x2B), RGBColor(0xC9, 0xA2, 0x4A), RGBColor(0x66, 0x77, 0x3A)
-INK, CREAM, PARCH, PARCH2, HILITE = (RGBColor(0x3B, 0x2F, 0x2A), RGBColor(0xFB, 0xF4, 0xE4), RGBColor(0xF7, 0xF0, 0xE1),
-                                     RGBColor(0xEE, 0xE2, 0xC8), RGBColor(0xF3, 0xDF, 0xA6))
+BROWN, TERRA, GOLD, OLIVE = RGBColor(0x5E, 0x1F, 0x42), RGBColor(0xD6, 0x45, 0x7A), RGBColor(0xE8, 0x9B, 0xB5), RGBColor(0x6F, 0x9A, 0x7A)
+INK, CREAM, PARCH, PARCH2, HILITE = (RGBColor(0x3A, 0x22, 0x30), RGBColor(0xFF, 0xFF, 0xFF), RGBColor(0xFD, 0xF2, 0xF6),
+                                     RGBColor(0xFA, 0xE3, 0xEC), RGBColor(0xF7, 0xC8, 0xD8))
 SERIF, SANS = "Georgia", "Calibri"
 prs = Presentation(OUT / "Poster Template.pptx")
 s = prs.slides[0]
