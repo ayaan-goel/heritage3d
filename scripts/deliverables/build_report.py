@@ -1,6 +1,6 @@
 """Final project report (department format) -> Deliverables/Report/heritage3d_Report.docx
 
-Format: A4, Times New Roman 12 pt, 1.5 line spacing, Word "Narrow" margins (0.5 inch, team choice), page border,
+Format: A4, Times New Roman 12 pt, 1.5 line spacing, margins left 1.5 inch and others 1 inch (guidelines), page border,
 cover (colour) + title page + certificate + declaration + acknowledgement + abstract + contents + lists,
 chapters 1-5, conclusion, future work, appendices, references in alphabetical order.
 Tables of contents/figures/tables are Word fields, filled when the file is opened or exported (to_pdf.ps1).
@@ -22,7 +22,8 @@ BLUE = RGBColor(0x1D, 0x35, 0x57)
 doc = Document()
 sec = doc.sections[0]
 sec.page_height, sec.page_width = Cm(29.7), Cm(21.0)
-sec.top_margin = sec.bottom_margin = sec.right_margin = sec.left_margin = Inches(0.5)  # Word "Narrow" (team, 2026-11-22)
+sec.top_margin = sec.bottom_margin = sec.right_margin = Inches(1)
+sec.left_margin = Inches(1.5)  # department guidelines
 st = doc.styles["Normal"]
 st.font.name = "Times New Roman"
 st.font.size = Pt(12)
