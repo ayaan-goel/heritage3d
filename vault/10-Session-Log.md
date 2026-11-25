@@ -334,6 +334,6 @@ Newest first. Every session must add an entry (see `CLAUDE.md`).
 ## 2026-11-25 — museum hosted online (directed by Ayaan Goel and Kshiti Bhavsar)
 
 - Team asked to host the museum. Turned on GitHub Pages for `ayaan-goel/heritage3d` (build type: GitHub Actions) and added `.github/workflows/pages.yml`, which uploads only `museum/` and deploys it to https://ayaan-goel.github.io/heritage3d/. Checked first: the museum folder is self-contained (131 MB; only three.js and model-viewer load from jsDelivr), and the CHSD attribution and licence are on both pages.
-- Commands: `gh api -X POST repos/ayaan-goel/heritage3d/pages -f build_type=workflow` → Pages enabled; deploy result recorded below after the first run.
+- Commands: `gh api -X POST repos/ayaan-goel/heritage3d/pages -f build_type=workflow` → Pages enabled. Commit df78d3d pushed; Actions run 45608685500 succeeded. Checked live in the app's browser: the hall's intro screen loads with no console errors and models download with no failed requests; `list.html` loads and shows Ark_HM_272_HI. Team checked the hosted site themselves and report the frame rate is fine (team observation, no fps figures recorded). Download times on the hosted site still not measured.
 
 **Next action** — measure real download times on the hosted site; update the deliverables' "hosting is future work" wording if the team wants.
