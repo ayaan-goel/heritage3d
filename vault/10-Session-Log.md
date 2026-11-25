@@ -330,3 +330,10 @@ Newest first. Every session must add an entry (see `CLAUDE.md`).
 - Slide 10: the 'Hosting the museum online — Pending' row replaced by 'Museum packaged as a static website; one-click live demo — Completed' (true: demo kit, local run). Hosting stays as future work under Next Steps (slide 17), not claimed as done. Committed with the team's 14:34 edits.
 - Team asked for an A-to-Z study guide for the final evaluation (panel of 2 CSE faculty, projector + A3 poster). Wrote `docs/meeting/final-evaluation-guide.html` + PDF (21 pages, Chrome export): basics → COLMAP/OpenMVS internals → dataset → steps → metrics → museum code → results → literature → tech stack → the team's questions answered (incl. phone-photo estimate marked as unmeasured, honest AI-use and work-split guidance) → more likely questions → day checklist → glossary. Checked as images.
 - Team's latest manual presentation edits (saved 14:38) committed as they are.
+
+## 2026-11-25 — museum hosted online (directed by Ayaan Goel and Kshiti Bhavsar)
+
+- Team asked to host the museum. Turned on GitHub Pages for `ayaan-goel/heritage3d` (build type: GitHub Actions) and added `.github/workflows/pages.yml`, which uploads only `museum/` and deploys it to https://ayaan-goel.github.io/heritage3d/. Checked first: the museum folder is self-contained (131 MB; only three.js and model-viewer load from jsDelivr), and the CHSD attribution and licence are on both pages.
+- Commands: `gh api -X POST repos/ayaan-goel/heritage3d/pages -f build_type=workflow` → Pages enabled; deploy result recorded below after the first run.
+
+**Next action** — measure real download times on the hosted site; update the deliverables' "hosting is future work" wording if the team wants.

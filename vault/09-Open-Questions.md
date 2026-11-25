@@ -24,7 +24,7 @@
 - [ ] Replace the four weak literature sources (not confirmed in Scopus) with indexed papers? Ask Prof. Singh. See [[02-Literature-Review]].
 - [ ] Does the 44-exhibit hall hold its frame rate full screen, and how long does the 129.6 MB collection take to download once hosted? Only measured in the app's pane from localhost.
 - [x] Museum needs **≥ 30 exhibits** (team minimum, 2026-11-01). Closed 2026-11-04: all four last artifacts passed the unchanged rule (L3, mesh F ≥ 0.95), giving exactly 30 of the 40. No fallback level, extra artifacts or lower bar needed.
-- [ ] Where to host the museum (GitHub Pages from this repo, university server, or local demo only)? Team decision; GLBs are ~4 MB each.
+- [x] Where to host the museum? **Answered 2026-11-25:** GitHub Pages from this repo, deployed by `.github/workflows/pages.yml` to https://ayaan-goel.github.io/heritage3d/ (team request "host the museum").
 - [ ] Why does OpenMVS seam leveling blacken faces on CHSD renders? (hypothesis: pure-black background pixels at silhouettes pull the colour correction to black). Not needed for the experiment; museum export avoids it.
 - [ ] Low-texture objects (`Ark_HM_1260B_HI`, `Ark_HM_38_HI`) fail at every level: report as a limitation only, or also measure texture per artifact and relate it to F? (hypothesis: too few SIFT matches)
 
